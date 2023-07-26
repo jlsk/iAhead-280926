@@ -1,5 +1,6 @@
 package com.manage.iahead;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -21,10 +23,10 @@ public class StarttestActivity extends AppCompatActivity implements PlayToneList
     private LinearLayout llNext;
     private CountDownTimer cTimer = null;
     private ImageView ivHit;
-    private int count=0, random;
-    private boolean isLeft=false;
+    private int count=0, random, countall=0;
+    private boolean checkPass=false;
     private PlayTone playTone;
-    private TextView tvText, tvTime;
+    private TextView tvText, tvTime, tv_next;
 
     @Override
     public void onPlay() {
@@ -44,6 +46,19 @@ public class StarttestActivity extends AppCompatActivity implements PlayToneList
 
         playTone = new PlayTone(this);
 
+        tv_next = findViewById(R.id.tv_next);
+        tv_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(tv_next.getText().toString().equalsIgnoreCase("next")){
+                    Intent intent = new Intent(StarttestActivity.this, StartrealtestActivity.class);
+                    startActivity(intent);
+                    finish();
+                    return;
+                }
+                finish();
+            }
+        });
         tvTime = findViewById(R.id.tvTime);
         llNext = findViewById(R.id.llNext);
         llNext.setOnClickListener(new View.OnClickListener() {
@@ -57,19 +72,22 @@ public class StarttestActivity extends AppCompatActivity implements PlayToneList
         ivHit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                cancelTimer();
                 ivHit.setBackground(getResources().getDrawable(R.drawable.yay));
                 playTone.stop();
-
-                if(count==5){
+                checkPass=true;
+                if(count==1){
+                    tvTime.setText("");
                     tvText.setText("CONGRATULATIONS! You have completed the configuration");
                     llNext.setVisibility(View.VISIBLE);
-                    cancelTimer();
                     return;
                 }
-                randomPlay();
+                count++;
+                countall++;
+                startTimer();
             }
         });
-        randomPlay();
+        //randomPlay();
         startTimer();
     }
 
@@ -80,13 +98,13 @@ public class StarttestActivity extends AppCompatActivity implements PlayToneList
             public void run() {
                 handler.removeCallbacksAndMessages(null);
                 ivHit.setBackground(getResources().getDrawable(R.drawable.ongoing));
-                random = ThreadLocalRandom.current().nextInt(0, 1);
-                if(random==0){
-                    isLeft=true;
-                }else{
-                    isLeft=false;
-                }
-                playTone.play(isLeft, 1000, 0.02, 3000);
+//                random = ThreadLocalRandom.current().nextInt(0, 1);
+//                if(random==0){
+//                    isLeft=true;
+//                }else{
+//                    isLeft=false;
+//                }
+                playTone.play(true, 1000, 0.02, 3000);
                 count++;
             }
         }, 2000);
@@ -99,23 +117,34 @@ public class StarttestActivity extends AppCompatActivity implements PlayToneList
             @Override
             public void run() {
                 handler.removeCallbacksAndMessages(null);
-                tvTime.setText("00:00");
+                ivHit.setBackground(getResources().getDrawable(R.drawable.ongoing));
+                countall++;
+                checkPass=false;
+                playTone.play(true, 1000, 0.02, 3000);
+
                 cTimer = new CountDownTimer(5000, 1000) {
                     public void onTick(long millisUntilFinished) {
-                        tvTime.setText(String.valueOf(millisUntilFinished/1000));
+                        tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
                     }
                     public void onFinish() {
-                        ivHit.setBackground(getResources().getDrawable(R.drawable.tryagain));
                         cancelTimer();
-                        startTimer();
+                        if(countall>2){
+                            Toast.makeText(StarttestActivity.this, "Fail, out of 2/3 must pass", Toast.LENGTH_SHORT).show();
+                            tvTime.setText("");
+                            llNext.setVisibility(View.VISIBLE);
+                            tv_next.setText("Finish");
+                            return;
+                        }
+                        if(!checkPass){
+                            ivHit.setBackground(getResources().getDrawable(R.drawable.tryagain));
+                            startTimer();
+                        }
                     }
                 };
                 cTimer.start();
             }
-        }, 2000);
-
+        }, 3000);
     }
-
 
     //cancel timer
     private void cancelTimer() {

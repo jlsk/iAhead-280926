@@ -12,6 +12,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import com.manage.iahead.Utility.SharedPref;
+
 public class EnteridActivity extends AppCompatActivity {
     private TextView tv_type;
     private EditText et_id;
@@ -49,6 +51,8 @@ public class EnteridActivity extends AppCompatActivity {
                     Toast.makeText(EnteridActivity.this, "Please enter your id.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                SharedPref.init(EnteridActivity.this);
+                SharedPref.write(SharedPref.Id, et_id.getText().toString());
                 intent = new Intent(EnteridActivity.this, HeadphonesettingActivity.class);
                 startActivity(intent);
                 finish();
