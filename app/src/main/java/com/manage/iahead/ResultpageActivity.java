@@ -28,6 +28,7 @@ public class ResultpageActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String left = intent.getStringExtra("left");
         String right = intent.getStringExtra("right");
+        String noisy = intent.getStringExtra("noisy");
 
         ivWhatsapp = findViewById(R.id.ivWhatsapp);
         ivWhatsapp.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +60,7 @@ public class ResultpageActivity extends AppCompatActivity {
             }
         });
         tvNoise = findViewById(R.id.tvNoise);
+        tvNoise.setText(noisy+ "dB");
         tvLeft = findViewById(R.id.tvLeft);
         tvRight = findViewById(R.id.tvRight);
         tv_id = findViewById(R.id.tv_id);

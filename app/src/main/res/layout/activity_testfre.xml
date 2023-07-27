@@ -10,7 +10,7 @@
         android:layout_marginLeft="80dp"
         android:background="@drawable/elephant"
         android:layout_width="match_parent"
-        android:layout_height="230dp"/>
+        android:layout_height="220dp"/>
 
     <TextView
         android:layout_width="wrap_content"
