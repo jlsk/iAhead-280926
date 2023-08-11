@@ -21,8 +21,8 @@ public class ResultpageActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resultpage);
 
         Intent intent = getIntent();
@@ -60,12 +60,12 @@ public class ResultpageActivity extends AppCompatActivity {
             }
         });
         tvNoise = findViewById(R.id.tvNoise);
-        tvNoise.setText(noisy+ "dB");
         tvLeft = findViewById(R.id.tvLeft);
         tvRight = findViewById(R.id.tvRight);
         tv_id = findViewById(R.id.tv_id);
         tvLeft.setText(left);
         tvRight.setText(right);
+        tvNoise.setText(noisy);
 
         SharedPref.init(this);
         String Id = SharedPref.read(SharedPref.Id, "");

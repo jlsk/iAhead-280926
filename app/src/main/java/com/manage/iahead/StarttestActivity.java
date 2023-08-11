@@ -27,6 +27,8 @@ public class StarttestActivity extends AppCompatActivity implements PlayToneList
     private boolean checkPass=false;
     private PlayTone playTone;
     private TextView tvText, tvTime, tv_next;
+    private Handler handler;
+    private boolean isLeft=false;
 
     @Override
     public void onPlay() {
@@ -39,9 +41,17 @@ public class StarttestActivity extends AppCompatActivity implements PlayToneList
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+
+        handler.removeCallbacksAndMessages(null);
+        cancelTimer();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starttest);
 
         playTone = new PlayTone(this);
@@ -50,13 +60,13 @@ public class StarttestActivity extends AppCompatActivity implements PlayToneList
         tv_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(tv_next.getText().toString().equalsIgnoreCase("next")){
-                    Intent intent = new Intent(StarttestActivity.this, StartrealtestActivity.class);
+//                if(tv_next.getText().toString().equalsIgnoreCase("next")){
+                    Intent intent = new Intent(StarttestActivity.this, StartrealtestNewActivity.class);
                     startActivity(intent);
                     finish();
-                    return;
-                }
-                finish();
+//                    return;
+//                }
+//                finish();
             }
         });
         tvTime = findViewById(R.id.tvTime);
@@ -76,13 +86,13 @@ public class StarttestActivity extends AppCompatActivity implements PlayToneList
                 ivHit.setBackground(getResources().getDrawable(R.drawable.yay));
                 playTone.stop();
                 checkPass=true;
-                if(count==1){
+                count++;
+                if(count==2){
                     tvTime.setText("");
                     tvText.setText("CONGRATULATIONS! You have completed the configuration");
                     llNext.setVisibility(View.VISIBLE);
                     return;
                 }
-                count++;
                 countall++;
                 startTimer();
             }
@@ -92,7 +102,7 @@ public class StarttestActivity extends AppCompatActivity implements PlayToneList
     }
 
     private void randomPlay(){
-        Handler handler = new Handler(Looper.getMainLooper());
+        handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -112,7 +122,7 @@ public class StarttestActivity extends AppCompatActivity implements PlayToneList
     }
 
     private void startTimer() {
-        Handler handler = new Handler(Looper.getMainLooper());
+        handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -120,7 +130,13 @@ public class StarttestActivity extends AppCompatActivity implements PlayToneList
                 ivHit.setBackground(getResources().getDrawable(R.drawable.ongoing));
                 countall++;
                 checkPass=false;
-                playTone.play(true, 1000, 0.02, 3000);
+                random = ThreadLocalRandom.current().nextInt(0, 1);
+                if(random==0){
+                    isLeft=true;
+                }else{
+                    isLeft=false;
+                }
+                playTone.play(isLeft, 1000, 0.02, 3000);
 
                 cTimer = new CountDownTimer(5000, 1000) {
                     public void onTick(long millisUntilFinished) {
@@ -128,16 +144,17 @@ public class StarttestActivity extends AppCompatActivity implements PlayToneList
                     }
                     public void onFinish() {
                         cancelTimer();
-                        if(countall>2){
+                        if(countall>3){
                             Toast.makeText(StarttestActivity.this, "Fail, out of 2/3 must pass", Toast.LENGTH_SHORT).show();
                             tvTime.setText("");
                             llNext.setVisibility(View.VISIBLE);
-                            tv_next.setText("Finish");
+//                            tv_next.setText("Finish");
                             return;
                         }
                         if(!checkPass){
                             ivHit.setBackground(getResources().getDrawable(R.drawable.tryagain));
                             startTimer();
+                            countall++;
                         }
                     }
                 };

@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,28 +19,25 @@ import com.manage.iahead.Jsyn.PlayTone;
 import com.manage.iahead.Jsyn.PlayToneListener;
 import com.manage.iahead.Utility.World;
 
-import java.io.File;
-import java.io.IOException;
 import java.text.DecimalFormat;
 
 public class StartrealtestActivity extends AppCompatActivity implements PlayToneListener {
     private LinearLayout llNext;
     private CountDownTimer cTimer = null;
-    private ImageView ivHit, iv_noisy;
+    private ImageView ivHit;
     private int count=0, random, countall=0;
     private boolean checkPass=false;
     private PlayTone playTone;
     private TextView tvText, tvTime, tv_next;
     private String levelType="level1left";
     private String leftStr="Refer", rightStr="Refer";
-    private MediaRecorder mRecorder;
+    private Handler handler;
     TextView mStatusView;
     Thread runner;
     private static double mEMA = 0.0;
     static final private double EMA_FILTER = 0.6;
     float volume = 10000;
-    private int noisycount=0;
-    private Handler handler;
+    private MediaRecorder mRecorder;
 
     @Override
     public void onPlay() {
@@ -55,22 +50,20 @@ public class StartrealtestActivity extends AppCompatActivity implements PlayTone
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+
+        handler.removeCallbacksAndMessages(null);
+        cancelTimer();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starttest);
 
-        mStatusView = (TextView) findViewById(R.id.tv_status);
-        mStatusView.setTextColor(getResources().getColor(android.R.color.transparent));
-
-        handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                updateTv();
-            }
-        }, 3000);
-
+        updateTv();
         playTone = new PlayTone(this);
 
         tv_next = findViewById(R.id.tv_next);
@@ -93,7 +86,6 @@ public class StartrealtestActivity extends AppCompatActivity implements PlayTone
         ivHit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateTv();
                 cancelTimer();
                 ivHit.setBackground(getResources().getDrawable(R.drawable.yay));
                 playTone.stop();
@@ -105,13 +97,12 @@ public class StartrealtestActivity extends AppCompatActivity implements PlayTone
                         count = 0;
                         countall = 0;
                     }else if(levelType.equalsIgnoreCase("level2left")){
-                        stopRecorder();
-                        handler.removeCallbacksAndMessages(null);
                         leftStr="Pass";
                         Intent intent = new Intent(StartrealtestActivity.this, ResultpageActivity.class);
                         intent.putExtra("left", leftStr);
                         intent.putExtra("right", rightStr);
-                        intent.putExtra("noisy", mStatusView.getText().toString());
+                        DecimalFormat df1 = new DecimalFormat("####.0");
+                        intent.putExtra("noisy", df1.format(World.dbCount) + " dB");
                         startActivity(intent);
                         finish();
                         return;
@@ -138,7 +129,7 @@ public class StartrealtestActivity extends AppCompatActivity implements PlayTone
     }
 
     private void startTimer() {
-        Handler handler = new Handler(Looper.getMainLooper());
+        handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -147,29 +138,7 @@ public class StartrealtestActivity extends AppCompatActivity implements PlayTone
                 countall++;
                 checkPass=false;
                 playTone.play(true, 1000, 0.02, 3000);
-                Double dbDouble = Double.parseDouble(mStatusView.getText().toString());
-                int dbInt = Integer.valueOf(dbDouble.intValue());
-                if(dbInt>60){
-                    //too noisy
-                    if(noisycount>1){
-                        iv_noisy=findViewById(R.id.iv_noisy);
-                        iv_noisy.setVisibility(View.VISIBLE);
-                        iv_noisy.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                handler.removeCallbacksAndMessages(null);
-                                stopRecorder();
-                                Intent intent = new Intent(StartrealtestActivity.this, ResultpageActivity.class);
-                                intent.putExtra("left", "Noisy");
-                                intent.putExtra("right", "Noisy");
-                                intent.putExtra("noisy", mStatusView.getText().toString());
-                                startActivity(intent);
-                                finish();
-                            }
-                        });
-                    }
-                    noisycount++;
-                }
+
                 cTimer = new CountDownTimer(5000, 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
@@ -216,14 +185,10 @@ public class StartrealtestActivity extends AppCompatActivity implements PlayTone
                     public void onFinish() {
                         cancelTimer();
                         if(countall>4){
-
-                            handler.removeCallbacksAndMessages(null);
-                            stopRecorder();
                             Toast.makeText(StartrealtestActivity.this, "Fail, out of 3/5 must pass", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(StartrealtestActivity.this, ResultpageActivity.class);
                             intent.putExtra("left", leftStr);
                             intent.putExtra("right", rightStr);
-                            intent.putExtra("noisy", mStatusView.getText().toString());
                             startActivity(intent);
                             finish();
                             return;
@@ -257,13 +222,10 @@ public class StartrealtestActivity extends AppCompatActivity implements PlayTone
                     public void onFinish() {
                         cancelTimer();
                         if(countall>4){
-                            handler.removeCallbacksAndMessages(null);
-                            stopRecorder();
                             Toast.makeText(StartrealtestActivity.this, "Fail, out of 3/5 must pass", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(StartrealtestActivity.this, ResultpageActivity.class);
                             intent.putExtra("left", leftStr);
                             intent.putExtra("right", rightStr);
-                            intent.putExtra("noisy", mStatusView.getText().toString());
                             startActivity(intent);
                             finish();
                             return;
@@ -283,55 +245,6 @@ public class StartrealtestActivity extends AppCompatActivity implements PlayTone
     private void cancelTimer() {
         if(cTimer!=null)
             cTimer.cancel();
-    }
-
-    public void onResume()
-    {
-        super.onResume();
-        startRecorder();
-    }
-
-    public void onPause()
-    {
-        super.onPause();
-        stopRecorder();
-    }
-
-    private void startRecorder(){
-        if (mRecorder == null)
-        {
-            mRecorder = new MediaRecorder();
-            mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-            mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-            mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-            File file = new File(getExternalCacheDir().getAbsolutePath(), "/testnoise");
-            mRecorder.setOutputFile(file.getAbsolutePath());
-            try
-            {
-                mRecorder.prepare();
-            }catch (java.io.IOException ioe) {
-                android.util.Log.e("[Monkey]", "IOException: " + android.util.Log.getStackTraceString(ioe));
-
-            }catch (java.lang.SecurityException e) {
-                android.util.Log.e("[Monkey]", "SecurityException: " + android.util.Log.getStackTraceString(e));
-            }
-            try
-            {
-                mRecorder.start();
-            }catch (java.lang.SecurityException e) {
-                android.util.Log.e("[Monkey]", "SecurityException: " + android.util.Log.getStackTraceString(e));
-            }
-
-            //mEMA = 0.0;
-        }
-
-    }
-    private void stopRecorder() {
-        if (mRecorder != null) {
-            mRecorder.stop();
-            mRecorder.release();
-            mRecorder = null;
-        }
     }
 
     private void updateTv(){
@@ -359,5 +272,4 @@ public class StartrealtestActivity extends AppCompatActivity implements PlayTone
         mEMA = EMA_FILTER * amp + (1.0 - EMA_FILTER) * mEMA;
         return mEMA;
     }
-
 }

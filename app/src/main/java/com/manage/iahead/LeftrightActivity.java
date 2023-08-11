@@ -23,12 +23,13 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
     private PlayTone playTone;
     private boolean isLeft=false, leftclick=false, rightclick=false;
     private LinearLayout ll_left, ll_right;
-    private int type=-1;
+    private int type=-1, count=0;
+    private boolean checkLeft=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leftright);
 
         ll_left = findViewById(R.id.ll_left);
@@ -36,10 +37,12 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
         ll_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tv_proceed.setVisibility(View.VISIBLE);
-                leftclick=true;
-                leftMargin();
-                playTone.stop();
+                if(checkLeft) {
+                    tv_proceed.setVisibility(View.VISIBLE);
+                    leftclick = true;
+                    leftMargin();
+                    playTone.stop();
+                }
             }
         });
 
@@ -62,8 +65,8 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
                 ivClose.setVisibility(View.GONE);
 
                 RelativeLayout.LayoutParams paramsRight = new RelativeLayout.LayoutParams(
-                        400,
-                        1000
+                        300,
+                        900
                 );
                 paramsRight.setMargins(30, 0, 0, 0);
                 paramsRight.addRule(RelativeLayout.CENTER_VERTICAL);
@@ -88,8 +91,8 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
 
     private void leftMargin(){
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                400,
-                850
+                300,
+                750
         );
         params.addRule(RelativeLayout.CENTER_VERTICAL);
         params.setMargins(0, 0, 60, 0);
@@ -98,8 +101,8 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
 
     private void rightMargin(){
         RelativeLayout.LayoutParams paramsRight = new RelativeLayout.LayoutParams(
-                400,
-                850
+                300,
+                750
         );
         paramsRight.setMargins(60, 0, 0, 0);
         paramsRight.addRule(RelativeLayout.CENTER_VERTICAL);
@@ -119,8 +122,8 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
                         rightMargin();
                     }
                     RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                            400,
-                            1000
+                            300,
+                            900
                     );
                     params.setMargins(0, 0, 30, 0);
                     params.addRule(RelativeLayout.CENTER_VERTICAL);
@@ -128,9 +131,11 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
 
                     Toast.makeText(LeftrightActivity.this, "Now presenting a tone on the LEFT ear.", Toast.LENGTH_SHORT).show();
                     playTone.play(true, 1000, 0.02, 3000);
+                    checkLeft=true;
                     startTimer(1);
                 }else if(type==1){
                     if(!leftclick){
+                        tv_proceed.setVisibility(View.VISIBLE);
                         Toast.makeText(LeftrightActivity.this, "you have no click LEFT side", Toast.LENGTH_SHORT).show();
                         leftMargin();
                     }

@@ -19,7 +19,7 @@
             android:layout_marginRight="40dp"
             android:layout_marginLeft="40dp"
             android:background="@drawable/twin"
-            android:layout_width="250dp"
+            android:layout_width="300dp"
             android:layout_gravity="center_horizontal"
             android:layout_height="200dp"/>
 
@@ -158,8 +158,8 @@
 
             <ImageView
                 android:id="@+id/ivWhatsapp"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:background="@drawable/whatsapp_icon"/>
 
             <ImageView
@@ -192,10 +192,7 @@
                 android:textSize="30dp"
                 android:textColor="@color/white"/>
         </LinearLayout>
-<View
-    android:layout_width="match_parent"
-    android:layout_height="30dp"/>
-        </LinearLayout>
 
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -13,8 +13,8 @@ public class ReadytestActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_readytest);
 
         ll_start = findViewById(R.id.ll_start);
