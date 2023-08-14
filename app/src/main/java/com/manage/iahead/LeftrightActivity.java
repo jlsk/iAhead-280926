@@ -3,6 +3,8 @@ package com.manage.iahead;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,6 +27,8 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
     private LinearLayout ll_left, ll_right;
     private int type=-1, count=0;
     private boolean checkLeft=false;
+    private Toast myToast;
+    private int dpInt=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,12 +36,21 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leftright);
 
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        dpInt = (int)(Math.round(dpWidth));
+
         ll_left = findViewById(R.id.ll_left);
         leftMargin();
         ll_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(checkLeft) {
+                    if(myToast!=null){
+                        myToast.cancel();
+                    }
+
                     tv_proceed.setVisibility(View.VISIBLE);
                     leftclick = true;
                     leftMargin();
@@ -51,6 +64,10 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
         ll_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(myToast!=null){
+                    myToast.cancel();
+                }
+
                 rightclick=true;
                 rightMargin();
                 playTone.stop();
@@ -64,16 +81,26 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
             public void onClick(View v) {
                 ivClose.setVisibility(View.GONE);
 
-                RelativeLayout.LayoutParams paramsRight = new RelativeLayout.LayoutParams(
-                        300,
-                        900
-                );
+                RelativeLayout.LayoutParams paramsRight;
+                if(dpInt<350){
+                    paramsRight = new RelativeLayout.LayoutParams(
+                            200,
+                            600
+                    );
+                }else {
+                    paramsRight = new RelativeLayout.LayoutParams(
+                            300,
+                            900
+                    );
+                }
                 paramsRight.setMargins(30, 0, 0, 0);
                 paramsRight.addRule(RelativeLayout.CENTER_VERTICAL);
                 paramsRight.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                 ll_right.setLayoutParams(paramsRight);
 
-                Toast.makeText(LeftrightActivity.this, "Now presenting a tone on the RIGHT ear.", Toast.LENGTH_SHORT).show();
+                myToast = Toast.makeText(LeftrightActivity.this, "Now presenting a tone on the RIGHT ear.", Toast.LENGTH_SHORT);
+                myToast.show();
+
                 playTone.play(isLeft, 1000, 0.02, 3000);
                 startTimer(0);
             }
@@ -90,20 +117,36 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
     }
 
     private void leftMargin(){
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                300,
-                750
-        );
+        RelativeLayout.LayoutParams params;
+        if(dpInt<350){
+            params = new RelativeLayout.LayoutParams(
+                    200,
+                    450
+            );
+        }else {
+            params = new RelativeLayout.LayoutParams(
+                    300,
+                    750
+            );
+        }
         params.addRule(RelativeLayout.CENTER_VERTICAL);
         params.setMargins(0, 0, 60, 0);
         ll_left.setLayoutParams(params);
     }
 
     private void rightMargin(){
-        RelativeLayout.LayoutParams paramsRight = new RelativeLayout.LayoutParams(
-                300,
-                750
-        );
+        RelativeLayout.LayoutParams paramsRight;
+        if(dpInt<350){
+            paramsRight = new RelativeLayout.LayoutParams(
+                    200,
+                    450
+            );
+        }else {
+            paramsRight = new RelativeLayout.LayoutParams(
+                    300,
+                    750
+            );
+        }
         paramsRight.setMargins(60, 0, 0, 0);
         paramsRight.addRule(RelativeLayout.CENTER_VERTICAL);
         paramsRight.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
@@ -118,25 +161,39 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
                 cancelTimer();
                 if(type==0) {
                     if (!rightclick) {
-                        Toast.makeText(LeftrightActivity.this, "you have no click RIGHT side", Toast.LENGTH_SHORT).show();
+                        myToast = Toast.makeText(LeftrightActivity.this, "you have no click RIGHT side", Toast.LENGTH_SHORT);
+                        myToast.show();
+
                         rightMargin();
                     }
-                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-                            300,
-                            900
-                    );
+                    RelativeLayout.LayoutParams params;
+                    if(dpInt<350){
+                        params = new RelativeLayout.LayoutParams(
+                                200,
+                                600
+                        );
+                    }else {
+                        params = new RelativeLayout.LayoutParams(
+                                300,
+                                900
+                        );
+                    }
                     params.setMargins(0, 0, 30, 0);
                     params.addRule(RelativeLayout.CENTER_VERTICAL);
                     ll_left.setLayoutParams(params);
 
-                    Toast.makeText(LeftrightActivity.this, "Now presenting a tone on the LEFT ear.", Toast.LENGTH_SHORT).show();
+                    myToast = Toast.makeText(LeftrightActivity.this, "Now presenting a tone on the LEFT ear.", Toast.LENGTH_SHORT);
+                    myToast.show();
+
                     playTone.play(true, 1000, 0.02, 3000);
                     checkLeft=true;
                     startTimer(1);
                 }else if(type==1){
                     if(!leftclick){
                         tv_proceed.setVisibility(View.VISIBLE);
-                        Toast.makeText(LeftrightActivity.this, "you have no click LEFT side", Toast.LENGTH_SHORT).show();
+                        myToast = Toast.makeText(LeftrightActivity.this, "you have no click LEFT side", Toast.LENGTH_SHORT);
+                        myToast.show();
+
                         leftMargin();
                     }
                 }

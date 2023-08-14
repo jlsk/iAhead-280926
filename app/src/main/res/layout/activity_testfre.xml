@@ -5,17 +5,17 @@
     android:orientation="vertical">
 
     <ImageView
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/elephant"
         android:layout_gravity="center_horizontal"
-        android:layout_width="250dp"
-        android:layout_height="230dp"/>
+        android:layout_width="230dp"
+        android:layout_height="210dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Test at 500Hz?"
-        android:textSize="40dp"
+        android:textSize="30dp"
         android:textColor="@color/black"
         android:layout_marginTop="20dp"
         android:layout_gravity="center_horizontal"/>
@@ -68,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="YES"
-                android:textSize="40dp"
+                android:textSize="30dp"
                 android:textStyle="bold"
                 android:textColor="@android:color/holo_green_dark"
                 android:layout_gravity="center_horizontal"/>
@@ -84,7 +84,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="NO"
-                android:textSize="40dp"
+                android:textSize="30dp"
                 android:textStyle="bold"
                 android:textColor="@android:color/holo_green_dark"
                 android:layout_gravity="center_horizontal"/>
@@ -93,7 +93,7 @@
 
     <LinearLayout
         android:id="@+id/llStart"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="26dp"
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -109,7 +109,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="START TEST"
-            android:textSize="30dp"
+            android:textSize="26dp"
             android:textColor="@color/white"/>
     </LinearLayout>
 </LinearLayout>

@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import com.manage.iahead.Jsyn.PlayTone;
 import com.manage.iahead.Jsyn.PlayToneListener;
 
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class StarttestActivity extends AppCompatActivity implements PlayToneListener {
@@ -29,6 +30,8 @@ public class StarttestActivity extends AppCompatActivity implements PlayToneList
     private TextView tvText, tvTime, tv_next;
     private Handler handler;
     private boolean isLeft=false;
+    final int min = 0;
+    final int max = 1;
 
     @Override
     public void onPlay() {
@@ -130,7 +133,7 @@ public class StarttestActivity extends AppCompatActivity implements PlayToneList
                 ivHit.setBackground(getResources().getDrawable(R.drawable.ongoing));
                 countall++;
                 checkPass=false;
-                random = ThreadLocalRandom.current().nextInt(0, 1);
+                random = new Random().nextInt((max - min) + 1) + min;
                 if(random==0){
                     isLeft=true;
                 }else{

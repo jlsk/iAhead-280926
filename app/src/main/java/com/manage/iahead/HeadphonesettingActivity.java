@@ -45,6 +45,9 @@ public class HeadphonesettingActivity extends AppCompatActivity implements PlayT
         ll_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(playTone!=null) {
+                    playTone.stop();
+                }
                 Intent intent = new Intent(HeadphonesettingActivity.this, LeftrightActivity.class);
                 startActivity(intent);
                 finish();

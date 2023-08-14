@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,7 +19,7 @@ import com.manage.iahead.Jsyn.PlayTone;
 import com.manage.iahead.Jsyn.PlayToneListener;
 
 import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
 
 public class StartrealtestNewActivity extends AppCompatActivity implements PlayToneListener {
     private LinearLayout llNext;
@@ -27,7 +28,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
     private int count=0, random, countall500=0, countall1000=0, countall2000=0, countall4000=0;
     private boolean checkPass=false;
     private PlayTone playTone;
-    private TextView tvText, tvTime, tv_next;
+    private TextView tvText, tvTime, tv_next, tvFrequency;
     private String levelType="level1left";
     private String leftStr="Refer", rightStr="Refer";
     private Handler handler;
@@ -37,6 +38,9 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
     private ArrayList<String>arrtone2000=new ArrayList<>();
     private ArrayList<String>arrtone4000=new ArrayList<>();
     private int type=0;
+    final int min = 0;
+    final int max = 1;
+    private String result="";
 
     @Override
     public void onPlay() {
@@ -64,6 +68,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
 
         playTone = new PlayTone(this);
 
+//        tvFrequency = findViewById(R.id.tvFrequency);
         tv_next = findViewById(R.id.tv_next);
         tv_next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +117,9 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
     }
 
     private void checkLast500(){
+        for(int i=0;i<arrtone500.size();i++) {
+            Log.d("testA", "testA-500-" +arrtone500.get(i));
+        }
         if(arrtone500.size()==5 || arrtone500.size()==6){
             boolean checkfirsttone=false, checksecondtone=false;
             for(int i=0;i<arrtone500.size();i++){
@@ -128,7 +136,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
             }
             //first and second tone any = N then run third tone
             if(arrtone500.size()==5) {
-                random = ThreadLocalRandom.current().nextInt(0, 1);
+                random = new Random().nextInt((max - min) + 1) + min;
                 if (random == 0) {
                     isLeft = true;
                 } else {
@@ -138,19 +146,23 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                     startTimerFirst500(isLeft);
                 }else{
                     //proceed next level
+                    type=1;
+                    Log.d("testA", "testA-500next1000");
                     startTimerFirst1000(isLeft);
                 }
             }else{
                 if (checkfirsttone && checksecondtone) {
                     Intent intent = new Intent(StartrealtestNewActivity.this, ResultpageActivity.class);
-                    intent.putExtra("left", "Defer");
-                    intent.putExtra("right", "Defer");
+                    intent.putExtra("left", "Refer");
+                    intent.putExtra("right", "Refer");
+                    intent.putExtra("result", "Refer");
+                    intent.putExtra("type", "500");
                     startActivity(intent);
                     finish();
                 }
             }
         }else{
-            random = ThreadLocalRandom.current().nextInt(0, 1);
+            random = new Random().nextInt((max - min) + 1) + min;
             if(random==0){
                 isLeft=true;
             }else{
@@ -169,6 +181,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 ivHit.setBackground(getResources().getDrawable(R.drawable.ongoing));
                 countall500++;
                 checkPass=false;
+//                tvFrequency.setText(String.valueOf(500));
                 playTone.play(flag, 500, 0.02, 3000);
 
                 cTimer = new CountDownTimer(5000, 1000) {
@@ -190,6 +203,9 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
     }
 
     private void checkLast1000(){
+        for(int i=0;i<arrtone1000.size();i++) {
+            Log.d("testA", "testA-1000-" +arrtone1000.get(i));
+        }
         if(arrtone1000.size()==5 || arrtone1000.size()==6){
             boolean checkfirsttone=false, checksecondtone=false;
             for(int i=0;i<arrtone1000.size();i++){
@@ -206,7 +222,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
             }
             //first and second tone any = N then run third tone
             if(arrtone1000.size()==5) {
-                random = ThreadLocalRandom.current().nextInt(0, 1);
+                random = new Random().nextInt((max - min) + 1) + min;
                 if (random == 0) {
                     isLeft = true;
                 } else {
@@ -216,19 +232,23 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                     startTimerFirst1000(isLeft);
                 }else{
                     //proceed next level
+                    type=2;
+                    Log.d("testA", "testA-500next2000");
                     startTimerFirst2000(isLeft);
                 }
             }else{
                 if (checkfirsttone && checksecondtone) {
                     Intent intent = new Intent(StartrealtestNewActivity.this, ResultpageActivity.class);
-                    intent.putExtra("left", "Defer");
-                    intent.putExtra("right", "Defer");
+                    intent.putExtra("left", "Refer");
+                    intent.putExtra("right", "Refer");
+                    intent.putExtra("result", "Refer");
+                    intent.putExtra("type", "1000");
                     startActivity(intent);
                     finish();
                 }
             }
         }else{
-            random = ThreadLocalRandom.current().nextInt(0, 1);
+            random = new Random().nextInt((max - min) + 1) + min;
             if(random==0){
                 isLeft=true;
             }else{
@@ -247,6 +267,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 ivHit.setBackground(getResources().getDrawable(R.drawable.ongoing));
                 countall1000++;
                 checkPass=false;
+//                tvFrequency.setText(String.valueOf(1000));
                 playTone.play(flag, 1000, 0.02, 3000);
 
                 cTimer = new CountDownTimer(5000, 1000) {
@@ -284,29 +305,32 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
             }
             //first and second tone any = N then run third tone
             if(arrtone2000.size()==5) {
+                random = new Random().nextInt((max - min) + 1) + min;
                 if (random == 0) {
                     isLeft = true;
                 } else {
                     isLeft = false;
                 }
                 if (checkfirsttone && checksecondtone) {
-                    random = ThreadLocalRandom.current().nextInt(0, 1);
                     startTimerFirst2000(isLeft);
                 }else{
+                    type=3;
                     //proceed next level
                     startTimerFirst4000(isLeft);
                 }
             }else{
                 if (checkfirsttone && checksecondtone) {
                     Intent intent = new Intent(StartrealtestNewActivity.this, ResultpageActivity.class);
-                    intent.putExtra("left", "Defer");
-                    intent.putExtra("right", "Defer");
+                    intent.putExtra("left", "Refer");
+                    intent.putExtra("right", "Refer");
+                    intent.putExtra("result", "Refer");
+                    intent.putExtra("type", "2000");
                     startActivity(intent);
                     finish();
                 }
             }
         }else{
-            random = ThreadLocalRandom.current().nextInt(0, 1);
+            random = new Random().nextInt((max - min) + 1) + min;
             if(random==0){
                 isLeft=true;
             }else{
@@ -325,6 +349,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 ivHit.setBackground(getResources().getDrawable(R.drawable.ongoing));
                 countall2000++;
                 checkPass=false;
+//                tvFrequency.setText(String.valueOf(2000));
                 playTone.play(flag, 2000, 0.02, 3000);
 
                 cTimer = new CountDownTimer(5000, 1000) {
@@ -363,7 +388,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
             //first and second tone any = N then run third tone
             if(arrtone4000.size()==5) {
                 if (checkfirsttone && checksecondtone) {
-                    random = ThreadLocalRandom.current().nextInt(0, 1);
+                    random = new Random().nextInt((max - min) + 1) + min;
                     if (random == 0) {
                         isLeft = true;
                     } else {
@@ -375,20 +400,24 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                     Intent intent = new Intent(StartrealtestNewActivity.this, ResultpageActivity.class);
                     intent.putExtra("left", "Pass");
                     intent.putExtra("right", "Pass");
+                    intent.putExtra("result", "Pass}");
+                    intent.putExtra("type", "0");
                     startActivity(intent);
                     finish();
                 }
             }else{
                 if (checkfirsttone && checksecondtone) {
                     Intent intent = new Intent(StartrealtestNewActivity.this, ResultpageActivity.class);
-                    intent.putExtra("left", "Defer");
-                    intent.putExtra("right", "Defer");
+                    intent.putExtra("left", "Refer");
+                    intent.putExtra("right", "Refer");
+                    intent.putExtra("result", "Refer");
+                    intent.putExtra("type", "4000");
                     startActivity(intent);
                     finish();
                 }
             }
         }else{
-            random = ThreadLocalRandom.current().nextInt(0, 1);
+            random = new Random().nextInt((max - min) + 1) + min;
             if(random==0){
                 isLeft=true;
             }else{
@@ -407,6 +436,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 ivHit.setBackground(getResources().getDrawable(R.drawable.ongoing));
                 countall4000++;
                 checkPass=false;
+//                tvFrequency.setText(String.valueOf(4000));
                 playTone.play(flag, 4000, 0.02, 3000);
 
                 cTimer = new CountDownTimer(5000, 1000) {
@@ -432,4 +462,5 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
         if(cTimer!=null)
             cTimer.cancel();
     }
+
 }

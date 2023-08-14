@@ -23,7 +23,7 @@
         android:layout_marginLeft="20dp"
         android:background="@drawable/child"
         android:layout_width="match_parent"
-        android:layout_height="200dp"/>
+        android:layout_height="180dp"/>
 
     <ImageView
         android:id="@+id/iv_parent"
@@ -32,7 +32,7 @@
         android:layout_marginLeft="20dp"
         android:background="@drawable/parent"
         android:layout_width="match_parent"
-        android:layout_height="200dp"/>
+        android:layout_height="180dp"/>
 
     <ImageView
         android:id="@+id/iv_therapist"
@@ -41,7 +41,7 @@
         android:layout_marginLeft="20dp"
         android:background="@drawable/therapist"
         android:layout_width="match_parent"
-        android:layout_height="200dp"/>
+        android:layout_height="180dp"/>
 
         </LinearLayout>
     </ScrollView>

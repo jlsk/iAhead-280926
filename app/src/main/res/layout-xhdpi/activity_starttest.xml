@@ -41,7 +41,7 @@
     <LinearLayout
         android:visibility="gone"
         android:id="@+id/llNext"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="40dp"
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

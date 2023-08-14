@@ -11,7 +11,7 @@
     <ImageView
         android:layout_gravity="center_horizontal"
         android:id="@+id/iv_setting"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/setting"
         android:layout_width="250dp"
         android:layout_height="150dp"/>
@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:text="HEADPHONE SETTINGS"
         android:textStyle="bold"
-        android:textSize="30dp"
+        android:textSize="26dp"
         android:textColor="@color/black"
         android:layout_marginTop="20dp"
         android:layout_gravity="center_horizontal"/>
@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Use the headphone according to the diagram"
-        android:textSize="20dp"
+        android:textSize="16dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:textColor="@color/black"
@@ -46,7 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Attach the earphone to this device"
-        android:textSize="20dp"
+        android:textSize="16dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:textColor="@color/black"
@@ -59,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="You will hear a beep sound"
-        android:textSize="20dp"
+        android:textSize="16dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:textColor="@color/black"
@@ -84,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="NEXT"
-            android:textSize="30dp"
+            android:textSize="26dp"
             android:textColor="@color/white"/>
     </LinearLayout>
     </LinearLayout>
