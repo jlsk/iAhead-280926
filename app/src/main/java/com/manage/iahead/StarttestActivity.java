@@ -88,6 +88,7 @@ public class StarttestActivity extends AppCompatActivity implements PlayToneList
                 cancelTimer();
                 ivHit.setBackground(getResources().getDrawable(R.drawable.yay));
                 playTone.stop();
+                playTone=null;
                 checkPass=true;
                 count++;
                 if(count==2){
@@ -117,6 +118,9 @@ public class StarttestActivity extends AppCompatActivity implements PlayToneList
 //                }else{
 //                    isLeft=false;
 //                }
+                if(playTone==null){
+                    playTone = new PlayTone(StarttestActivity.this);
+                }
                 playTone.play(true, 1000, 0.02, 3000);
                 count++;
             }
@@ -139,6 +143,9 @@ public class StarttestActivity extends AppCompatActivity implements PlayToneList
                 }else{
                     isLeft=false;
                 }
+                if(playTone==null){
+                    playTone = new PlayTone(StarttestActivity.this);
+                }
                 playTone.play(isLeft, 1000, 0.02, 3000);
 
                 cTimer = new CountDownTimer(5000, 1000) {
@@ -146,6 +153,7 @@ public class StarttestActivity extends AppCompatActivity implements PlayToneList
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
                     }
                     public void onFinish() {
+                        playTone=null;
                         cancelTimer();
                         if(countall>3){
                             Toast.makeText(StarttestActivity.this, "Fail, out of 2/3 must pass", Toast.LENGTH_SHORT).show();

@@ -93,6 +93,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 cancelTimer();
                 ivHit.setBackground(getResources().getDrawable(R.drawable.yay));
                 playTone.stop();
+                playTone=null;
                 if(type==0) {
                     countall500++;
                     arrtone500.add("Y");
@@ -182,6 +183,9 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 countall500++;
                 checkPass=false;
 //                tvFrequency.setText(String.valueOf(500));
+                if(playTone==null){
+                    playTone = new PlayTone(StartrealtestNewActivity.this);
+                }
                 playTone.play(flag, 500, 0.02, 3000);
 
                 cTimer = new CountDownTimer(5000, 1000) {
@@ -189,6 +193,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
                     }
                     public void onFinish() {
+                        playTone=null;
                         cancelTimer();
                         if(!checkPass){
                             ivHit.setBackground(getResources().getDrawable(R.drawable.tryagain));
@@ -268,6 +273,9 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 countall1000++;
                 checkPass=false;
 //                tvFrequency.setText(String.valueOf(1000));
+                if(playTone==null){
+                    playTone = new PlayTone(StartrealtestNewActivity.this);
+                }
                 playTone.play(flag, 1000, 0.02, 3000);
 
                 cTimer = new CountDownTimer(5000, 1000) {
@@ -275,6 +283,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
                     }
                     public void onFinish() {
+                        playTone=null;
                         cancelTimer();
                         if(!checkPass){
                             ivHit.setBackground(getResources().getDrawable(R.drawable.tryagain));
@@ -350,6 +359,9 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 countall2000++;
                 checkPass=false;
 //                tvFrequency.setText(String.valueOf(2000));
+                if(playTone==null){
+                    playTone = new PlayTone(StartrealtestNewActivity.this);
+                }
                 playTone.play(flag, 2000, 0.02, 3000);
 
                 cTimer = new CountDownTimer(5000, 1000) {
@@ -357,6 +369,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
                     }
                     public void onFinish() {
+                        playTone=null;
                         cancelTimer();
                         if(!checkPass){
                             ivHit.setBackground(getResources().getDrawable(R.drawable.tryagain));
@@ -437,6 +450,9 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 countall4000++;
                 checkPass=false;
 //                tvFrequency.setText(String.valueOf(4000));
+                if(playTone==null){
+                    playTone = new PlayTone(StartrealtestNewActivity.this);
+                }
                 playTone.play(flag, 4000, 0.02, 3000);
 
                 cTimer = new CountDownTimer(5000, 1000) {
@@ -444,6 +460,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
                     }
                     public void onFinish() {
+                        playTone=null;
                         cancelTimer();
                         if(!checkPass){
                             ivHit.setBackground(getResources().getDrawable(R.drawable.tryagain));

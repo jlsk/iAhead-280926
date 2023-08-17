@@ -46,6 +46,8 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
         ll_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                playTone.stop();
+                playTone=null;
                 if(checkLeft) {
                     if(myToast!=null){
                         myToast.cancel();
@@ -54,7 +56,6 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
                     tv_proceed.setVisibility(View.VISIBLE);
                     leftclick = true;
                     leftMargin();
-                    playTone.stop();
                 }
             }
         });
@@ -64,13 +65,14 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
         ll_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                playTone.stop();
+                playTone=null;
                 if(myToast!=null){
                     myToast.cancel();
                 }
 
                 rightclick=true;
                 rightMargin();
-                playTone.stop();
             }
         });
         tv_proceed = findViewById(R.id.tv_proceed);
@@ -100,7 +102,9 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
 
                 myToast = Toast.makeText(LeftrightActivity.this, "Now presenting a tone on the RIGHT ear.", Toast.LENGTH_SHORT);
                 myToast.show();
-
+                if(playTone==null){
+                    playTone = new PlayTone(LeftrightActivity.this);
+                }
                 playTone.play(isLeft, 1000, 0.02, 3000);
                 startTimer(0);
             }
@@ -158,6 +162,7 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
             public void onTick(long millisUntilFinished) {
             }
             public void onFinish() {
+                playTone=null;
                 cancelTimer();
                 if(type==0) {
                     if (!rightclick) {
@@ -184,7 +189,9 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
 
                     myToast = Toast.makeText(LeftrightActivity.this, "Now presenting a tone on the LEFT ear.", Toast.LENGTH_SHORT);
                     myToast.show();
-
+                    if(playTone==null){
+                        playTone = new PlayTone(LeftrightActivity.this);
+                    }
                     playTone.play(true, 1000, 0.02, 3000);
                     checkLeft=true;
                     startTimer(1);
