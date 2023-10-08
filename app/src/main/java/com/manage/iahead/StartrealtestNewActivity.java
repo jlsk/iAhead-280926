@@ -68,7 +68,8 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
 
         playTone = new PlayTone(this);
 
-//        tvFrequency = findViewById(R.id.tvFrequency);
+        tvFrequency = findViewById(R.id.tvFrequency);
+        tvFrequency.setText("Frequency-"+String.valueOf(500));
         tv_next = findViewById(R.id.tv_next);
         tv_next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,7 +183,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 ivHit.setBackground(getResources().getDrawable(R.drawable.ongoing));
                 countall500++;
                 checkPass=false;
-//                tvFrequency.setText(String.valueOf(500));
+                tvFrequency.setText("Frequency-"+String.valueOf(500));
                 if(playTone==null){
                     playTone = new PlayTone(StartrealtestNewActivity.this);
                 }
@@ -272,7 +273,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 ivHit.setBackground(getResources().getDrawable(R.drawable.ongoing));
                 countall1000++;
                 checkPass=false;
-//                tvFrequency.setText(String.valueOf(1000));
+                tvFrequency.setText("Frequency-"+String.valueOf(1000));
                 if(playTone==null){
                     playTone = new PlayTone(StartrealtestNewActivity.this);
                 }
@@ -358,7 +359,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 ivHit.setBackground(getResources().getDrawable(R.drawable.ongoing));
                 countall2000++;
                 checkPass=false;
-//                tvFrequency.setText(String.valueOf(2000));
+                tvFrequency.setText("Frequency-"+String.valueOf(2000));
                 if(playTone==null){
                     playTone = new PlayTone(StartrealtestNewActivity.this);
                 }
@@ -449,7 +450,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 ivHit.setBackground(getResources().getDrawable(R.drawable.ongoing));
                 countall4000++;
                 checkPass=false;
-//                tvFrequency.setText(String.valueOf(4000));
+                tvFrequency.setText("Frequency-"+String.valueOf(4000));
                 if(playTone==null){
                     playTone = new PlayTone(StartrealtestNewActivity.this);
                 }
