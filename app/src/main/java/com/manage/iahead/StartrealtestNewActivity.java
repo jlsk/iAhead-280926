@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.manage.iahead.Jsyn.PlayTone;
 import com.manage.iahead.Jsyn.PlayToneListener;
+import com.manage.iahead.Utility.SharedPref;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -68,8 +69,14 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
 
         playTone = new PlayTone(this);
 
+        SharedPref.init(this);
+        String DEBUGMODESTR = SharedPref.read(SharedPref.DEBUGMODE, "");
+
         tvFrequency = findViewById(R.id.tvFrequency);
         tvFrequency.setText("Frequency-"+String.valueOf(500));
+        if(DEBUGMODESTR.equalsIgnoreCase("")){
+            tvFrequency.setVisibility(View.GONE);
+        }
         tv_next = findViewById(R.id.tv_next);
         tv_next.setOnClickListener(new View.OnClickListener() {
             @Override

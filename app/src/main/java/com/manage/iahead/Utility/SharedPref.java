@@ -11,6 +11,7 @@ public class SharedPref {
     public static final String EMAIL = "EMAIL";
     public static final String PHONE = "PHONE";
     public static final String Id = "Id";
+    public static final String DEBUGMODE = "DEBUGMODE";
     public static final String MY_PREFS_NAME = "MyPrefsFile";
     private SharedPref()
     {

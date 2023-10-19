@@ -3,6 +3,7 @@ package com.manage.iahead.Jsyn;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
+import android.media.audiofx.LoudnessEnhancer;
 import android.os.Process;
 
 import com.jsyn.devices.AudioDeviceInputStream;
@@ -76,6 +77,11 @@ public class AndroidAudio implements AudioDeviceManager {
                     AudioFormat.CHANNEL_OUT_STEREO,
                     AudioFormat.ENCODING_PCM_FLOAT, bufferSize,
                     AudioTrack.MODE_STREAM);
+
+            LoudnessEnhancer enhancer = new LoudnessEnhancer(audioTrack.getAudioSessionId());
+
+            enhancer.setTargetGain(8000);
+            enhancer.setEnabled(true);
             audioTrack.play();
         }
         /** Grossly inefficient. Call the array version instead. */

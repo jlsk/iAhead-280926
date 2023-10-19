@@ -8,7 +8,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
+
+import com.manage.iahead.Utility.SharedPref;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,12 +20,32 @@ import java.util.TimeZone;
 public class MainActivity extends AppCompatActivity {
     private ImageView iv_child, iv_parent, iv_therapist;
     private Intent intent;
+    private LinearLayout view_hidden;
+    private String DEBUGMODESTR="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SharedPref.init(this);
+        DEBUGMODESTR = SharedPref.read(SharedPref.DEBUGMODE, "");
+
+        view_hidden = findViewById(R.id.view_hidden);
+        view_hidden.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(DEBUGMODESTR.equalsIgnoreCase("")){
+                    SharedPref.write(SharedPref.DEBUGMODE, "Y");
+                    Toast.makeText(MainActivity.this, "Debug Mode Activated", Toast.LENGTH_SHORT).show();
+                }else{
+                    SharedPref.write(SharedPref.DEBUGMODE, "");
+                    Toast.makeText(MainActivity.this, "Debug Mode Deactivated", Toast.LENGTH_SHORT).show();
+                }
+                return false;
+            }
+        });
 
         intent=new Intent(this, EnteridActivity.class);
         iv_child = findViewById(R.id.iv_child);
