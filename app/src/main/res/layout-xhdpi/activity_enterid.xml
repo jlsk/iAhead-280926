@@ -6,72 +6,197 @@
 
     <ImageView
         android:id="@+id/iv_twin"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/twin"
         android:layout_gravity="center_horizontal"
         android:layout_width="300dp"
-        android:layout_height="200dp"/>
+        android:layout_height="160dp"/>
 
     <TextView
         android:id="@+id/tv_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="I'm a Child"
-        android:textSize="40dp"
+        android:textSize="35dp"
         android:textColor="@color/black"
         android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal"/>
 
-    <LinearLayout
-        android:gravity="center_horizontal"
-        android:layout_width="match_parent"
+    <EditText
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/et_white"
+        android:singleLine="true"
+        android:id="@+id/et_id"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:hint="ID"
+        android:textSize="20dp"
+        android:textColor="@color/black"/>
+
+    <EditText
+        android:layout_marginTop="15dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/et_white"
+        android:singleLine="true"
+        android:id="@+id/et_name"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:hint="Name"
+        android:textSize="20dp"
+        android:visibility="gone"
+        android:textColor="@color/black"/>
+
+    <EditText
+        android:visibility="gone"
+        android:layout_marginTop="15dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/et_white"
+        android:singleLine="true"
+        android:id="@+id/et_phone"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:hint="Phone Number"
+        android:textSize="20dp"
+        android:textColor="@color/black"/>
+
+    <EditText
+        android:visibility="gone"
+        android:layout_marginTop="15dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/et_white"
+        android:singleLine="true"
+        android:id="@+id/et_email"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:hint="Email Address"
+        android:textSize="20dp"
+        android:textColor="@color/black"/>
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/rl_calendar"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:focusableInTouchMode="false"
+            android:focusable="false"
+            android:clickable="false"
+            android:paddingLeft="45dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:background="@drawable/et_white"
+            android:singleLine="true"
+            android:id="@+id/et_calendar"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:hint="Date of Birth"
+            android:textSize="20dp"
+            android:textColor="@color/black"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Enter ID : "
-            android:textSize="20dp"
-            android:textColor="@color/black"/>
-
-        <EditText
-            android:singleLine="true"
-            android:id="@+id/et_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Enter your ID number"
-            android:textSize="20dp"
-            android:textColor="@color/black"/>
-    </LinearLayout>
+            android:layout_margin="8dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/font_awesome"
+            android:text="\uf133"
+            android:textColor="@color/light_grey"
+            android:textSize="28dp" />
+    </RelativeLayout>
 
     <LinearLayout
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:layout_marginBottom="40dp"
         android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <CheckBox
+            android:visibility="gone"
             android:id="@+id/chk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="I hereby agree to the terms of usage of the iAhead application"
-            android:textSize="20dp"
+            android:textSize="17dp"
             android:textColor="@color/black"/>
 
-    </LinearLayout>
+        <RadioGroup
+            android:id="@+id/radiogroup"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Screening Level"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    />
+
+                <TextView
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Required"
+                    android:textColor="@color/grey"
+                    android:textSize="18dp"
+                    />
+            </RelativeLayout>
+
+            <RadioButton
+                android:id="@+id/radio1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="25db (Quiet)"/>
+
+            <RadioButton
+                android:id="@+id/radio2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="40db (Noisy)"/>
+
+        </RadioGroup>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_enter"
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/buttonblue"
+        android:background="@color/dark_grey"
         android:orientation="horizontal">
 
         <TextView
@@ -82,7 +207,7 @@
             android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ENTER"
+            android:text="Enter"
             android:textSize="30dp"
             android:textColor="@color/white"/>
     </LinearLayout>

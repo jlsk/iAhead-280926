@@ -15,15 +15,17 @@ import androidx.appcompat.app.AppCompatDelegate;
 import com.manage.iahead.Utility.SharedPref;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
 public class ResultpageActivity extends AppCompatActivity {
-    private LinearLayout ll_home;
-    private TextView tv_id, tvLeft, tvRight, tvNoise;
+    private LinearLayout ll_home, ll_whatsapp, ll_email;
+    private TextView tv_id, tvLeft, tvRight, tvNoise, tv_date, tv_location, tv_screening,
+            tv500left, tv1000left, tv2000left, tv4000left, tv500right, tv1000right, tv2000right, tv4000right;
     private String left, right;
-    private ImageView ivWhatsapp, ivEmail;
-    private String Id, leftStr, rightStr, noisy, result, type;
+    private String Id, leftStr, rightStr, noisy, result, type, name, phone, email, typecat, datetime, testlocation,
+    screeninglevel, right500, right1000, right2000, right4000, left500, left1000, left2000, left4000, datetime1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,17 +34,58 @@ public class ResultpageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_resultpage);
 
         Intent intent = getIntent();
-        leftStr = intent.getStringExtra("left");
-        rightStr = intent.getStringExtra("right");
-        noisy = intent.getStringExtra("noisy");
-        result = intent.getStringExtra("result");
-        type = intent.getStringExtra("type");
+        right500 = intent.getStringExtra("right500");
+        right1000 = intent.getStringExtra("right1000");
+        right2000 = intent.getStringExtra("right2000");
+        right4000 = intent.getStringExtra("right4000");
+        left500 = intent.getStringExtra("left500");
+        left1000 = intent.getStringExtra("left1000");
+        left2000 = intent.getStringExtra("left2000");
+        left4000 = intent.getStringExtra("left4000");
+
+        tv500left = findViewById(R.id.tv500left);
+        tv1000left = findViewById(R.id.tv1000left);
+        tv2000left = findViewById(R.id.tv2000left);
+        tv4000left = findViewById(R.id.tv4000left);
+        tv500right = findViewById(R.id.tv500right);
+        tv1000right = findViewById(R.id.tv1000right);
+        tv2000right = findViewById(R.id.tv2000right);
+        tv4000right = findViewById(R.id.tv4000right);
+
+        tv500left.setText("500hz: "+left500);
+        tv1000left.setText("1000hz: "+left1000);
+        tv2000left.setText("2000hz: "+left2000);
+        tv4000left.setText("4000hz: "+left4000);
+
+        tv500right.setText("500hz: "+right500);
+        tv1000right.setText("1000hz: "+right1000);
+        tv2000right.setText("2000hz: "+right2000);
+        tv4000right.setText("4000hz: "+right4000);
 
         SharedPref.init(this);
         Id = SharedPref.read(SharedPref.Id, "");
+        name = SharedPref.read(SharedPref.NAME, "");
+        phone = SharedPref.read(SharedPref.PHONE, "");
+        email = SharedPref.read(SharedPref.EMAIL, "");
+        typecat = SharedPref.read(SharedPref.TYPE, "");
+        datetime = SharedPref.read(SharedPref.DATETIME, "");
+        testlocation = SharedPref.read(SharedPref.TESTLOCATION, "");
+        screeninglevel = SharedPref.read(SharedPref.SCREENINGLEVEL, "");
 
-        ivWhatsapp = findViewById(R.id.ivWhatsapp);
-        ivWhatsapp.setOnClickListener(new View.OnClickListener() {
+        tv_date = findViewById(R.id.tv_date);
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yy hh:mm");
+        datetime1 = dateformat.format(c.getTime());
+        tv_date.setText(datetime1);
+
+        tv_location = findViewById(R.id.tv_location);
+        tv_location.setText(testlocation);
+
+        tv_screening = findViewById(R.id.tv_screening);
+        tv_screening.setText(screeninglevel+ "db");
+
+        ll_whatsapp = findViewById(R.id.ll_whatsapp);
+        ll_whatsapp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Date currentDate = new Date();
@@ -57,8 +100,8 @@ public class ResultpageActivity extends AppCompatActivity {
                 startActivity(Intent.createChooser(shareIntent, "Share With"));
             }
         });
-        ivEmail= findViewById(R.id.ivEmail);
-        ivEmail.setOnClickListener(new View.OnClickListener() {
+        ll_email= findViewById(R.id.ll_email);
+        ll_email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -81,14 +124,12 @@ public class ResultpageActivity extends AppCompatActivity {
                 }
             }
         });
-        tvNoise = findViewById(R.id.tvNoise);
-        tvLeft = findViewById(R.id.tvLeft);
-        tvRight = findViewById(R.id.tvRight);
         tv_id = findViewById(R.id.tv_id);
-        tvLeft.setText(leftStr);
-        tvRight.setText(rightStr);
-        tvNoise.setText(noisy);
-        tv_id.setText(Id);
+        if(typecat.equalsIgnoreCase("child")){
+            tv_id.setText(Id + " / "+ name + " / "+ datetime);
+        }else{
+            tv_id.setText(Id + " / "+ phone + " / "+ email);
+        }
 
         ll_home = findViewById(R.id.ll_home);
         ll_home.setOnClickListener(new View.OnClickListener() {
@@ -109,35 +150,20 @@ public class ResultpageActivity extends AppCompatActivity {
 
         text+="iAhead Test Result:";
         text+="\nID: "+Id;
-        text+="\nDate : "+ gmtDateString;
-        text+="\nResult :"+result;
-        text+="\nNoisy Level: "+noisy+"HZ";
-        if(type.equalsIgnoreCase("0")){
-            text+="\nTone Level: 500: Pass";
-            text+="\n1000 : Pass";
-            text+="\n2000 : Pass";
-            text+="\n4000 : Pass";
-        }else if(type.equalsIgnoreCase("500")){
-            text+="\nTone Level: 500: Refer";
-            text+="\n1000 : Refer";
-            text+="\n2000 : Refer";
-            text+="\n4000 : Refer";
-        }else if(type.equalsIgnoreCase("1000")){
-            text+="\nTone Level: 500: Pass";
-            text+="\n1000 : Refer";
-            text+="\n2000 : Refer";
-            text+="\n4000 : Refer";
-        }else if(type.equalsIgnoreCase("2000")){
-            text+="\nTone Level: 500: Pass";
-            text+="\n1000 : Pass";
-            text+="\n2000 : Refer";
-            text+="\n4000 : Refer";
-        }else if(type.equalsIgnoreCase("4000")){
-            text+="\nTone Level: 500: Pass";
-            text+="\n1000 : Pass";
-            text+="\n2000 : Pass";
-            text+="\n4000 : Refer";
-        }
+        text+="\nDate & Time : "+ datetime1;
+        text+="\nTest Location :"+testlocation+"\n";
+        text+="\nScreening Level: "+screeninglevel+"db\n";
+        text+="\nRight:";
+        text+="\n500hz : "+right500;
+        text+="\n1000hz : "+right1000;
+        text+="\n2000hz : "+right2000;
+        text+="\n4000hz : "+right4000;
+        text+="\nLeft:";
+        text+="\n500hz : "+left500;
+        text+="\n1000hz : "+left1000;
+        text+="\n2000hz : "+left2000;
+        text+="\n4000hz : "+left4000;
+
         return text;
     }
 }

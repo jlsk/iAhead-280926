@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 
+import com.manage.iahead.Utility.SharedPref;
+
 public class SelectnoisyquietActivity extends AppCompatActivity {
     private ImageView ivNoisy, ivQuiet;
 
@@ -21,11 +23,13 @@ public class SelectnoisyquietActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selectnoisyquiet);
 
+        SharedPref.init(this);
         ivNoisy = findViewById(R.id.ivNoisy);
         ivNoisy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SelectnoisyquietActivity.this, TestfreActivity.class);
+                SharedPref.write(SharedPref.TESTLOCATION, "noise");
+                Intent intent = new Intent(SelectnoisyquietActivity.this, StartrealtestNewActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -34,7 +38,8 @@ public class SelectnoisyquietActivity extends AppCompatActivity {
         ivQuiet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SelectnoisyquietActivity.this, TestfreActivity.class);
+                SharedPref.write(SharedPref.TESTLOCATION, "quiet");
+                Intent intent = new Intent(SelectnoisyquietActivity.this, StartrealtestNewActivity.class);
                 startActivity(intent);
                 finish();
             }

@@ -6,11 +6,14 @@ import android.content.SharedPreferences;
 
 public class SharedPref {
     private static SharedPreferences mSharedPref;
-    public static final String DOCUMENTID = "DOCUMENTID";
-    public static final String NAME = "NAME";
-    public static final String EMAIL = "EMAIL";
+    public static final String SCREENINGLEVEL = "SCREENINGLEVEL";
+    public static final String TESTLOCATION = "TESTLOCATION";
+    public static final String DATETIME = "DATETIME";
     public static final String PHONE = "PHONE";
+    public static final String NAME = "NAME";
     public static final String Id = "Id";
+    public static final String TYPE = "TYPE";
+    public static final String EMAIL = "EMAIL";
     public static final String DEBUGMODE = "DEBUGMODE";
     public static final String MY_PREFS_NAME = "MyPrefsFile";
     private SharedPref()

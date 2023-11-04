@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 intent.putExtra("type", "child");
+                SharedPref.write(SharedPref.TYPE, "child");
                 startActivity(intent);
 
             }
@@ -62,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 intent.putExtra("type", "parent");
+                SharedPref.write(SharedPref.TYPE, "parent");
                 startActivity(intent);
             }
         });
@@ -70,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 intent.putExtra("type", "therapist");
+                SharedPref.write(SharedPref.TYPE, "therapist");
                 startActivity(intent);
             }
         });

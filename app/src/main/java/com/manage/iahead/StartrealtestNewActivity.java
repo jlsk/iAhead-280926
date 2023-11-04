@@ -42,6 +42,13 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
     final int min = 0;
     final int max = 1;
     private String result="";
+    private boolean check500press1=false, check500press2=false, check500press3=false,
+            check1000press1=false, check1000press2=false, check1000press3=false, check2000press1=false, check2000press2=false,
+            check2000press3=false, check4000press1=false, check4000press2=false, check4000press3=false, check500Leftpress1=false,
+            check500Leftpress2=false, check500Leftpress3=false,
+            check1000Leftpress1=false, check1000Leftpress2=false, check1000Leftpress3=false, check2000Leftpress1=false,
+            check2000Leftpress2=false,
+            check2000Leftpress3=false, check4000Leftpress1=false, check4000Leftpress2=false, check4000Leftpress3=false;
 
     @Override
     public void onPlay() {
@@ -97,88 +104,206 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
         ivHit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("test", "testpress-isleft-"+String.valueOf(isLeft));
+                Log.d("test", "testpress-type-"+String.valueOf(type));
                 checkPass=true;
                 cancelTimer();
                 ivHit.setBackground(getResources().getDrawable(R.drawable.yay));
+                if(playTone==null){
+                    return;
+                }
                 playTone.stop();
                 playTone=null;
                 if(type==0) {
-                    countall500++;
-                    arrtone500.add("Y");
-                    checkLast500();
+                    if(countall500==1){
+                        if(!isLeft) {
+                            check500press1 = true;
+                        }else{
+                            check500Leftpress1 = true;
+                        }
+                    }else if(countall500==2){
+                        if(!isLeft) {
+                            check500press2 = true;
+                        }else{
+                            check500Leftpress2 = true;
+                        }
+                    }else if(countall500==3){
+                        if(!isLeft) {
+                            check500press3 = true;
+                        }else{
+                            check500Leftpress3 = true;
+                        }
+                    }
+                    if(!isLeft) {
+                        if (!check500press1 && !check500press2) {
+                            startTimerFirst500(isLeft);
+                        } else {
+                            if(check500press1 && check500press2 || check500press1 && !check500press2 && countall500==2
+                                    || !check500press1 && check500press2 && countall500==2) {
+                                startTimerFirst1000(isLeft);
+                            }else{
+                                startTimerFirst500(isLeft);
+                            }
+                        }
+                    }else{
+                        if (!check500Leftpress1 && !check500Leftpress2) {
+                            startTimerFirst500(isLeft);
+                        } else {
+                            if(check500Leftpress1 && check500Leftpress2 || check500Leftpress1 && !check500Leftpress2 && countall500>1
+                                    || !check500Leftpress1 && check500Leftpress2 && countall500>1) {
+                                startTimerFirst1000(isLeft);
+                            }else{
+                                startTimerFirst500(isLeft);
+                            }
+                        }
+                    }
                 }else if(type==1) {
-                    countall1000++;
-                    arrtone1000.add("Y");
-                    checkLast1000();
+                    if(countall1000==1){
+                        if(!isLeft) {
+                            check1000press1 = true;
+                        }else{
+                            check1000Leftpress1 = true;
+                        }
+                    }else if(countall1000==2){
+                        if(!isLeft) {
+                            check1000press2 = true;
+                        }else{
+                            check1000Leftpress2 = true;
+                        }
+                    }else if(countall1000==3){
+                        if(!isLeft) {
+                            check1000press3 = true;
+                        }else{
+                            check1000Leftpress3 = true;
+                        }
+                    }
+                    if(!isLeft) {
+                        if (!check1000press1 && !check1000press2) {
+                            startTimerFirst1000(isLeft);
+                        } else {
+                            if(check1000press1 && check1000press2 || check1000press1 && !check1000press2 && countall1000>1
+                                    || !check1000press1 && check1000press2 && countall1000>1) {
+                                startTimerFirst2000(isLeft);
+                            }else{
+                                startTimerFirst1000((isLeft));
+                            }
+                        }
+                    }else{
+                        if (!check1000Leftpress1 && !check1000Leftpress2) {
+                            startTimerFirst1000(isLeft);
+                        } else {
+                            if(check1000Leftpress1 && check1000Leftpress2 || check1000Leftpress1 && !check1000Leftpress2 && countall1000>1
+                                    || !check1000Leftpress1 && check1000Leftpress2 && countall1000>1) {
+                                startTimerFirst2000(isLeft);
+                            }else{
+                                startTimerFirst1000(isLeft);
+                            }
+                        }
+                    }
                 }else if(type==2) {
-                    countall2000++;
-                    arrtone2000.add("Y");
-                    checkLast2000();
+                    if(countall2000==1){
+                        if(!isLeft) {
+                            check2000press1 = true;
+                        }else{
+                            check2000Leftpress1 = true;
+                        }
+                    }else if(countall2000==2){
+                        if(!isLeft) {
+                            check2000press2 = true;
+                        }else{
+                            check2000Leftpress2 = true;
+                        }
+                    }else if(countall2000==3){
+                        if(!isLeft) {
+                            check2000press3 = true;
+                        }else{
+                            check2000Leftpress3 = true;
+                        }
+                    }
+                    if(!isLeft) {
+                        if (!check2000press1 && !check2000press2) {
+                            startTimerFirst2000(isLeft);
+                        } else {
+                            if(check2000press1 && check2000press2 || check2000press1 && !check2000press2 && countall2000>1
+                                    || !check2000press1 && check2000press2 && countall2000>1) {
+                                startTimerFirst4000(isLeft);
+                            }else{
+                                startTimerFirst2000(isLeft);
+                            }
+                        }
+                    }else{
+                        if (!check2000Leftpress1 && !check2000Leftpress2) {
+                            startTimerFirst2000(isLeft);
+                        } else {
+                            if(check2000Leftpress1 && check2000Leftpress2 || check2000Leftpress1 && !check2000Leftpress2 && countall2000>1
+                                    || !check2000Leftpress1 && check2000Leftpress2 && countall2000>1) {
+                                startTimerFirst4000(isLeft);
+                            }else{
+                                startTimerFirst2000(isLeft);
+                            }
+                        }
+                    }
                 }else if(type==3) {
-                    countall4000++;
-                    arrtone4000.add("Y");
-                    checkLast4000();
+                    if(countall4000==1){
+                        if(!isLeft) {
+                            check4000press1 = true;
+                        }else{
+                            check4000Leftpress1 = true;
+                        }
+                    }else if(countall4000==2){
+                        if(!isLeft) {
+                            check4000press2 = true;
+                        }else{
+                            check4000Leftpress2 = true;
+                        }
+                    }else if(countall4000==3){
+                        if(!isLeft) {
+                            check4000press3 = true;
+                        }else{
+                            check4000Leftpress3 = true;
+                        }
+                    }
+                    if(!isLeft) {
+                        if (!check4000press1 && !check4000press2) {
+                            startTimerFirst4000(isLeft);
+                        } else {
+                            if(check4000press1 && check4000press2 || check4000press1 && !check4000press2 && countall4000>1
+                                    || !check4000press1 && check4000press2 && countall4000>1) {
+                                isLeft=true;
+                                type=0;
+                                countall500=0;
+                                countall1000=0;
+                                countall2000=0;
+                                countall4000=0;
+                                startTimerFirst500(isLeft);
+                            }else{
+                                startTimerFirst4000(isLeft);
+                            }
+                        }
+                    }else{
+                        if (!check4000Leftpress1 && !check4000Leftpress2) {
+                            startTimerFirst4000(isLeft);
+                        } else {
+                            if(check4000Leftpress1 && check4000Leftpress2 || check4000Leftpress1 && !check4000Leftpress2 && countall4000>1
+                                    || !check4000Leftpress1 && check4000Leftpress2 && countall4000>1) {
+                                goNextPage();
+                            }else{
+                                startTimerFirst4000(isLeft);
+                            }
+                        }
+                    }
+
                 }
             }
         });
         type=0;
-        startTimerFirst500(true);
+        startTimerFirst500(isLeft);
     }
 
-    private void checkLast500(){
-        for(int i=0;i<arrtone500.size();i++) {
-            Log.d("testA", "testA-500-" +arrtone500.get(i));
-        }
-        if(arrtone500.size()==5 || arrtone500.size()==6){
-            boolean checkfirsttone=false, checksecondtone=false;
-            for(int i=0;i<arrtone500.size();i++){
-                if(i==1 || i==2){
-                    if(arrtone500.get(i).equalsIgnoreCase("N")){
-                        checkfirsttone=true;
-                    }
-                }
-                if(i==3 || i==4){
-                    if(arrtone500.get(i).equalsIgnoreCase("N")){
-                        checksecondtone=true;
-                    }
-                }
-            }
-            //first and second tone any = N then run third tone
-            if(arrtone500.size()==5) {
-                random = new Random().nextInt((max - min) + 1) + min;
-                if (random == 0) {
-                    isLeft = true;
-                } else {
-                    isLeft = false;
-                }
-                if (checkfirsttone && checksecondtone) {
-                    startTimerFirst500(isLeft);
-                }else{
-                    //proceed next level
-                    type=1;
-                    Log.d("testA", "testA-500next1000");
-                    startTimerFirst1000(isLeft);
-                }
-            }else{
-                if (checkfirsttone && checksecondtone) {
-                    Intent intent = new Intent(StartrealtestNewActivity.this, ResultpageActivity.class);
-                    intent.putExtra("left", "Refer");
-                    intent.putExtra("right", "Refer");
-                    intent.putExtra("result", "Refer");
-                    intent.putExtra("type", "500");
-                    startActivity(intent);
-                    finish();
-                }
-            }
-        }else{
-            random = new Random().nextInt((max - min) + 1) + min;
-            if(random==0){
-                isLeft=true;
-            }else{
-                isLeft=false;
-            }
-            startTimerFirst500(isLeft);
-        }
+    private int getInternal(){
+        int randomInt = new Random().nextInt((6 - 3) + 1) + 3;
+        randomInt=randomInt*1000;
+        return randomInt;
     }
 
     private void startTimerFirst500(boolean flag) {
@@ -196,18 +321,51 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 }
                 playTone.play(flag, 500, 0.02, 3000);
 
-                cTimer = new CountDownTimer(5000, 1000) {
+                cTimer = new CountDownTimer(getInternal(), 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
                     }
                     public void onFinish() {
+                        Log.d("test", "testnopress500-isleft-"+String.valueOf(isLeft));
+                        Log.d("test", "testnopress500-type-"+String.valueOf(type));
                         playTone=null;
                         cancelTimer();
                         if(!checkPass){
                             ivHit.setBackground(getResources().getDrawable(R.drawable.tryagain));
                             arrtone500.add("N");
                         }
-                        checkLast500();
+
+                        if(!isLeft) {
+                            if(countall500==3){
+                                startTimerFirst1000(isLeft);
+                                return;
+                            }
+                            if (!check500press1 && !check500press2 && countall500==2) {
+                                startTimerFirst500(isLeft);
+                            } else {
+                                if(check500press1 && check500press2 || check500press1 && !check500press2
+                                || !check500press1 && check500press2 || !check500press1 && !check500press2 && countall500==3) {
+                                    startTimerFirst1000(isLeft);
+                                }else{
+                                    startTimerFirst500(isLeft);
+                                }
+                            }
+                        }else{
+                            if(countall500==3){
+                                startTimerFirst1000(isLeft);
+                                return;
+                            }
+                            if (!check500Leftpress1 && !check500Leftpress2 && countall500==2) {
+                                startTimerFirst500(isLeft);
+                            } else {
+                                if(check500Leftpress1 && check500Leftpress2 || check500Leftpress1 && !check500Leftpress2
+                                        || !check500Leftpress1 && check500Leftpress2 || !check500Leftpress1 && !check500Leftpress2 && countall500==3) {
+                                    startTimerFirst1000(isLeft);
+                                }else{
+                                    startTimerFirst500(isLeft);
+                                }
+                            }
+                        }
                     }
                 };
                 cTimer.start();
@@ -215,63 +373,8 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
         }, 3000);
     }
 
-    private void checkLast1000(){
-        for(int i=0;i<arrtone1000.size();i++) {
-            Log.d("testA", "testA-1000-" +arrtone1000.get(i));
-        }
-        if(arrtone1000.size()==5 || arrtone1000.size()==6){
-            boolean checkfirsttone=false, checksecondtone=false;
-            for(int i=0;i<arrtone1000.size();i++){
-                if(i==1 || i==2){
-                    if(arrtone1000.get(i).equalsIgnoreCase("N")){
-                        checkfirsttone=true;
-                    }
-                }
-                if(i==3 || i==4){
-                    if(arrtone1000.get(i).equalsIgnoreCase("N")){
-                        checksecondtone=true;
-                    }
-                }
-            }
-            //first and second tone any = N then run third tone
-            if(arrtone1000.size()==5) {
-                random = new Random().nextInt((max - min) + 1) + min;
-                if (random == 0) {
-                    isLeft = true;
-                } else {
-                    isLeft = false;
-                }
-                if (checkfirsttone && checksecondtone) {
-                    startTimerFirst1000(isLeft);
-                }else{
-                    //proceed next level
-                    type=2;
-                    Log.d("testA", "testA-500next2000");
-                    startTimerFirst2000(isLeft);
-                }
-            }else{
-                if (checkfirsttone && checksecondtone) {
-                    Intent intent = new Intent(StartrealtestNewActivity.this, ResultpageActivity.class);
-                    intent.putExtra("left", "Refer");
-                    intent.putExtra("right", "Refer");
-                    intent.putExtra("result", "Refer");
-                    intent.putExtra("type", "1000");
-                    startActivity(intent);
-                    finish();
-                }
-            }
-        }else{
-            random = new Random().nextInt((max - min) + 1) + min;
-            if(random==0){
-                isLeft=true;
-            }else{
-                isLeft=false;
-            }
-            startTimerFirst1000(isLeft);
-        }
-    }
-
     private void startTimerFirst1000(boolean flag) {
+        type=1;
         handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
             @Override
@@ -286,18 +389,43 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 }
                 playTone.play(flag, 1000, 0.02, 3000);
 
-                cTimer = new CountDownTimer(5000, 1000) {
+                cTimer = new CountDownTimer(getInternal(), 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
                     }
                     public void onFinish() {
+
+                        Log.d("test", "testnopress1000-isleft-"+String.valueOf(isLeft));
+                        Log.d("test", "testnopress1000-type-"+String.valueOf(type));
                         playTone=null;
                         cancelTimer();
                         if(!checkPass){
                             ivHit.setBackground(getResources().getDrawable(R.drawable.tryagain));
                             arrtone1000.add("N");
                         }
-                        checkLast1000();
+                        if(!isLeft) {
+                            if (!check1000press1 && !check1000press2 && countall1000==2) {
+                                startTimerFirst1000(isLeft);
+                            } else {
+                                if(check1000press1 && check1000press2 || check1000press1 && !check1000press2
+                                        || !check1000press1 && check1000press2 || !check1000press1 && !check1000press2 && countall1000==3) {
+                                    startTimerFirst2000(isLeft);
+                                }else{
+                                    startTimerFirst1000(isLeft);
+                                }
+                            }
+                        }else{
+                            if (!check1000Leftpress1 && !check1000Leftpress2 && countall1000==2) {
+                                startTimerFirst1000(isLeft);
+                            } else {
+                                if(check1000Leftpress1 && check1000Leftpress2  || check1000Leftpress1 && !check1000Leftpress2
+                                        || !check1000Leftpress1 && check1000Leftpress2 || !check1000Leftpress1 && !check1000Leftpress2 && countall1000==3) {
+                                    startTimerFirst2000(isLeft);
+                                }else{
+                                    startTimerFirst1000(isLeft);
+                                }
+                            }
+                        }
                     }
                 };
                 cTimer.start();
@@ -305,59 +433,8 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
         }, 3000);
     }
 
-    private void checkLast2000(){
-        if(arrtone2000.size()==5 || arrtone2000.size()==6){
-            boolean checkfirsttone=false, checksecondtone=false;
-            for(int i=0;i<arrtone2000.size();i++){
-                if(i==1 || i==2){
-                    if(arrtone2000.get(i).equalsIgnoreCase("N")){
-                        checkfirsttone=true;
-                    }
-                }
-                if(i==3 || i==4){
-                    if(arrtone2000.get(i).equalsIgnoreCase("N")){
-                        checksecondtone=true;
-                    }
-                }
-            }
-            //first and second tone any = N then run third tone
-            if(arrtone2000.size()==5) {
-                random = new Random().nextInt((max - min) + 1) + min;
-                if (random == 0) {
-                    isLeft = true;
-                } else {
-                    isLeft = false;
-                }
-                if (checkfirsttone && checksecondtone) {
-                    startTimerFirst2000(isLeft);
-                }else{
-                    type=3;
-                    //proceed next level
-                    startTimerFirst4000(isLeft);
-                }
-            }else{
-                if (checkfirsttone && checksecondtone) {
-                    Intent intent = new Intent(StartrealtestNewActivity.this, ResultpageActivity.class);
-                    intent.putExtra("left", "Refer");
-                    intent.putExtra("right", "Refer");
-                    intent.putExtra("result", "Refer");
-                    intent.putExtra("type", "2000");
-                    startActivity(intent);
-                    finish();
-                }
-            }
-        }else{
-            random = new Random().nextInt((max - min) + 1) + min;
-            if(random==0){
-                isLeft=true;
-            }else{
-                isLeft=false;
-            }
-            startTimerFirst2000(isLeft);
-        }
-    }
-
     private void startTimerFirst2000(boolean flag) {
+        type=2;
         handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
             @Override
@@ -372,18 +449,44 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 }
                 playTone.play(flag, 2000, 0.02, 3000);
 
-                cTimer = new CountDownTimer(5000, 1000) {
+                cTimer = new CountDownTimer(getInternal(), 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
                     }
                     public void onFinish() {
+
+                        Log.d("test", "testnopress2000-isleft-"+String.valueOf(isLeft));
+                        Log.d("test", "testnopress2000-type-"+String.valueOf(type));
+
                         playTone=null;
                         cancelTimer();
                         if(!checkPass){
                             ivHit.setBackground(getResources().getDrawable(R.drawable.tryagain));
                             arrtone2000.add("N");
                         }
-                        checkLast2000();
+                        if(!isLeft) {
+                            if (!check2000press1 && !check2000press2 && countall2000==2) {
+                                startTimerFirst2000(isLeft);
+                            } else {
+                                if(check2000press1 && check2000press2 || check2000press1 && !check2000press2
+                                        || !check2000press1 && check2000press2 || !check2000press1 && !check2000press2 && countall2000==3) {
+                                    startTimerFirst4000(isLeft);
+                                }else{
+                                    startTimerFirst2000(isLeft);
+                                }
+                            }
+                        }else{
+                            if (!check2000Leftpress1 && !check2000Leftpress2 && countall2000==2) {
+                                startTimerFirst2000(isLeft);
+                            } else {
+                                if(check2000Leftpress1 && check2000Leftpress2 || check2000Leftpress1 && !check2000Leftpress2
+                                        || !check2000Leftpress1 && check2000Leftpress2 || !check2000Leftpress1 && !check2000Leftpress2 && countall2000==3) {
+                                    startTimerFirst4000(isLeft);
+                                }else{
+                                    startTimerFirst2000(isLeft);
+                                }
+                            }
+                        }
                     }
                 };
                 cTimer.start();
@@ -391,64 +494,8 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
         }, 3000);
     }
 
-    private void checkLast4000(){
-        if(arrtone4000.size()==5 || arrtone4000.size()==6){
-            boolean checkfirsttone=false, checksecondtone=false;
-            for(int i=0;i<arrtone4000.size();i++){
-                if(i==1 || i==2){
-                    if(arrtone4000.get(i).equalsIgnoreCase("N")){
-                        checkfirsttone=true;
-                    }
-                }
-                if(i==3 || i==4){
-                    if(arrtone4000.get(i).equalsIgnoreCase("N")){
-                        checksecondtone=true;
-                    }
-                }
-            }
-            //first and second tone any = N then run third tone
-            if(arrtone4000.size()==5) {
-                if (checkfirsttone && checksecondtone) {
-                    random = new Random().nextInt((max - min) + 1) + min;
-                    if (random == 0) {
-                        isLeft = true;
-                    } else {
-                        isLeft = false;
-                    }
-                    startTimerFirst4000(isLeft);
-                }else{
-                    //proceed next level
-                    Intent intent = new Intent(StartrealtestNewActivity.this, ResultpageActivity.class);
-                    intent.putExtra("left", "Pass");
-                    intent.putExtra("right", "Pass");
-                    intent.putExtra("result", "Pass}");
-                    intent.putExtra("type", "0");
-                    startActivity(intent);
-                    finish();
-                }
-            }else{
-                if (checkfirsttone && checksecondtone) {
-                    Intent intent = new Intent(StartrealtestNewActivity.this, ResultpageActivity.class);
-                    intent.putExtra("left", "Refer");
-                    intent.putExtra("right", "Refer");
-                    intent.putExtra("result", "Refer");
-                    intent.putExtra("type", "4000");
-                    startActivity(intent);
-                    finish();
-                }
-            }
-        }else{
-            random = new Random().nextInt((max - min) + 1) + min;
-            if(random==0){
-                isLeft=true;
-            }else{
-                isLeft=false;
-            }
-            startTimerFirst4000(isLeft);
-        }
-    }
-
     private void startTimerFirst4000(boolean flag) {
+        type=3;
         handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
             @Override
@@ -463,18 +510,44 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 }
                 playTone.play(flag, 4000, 0.02, 3000);
 
-                cTimer = new CountDownTimer(5000, 1000) {
+                cTimer = new CountDownTimer(getInternal(), 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
                     }
                     public void onFinish() {
+
+                        Log.d("test", "testnopress4000-isleft-"+String.valueOf(isLeft));
+                        Log.d("test", "testnopress4000-type-"+String.valueOf(type));
+
                         playTone=null;
                         cancelTimer();
                         if(!checkPass){
                             ivHit.setBackground(getResources().getDrawable(R.drawable.tryagain));
                             arrtone4000.add("N");
                         }
-                        checkLast4000();
+                        if(!isLeft) {
+                            if (!check4000press1 && !check4000press2 && countall4000==2) {
+                                startTimerFirst4000(isLeft);
+                            } else {
+                                if(check4000Leftpress1 && check4000Leftpress2  || check4000press1 && !check4000press2
+                                        || !check4000press1 && check4000press2 || !check4000press1 && !check4000press2 && countall4000==3) {
+                                    goNextPage();
+                                }else{
+                                    startTimerFirst4000(isLeft);
+                                }
+                            }
+                        }else{
+                            if (!check4000Leftpress1 && !check4000Leftpress2 && countall4000==2) {
+                                startTimerFirst4000(isLeft);
+                            } else {
+                                if(check4000Leftpress1 && check4000Leftpress2  || check4000Leftpress1 && !check4000Leftpress2
+                                        || !check4000Leftpress1 && check4000Leftpress2 || !check4000Leftpress1 && !check4000Leftpress2 && countall4000==3) {
+                                    goNextPage();
+                                }else{
+                                    startTimerFirst4000(isLeft);
+                                }
+                            }
+                        }
                     }
                 };
                 cTimer.start();
@@ -486,6 +559,54 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
     private void cancelTimer() {
         if(cTimer!=null)
             cTimer.cancel();
+    }
+
+    private void goNextPage(){
+        Intent intent = new Intent(StartrealtestNewActivity.this, ResultpageActivity.class);
+        String Str500 = "REFER", Str1000 = "REFER", Str2000 = "REFER", Str4000 = "REFER";
+        String Str500Left = "REFER", Str1000Left = "REFER", Str2000Left = "REFER", Str4000Left = "REFER";
+        if(check500press1 && check500press2 || check500press2 && check500press3
+                || check500press1 && check500press3){
+            Str500="PASS";
+        }
+        if(check1000press1 && check1000press2 || check1000press2 && check1000press3
+                || check1000press1 && check1000press3){
+            Str1000="PASS";
+        }
+        if(check2000press1 && check2000press2 || check2000press2 && check2000press3
+                || check2000press1 && check2000press3){
+            Str2000="PASS";
+        }
+        if(check4000press1 && check4000press2 || check4000press2 && check4000press3
+                || check4000press1 && check4000press3){
+            Str4000="PASS";
+        }
+        if(check500Leftpress1 && check500Leftpress2 || check500Leftpress2 && check500Leftpress3
+                || check500Leftpress1 && check500Leftpress3){
+            Str500Left="PASS";
+        }
+        if(check1000Leftpress1 && check1000Leftpress2 || check1000Leftpress2 && check1000Leftpress3
+                || check1000Leftpress1 && check1000Leftpress3){
+            Str1000Left="PASS";
+        }
+        if(check2000Leftpress1 && check2000Leftpress2 || check2000Leftpress2 && check2000Leftpress3
+                || check2000Leftpress1 && check2000Leftpress3){
+            Str2000Left="PASS";
+        }
+        if(check4000Leftpress1 && check4000Leftpress2 || check4000Leftpress2 && check4000Leftpress3
+                || check4000Leftpress1 && check4000Leftpress3){
+            Str4000Left="PASS";
+        }
+        intent.putExtra("right500", Str500);
+        intent.putExtra("right1000", Str1000);
+        intent.putExtra("right2000", Str2000);
+        intent.putExtra("right4000", Str4000);
+        intent.putExtra("left500", Str500Left);
+        intent.putExtra("left1000", Str1000Left);
+        intent.putExtra("left2000", Str2000Left);
+        intent.putExtra("left4000", Str4000Left);
+        startActivity(intent);
+        finish();
     }
 
 }

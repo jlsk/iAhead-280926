@@ -39,7 +39,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
-        android:background="@drawable/therapist"
+        android:background="@drawable/professional"
         android:layout_width="match_parent"
         android:layout_height="150dp"/>
 

@@ -82,7 +82,7 @@ public class HeadphonesettingActivity extends AppCompatActivity implements PlayT
                         Microphone_Plugged_in = true;
                         Toast.makeText(getApplicationContext(), "microphone plugged in",
                                 Toast.LENGTH_LONG).show();
-                        playTone.play(true, 1000, 0.02, 3000);
+                        playTone.play(false, 1000, 0.02, 2000);
                     }
                 }
             }

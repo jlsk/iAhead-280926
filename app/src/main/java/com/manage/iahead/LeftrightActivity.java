@@ -3,6 +3,8 @@ package com.manage.iahead;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -18,17 +20,20 @@ import androidx.appcompat.app.AppCompatDelegate;
 import com.manage.iahead.Jsyn.PlayTone;
 import com.manage.iahead.Jsyn.PlayToneListener;
 
+import java.util.Random;
+
 public class LeftrightActivity extends AppCompatActivity implements PlayToneListener {
     private ImageView ivClose;
-    private TextView tv_proceed;
+    private TextView tv_proceed, tv_repeat;
     private CountDownTimer cTimer = null;
     private PlayTone playTone;
     private boolean isLeft=false, leftclick=false, rightclick=false;
-    private LinearLayout ll_left, ll_right;
+    private LinearLayout ll_left, ll_right, ll_proceed;
     private int type=-1, count=0;
     private boolean checkLeft=false;
     private Toast myToast;
     private int dpInt=0;
+    private int countTone=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,16 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
         float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
         dpInt = (int)(Math.round(dpWidth));
 
+        tv_repeat = findViewById(R.id.tv_repeat);
+        tv_repeat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LeftrightActivity.this, LeftrightActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        ll_proceed = findViewById(R.id.ll_proceed);
         ll_left = findViewById(R.id.ll_left);
         leftMargin();
         ll_left.setOnClickListener(new View.OnClickListener() {
@@ -52,8 +67,10 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
                     if(myToast!=null){
                         myToast.cancel();
                     }
-
-                    tv_proceed.setVisibility(View.VISIBLE);
+                    Log.d("test","test-"+String.valueOf(countTone));
+                    if(countTone>4) {
+                        ll_proceed.setVisibility(View.VISIBLE);
+                    }
                     leftclick = true;
                     leftMargin();
                 }
@@ -105,7 +122,7 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
                 if(playTone==null){
                     playTone = new PlayTone(LeftrightActivity.this);
                 }
-                playTone.play(isLeft, 1000, 0.02, 3000);
+                playTone.play(isLeft, 1000, 0.02, 2000);
                 startTimer(0);
             }
         });
@@ -113,7 +130,7 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
             @Override
             public void onClick(View v) {
                 cancelTimer();
-                Intent intent = new Intent(LeftrightActivity.this, ReadytestActivity.class);
+                Intent intent = new Intent(LeftrightActivity.this, SelectnoisyquietActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -158,55 +175,110 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
     }
 
     private void startTimer(int type){
-        cTimer = new CountDownTimer(4000, 1000) {
-            public void onTick(long millisUntilFinished) {
-            }
-            public void onFinish() {
-                playTone=null;
-                cancelTimer();
-                if(type==0) {
-                    if (!rightclick) {
-                        myToast = Toast.makeText(LeftrightActivity.this, "you have no click RIGHT side", Toast.LENGTH_SHORT);
-                        myToast.show();
+                int random = new Random().nextInt((5 - 2) + 1) + 2;
+                random=random*1000;
+                cTimer = new CountDownTimer(random, 1000) {
+                    public void onTick(long millisUntilFinished) {
+                    }
+                    public void onFinish() {
+                        playTone=null;
+                        cancelTimer();
+                        if(type==0) {
+                            if (!rightclick) {
+                                myToast = Toast.makeText(LeftrightActivity.this, "you have no click RIGHT side", Toast.LENGTH_SHORT);
+                                myToast.show();
 
-                        rightMargin();
-                    }
-                    RelativeLayout.LayoutParams params;
-                    if(dpInt<350){
-                        params = new RelativeLayout.LayoutParams(
-                                200,
-                                600
-                        );
-                    }else {
-                        params = new RelativeLayout.LayoutParams(
-                                300,
-                                900
-                        );
-                    }
-                    params.setMargins(0, 0, 30, 0);
-                    params.addRule(RelativeLayout.CENTER_VERTICAL);
-                    ll_left.setLayoutParams(params);
+                                rightMargin();
+                            }
 
-                    myToast = Toast.makeText(LeftrightActivity.this, "Now presenting a tone on the LEFT ear.", Toast.LENGTH_SHORT);
-                    myToast.show();
-                    if(playTone==null){
-                        playTone = new PlayTone(LeftrightActivity.this);
-                    }
-                    playTone.play(true, 1000, 0.02, 3000);
-                    checkLeft=true;
-                    startTimer(1);
-                }else if(type==1){
-                    if(!leftclick){
-                        tv_proceed.setVisibility(View.VISIBLE);
-                        myToast = Toast.makeText(LeftrightActivity.this, "you have no click LEFT side", Toast.LENGTH_SHORT);
-                        myToast.show();
+                            if(playTone==null){
+                                playTone = new PlayTone(LeftrightActivity.this);
+                            }
+                            checkLeft=true;
+                            countTone++;
+                            Log.d("test", "test-"+String.valueOf(countTone));
+                            if(countTone>2) {
+                                playTone.play(true, 1000, 0.02, 2000);
+                                RelativeLayout.LayoutParams params;
+                                if(dpInt<350){
+                                    params = new RelativeLayout.LayoutParams(
+                                            200,
+                                            600
+                                    );
+                                }else {
+                                    params = new RelativeLayout.LayoutParams(
+                                            300,
+                                            900
+                                    );
+                                }
+                                params.setMargins(0, 0, 30, 0);
+                                params.addRule(RelativeLayout.CENTER_VERTICAL);
+                                ll_left.setLayoutParams(params);
 
-                        leftMargin();
+                                myToast = Toast.makeText(LeftrightActivity.this, "Now presenting a tone on the LEFT ear.", Toast.LENGTH_SHORT);
+                                myToast.show();
+                                startTimer(1);
+                            }else{
+                                //right
+                                playTone.play(false, 1000, 0.02, 2000);
+                                RelativeLayout.LayoutParams paramsRight;
+                                if(dpInt<350){
+                                    paramsRight = new RelativeLayout.LayoutParams(
+                                            200,
+                                            600
+                                    );
+                                }else {
+                                    paramsRight = new RelativeLayout.LayoutParams(
+                                            300,
+                                            900
+                                    );
+                                }
+                                paramsRight.setMargins(30, 0, 0, 0);
+                                paramsRight.addRule(RelativeLayout.CENTER_VERTICAL);
+                                paramsRight.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                                ll_right.setLayoutParams(paramsRight);
+
+                                startTimer(0);
+                            }
+                        }else if(type==1){
+                            if(!leftclick) {
+                                myToast = Toast.makeText(LeftrightActivity.this, "you have no click LEFT side", Toast.LENGTH_SHORT);
+                                myToast.show();
+                                leftMargin();
+                            }
+
+                                countTone++;
+                                if(countTone<6) {
+                                    if(playTone==null){
+                                        playTone = new PlayTone(LeftrightActivity.this);
+                                    }
+
+                                    playTone.play(true, 1000, 0.02, 2000);
+                                    RelativeLayout.LayoutParams params;
+                                    if(dpInt<350){
+                                        params = new RelativeLayout.LayoutParams(
+                                                200,
+                                                600
+                                        );
+                                    }else {
+                                        params = new RelativeLayout.LayoutParams(
+                                                300,
+                                                900
+                                        );
+                                    }
+                                    params.setMargins(0, 0, 30, 0);
+                                    params.addRule(RelativeLayout.CENTER_VERTICAL);
+                                    ll_left.setLayoutParams(params);
+
+                                    startTimer(1);
+                                }else{
+                                    ll_proceed.setVisibility(View.VISIBLE);
+                                }
+                        }
                     }
-                }
-            }
-        };
-        cTimer.start();
+                };
+
+                cTimer.start();
     }
 
     private void cancelTimer() {
@@ -222,5 +294,11 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
     @Override
     public void onSleep() {
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        cancelTimer();
     }
 }

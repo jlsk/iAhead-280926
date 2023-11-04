@@ -3,91 +3,110 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_gravity="center_horizontal"
-        android:id="@+id/iv_setting"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/setting"
-        android:layout_width="250dp"
-        android:layout_height="150dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <TextView
-        android:gravity="center_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="HEADPHONE SETTINGS"
-        android:textStyle="bold"
-        android:textSize="26dp"
-        android:textColor="@color/black"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center_horizontal"/>
+            <TextView
+                android:gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Headphone Test"
+                android:textStyle="bold"
+                android:textSize="26dp"
+                android:textColor="@color/black"
+                android:layout_marginTop="40dp"
+                android:layout_gravity="center_horizontal"/>
 
-    <TextView
-        android:textStyle="bold"
-        android:gravity="center_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Use the headphone according to the diagram"
-        android:textSize="16dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:textColor="@color/black"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center_horizontal"/>
+            <ImageView
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/iv_setting"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/setting"
+                android:layout_width="180dp"
+                android:layout_height="100dp"/>
 
-    <TextView
-        android:textStyle="bold"
-        android:gravity="center_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Attach the earphone to this device"
-        android:textSize="16dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:textColor="@color/black"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center_horizontal"/>
+            <TextView
+                android:textStyle="bold"
+                android:gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Use the headphone according to the diagram."
+                android:textSize="16dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/black"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal"/>
 
-    <TextView
-        android:textStyle="bold"
-        android:gravity="center_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="You will hear a beep sound"
-        android:textSize="16dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:textColor="@color/black"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center_horizontal"/>
+            <TextView
+                android:textStyle="bold"
+                android:gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Please Attach the headphone to this device."
+                android:textSize="16dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/black"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal"/>
 
-    <LinearLayout
-        android:id="@+id/ll_next"
-        android:layout_marginTop="30dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/buttonblue"
-        android:orientation="horizontal">
+            <TextView
+                android:textStyle="bold"
+                android:gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="You will hear a repeating 'beep' sound on the RIGHT side."
+                android:textSize="16dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/black"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal"/>
 
-        <TextView
-            android:layout_marginRight="50dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="NEXT"
-            android:textSize="26dp"
-            android:textColor="@color/white"/>
-    </LinearLayout>
-    </LinearLayout>
+            <TextView
+                android:textStyle="bold"
+                android:gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Once you are ready, press NEXT."
+                android:textSize="16dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/black"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center_horizontal"/>
+
+            <LinearLayout
+                android:id="@+id/ll_next"
+                android:layout_marginTop="30dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/dark_grey"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_marginRight="50dp"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Next"
+                    android:textSize="26dp"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
 
     <ImageView
         android:visibility="gone"
