@@ -29,7 +29,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
     private int count=0, random, countall500=0, countall1000=0, countall2000=0, countall4000=0;
     private boolean checkPass=false;
     private PlayTone playTone;
-    private TextView tvText, tvTime, tv_next, tvFrequency;
+    private TextView tvText, tvTime, tv_next, tvFrequency, tvDisplay;
     private String levelType="level1left";
     private String leftStr="Refer", rightStr="Refer";
     private Handler handler;
@@ -48,7 +48,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
             check500Leftpress2=false, check500Leftpress3=false,
             check1000Leftpress1=false, check1000Leftpress2=false, check1000Leftpress3=false, check2000Leftpress1=false,
             check2000Leftpress2=false,
-            check2000Leftpress3=false, check4000Leftpress1=false, check4000Leftpress2=false, check4000Leftpress3=false;
+            check2000Leftpress3=false, check4000Leftpress1=false, check4000Leftpress2=false, check4000Leftpress3=false, ableClick=true;
 
     @Override
     public void onPlay() {
@@ -74,11 +74,12 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starttest);
 
-        playTone = new PlayTone(this);
+        playTone = new PlayTone(this, StartrealtestNewActivity.this);
 
         SharedPref.init(this);
         String DEBUGMODESTR = SharedPref.read(SharedPref.DEBUGMODE, "");
 
+        tvDisplay = findViewById(R.id.tvDisplay);
         tvFrequency = findViewById(R.id.tvFrequency);
         tvFrequency.setText("Frequency-"+String.valueOf(500));
         if(DEBUGMODESTR.equalsIgnoreCase("")){
@@ -106,6 +107,9 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
             public void onClick(View v) {
                 Log.d("test", "testpress-isleft-"+String.valueOf(isLeft));
                 Log.d("test", "testpress-type-"+String.valueOf(type));
+                if(!ableClick){
+                    return;
+                }
                 checkPass=true;
                 cancelTimer();
                 ivHit.setBackground(getResources().getDrawable(R.drawable.yay));
@@ -135,22 +139,24 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                         }
                     }
                     if(!isLeft) {
-                        if (!check500press1 && !check500press2) {
+                        if (!check500press1 && !check500press2 && countall500==2) {
                             startTimerFirst500(isLeft);
                         } else {
                             if(check500press1 && check500press2 || check500press1 && !check500press2 && countall500==2
-                                    || !check500press1 && check500press2 && countall500==2) {
+                                    || !check500press1 && check500press2 && countall500==2 ||
+                                    !check500press1 && !check500press2 && countall500==3) {
                                 startTimerFirst1000(isLeft);
                             }else{
                                 startTimerFirst500(isLeft);
                             }
                         }
                     }else{
-                        if (!check500Leftpress1 && !check500Leftpress2) {
+                        if (!check500Leftpress1 && !check500Leftpress2 && countall500==2) {
                             startTimerFirst500(isLeft);
                         } else {
                             if(check500Leftpress1 && check500Leftpress2 || check500Leftpress1 && !check500Leftpress2 && countall500>1
-                                    || !check500Leftpress1 && check500Leftpress2 && countall500>1) {
+                                    || !check500Leftpress1 && check500Leftpress2 && countall500>1 ||
+                                    !check500Leftpress1 && !check500Leftpress2 && countall500==3) {
                                 startTimerFirst1000(isLeft);
                             }else{
                                 startTimerFirst500(isLeft);
@@ -178,22 +184,24 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                         }
                     }
                     if(!isLeft) {
-                        if (!check1000press1 && !check1000press2) {
+                        if (!check1000press1 && !check1000press2 && countall1000==2) {
                             startTimerFirst1000(isLeft);
                         } else {
                             if(check1000press1 && check1000press2 || check1000press1 && !check1000press2 && countall1000>1
-                                    || !check1000press1 && check1000press2 && countall1000>1) {
+                                    || !check1000press1 && check1000press2 && countall1000>1 ||
+                                    !check1000press1 && !check1000press2 && countall1000==3) {
                                 startTimerFirst2000(isLeft);
                             }else{
                                 startTimerFirst1000((isLeft));
                             }
                         }
                     }else{
-                        if (!check1000Leftpress1 && !check1000Leftpress2) {
+                        if (!check1000Leftpress1 && !check1000Leftpress2 && countall1000==2) {
                             startTimerFirst1000(isLeft);
                         } else {
                             if(check1000Leftpress1 && check1000Leftpress2 || check1000Leftpress1 && !check1000Leftpress2 && countall1000>1
-                                    || !check1000Leftpress1 && check1000Leftpress2 && countall1000>1) {
+                                    || !check1000Leftpress1 && check1000Leftpress2 && countall1000>1||
+                                    !check1000Leftpress1 && !check1000Leftpress2 && countall1000==3) {
                                 startTimerFirst2000(isLeft);
                             }else{
                                 startTimerFirst1000(isLeft);
@@ -221,22 +229,24 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                         }
                     }
                     if(!isLeft) {
-                        if (!check2000press1 && !check2000press2) {
+                        if (!check2000press1 && !check2000press2 && countall2000==2) {
                             startTimerFirst2000(isLeft);
                         } else {
                             if(check2000press1 && check2000press2 || check2000press1 && !check2000press2 && countall2000>1
-                                    || !check2000press1 && check2000press2 && countall2000>1) {
+                                    || !check2000press1 && check2000press2 && countall2000>1 ||
+                                    !check2000press1 && !check2000press2 && countall2000==3) {
                                 startTimerFirst4000(isLeft);
                             }else{
                                 startTimerFirst2000(isLeft);
                             }
                         }
                     }else{
-                        if (!check2000Leftpress1 && !check2000Leftpress2) {
+                        if (!check2000Leftpress1 && !check2000Leftpress2 && countall2000==2) {
                             startTimerFirst2000(isLeft);
                         } else {
                             if(check2000Leftpress1 && check2000Leftpress2 || check2000Leftpress1 && !check2000Leftpress2 && countall2000>1
-                                    || !check2000Leftpress1 && check2000Leftpress2 && countall2000>1) {
+                                    || !check2000Leftpress1 && check2000Leftpress2 && countall2000>1 ||
+                                    !check2000Leftpress1 && !check2000Leftpress2 && countall2000==3) {
                                 startTimerFirst4000(isLeft);
                             }else{
                                 startTimerFirst2000(isLeft);
@@ -264,11 +274,12 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                         }
                     }
                     if(!isLeft) {
-                        if (!check4000press1 && !check4000press2) {
+                        if (!check4000press1 && !check4000press2 && countall4000==2) {
                             startTimerFirst4000(isLeft);
                         } else {
                             if(check4000press1 && check4000press2 || check4000press1 && !check4000press2 && countall4000>1
-                                    || !check4000press1 && check4000press2 && countall4000>1) {
+                                    || !check4000press1 && check4000press2 && countall4000>1 ||
+                                    !check4000press1 && !check4000press2 && countall4000==3) {
                                 isLeft=true;
                                 type=0;
                                 countall500=0;
@@ -281,11 +292,12 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                             }
                         }
                     }else{
-                        if (!check4000Leftpress1 && !check4000Leftpress2) {
+                        if (!check4000Leftpress1 && !check4000Leftpress2 && countall4000==2) {
                             startTimerFirst4000(isLeft);
                         } else {
                             if(check4000Leftpress1 && check4000Leftpress2 || check4000Leftpress1 && !check4000Leftpress2 && countall4000>1
-                                    || !check4000Leftpress1 && check4000Leftpress2 && countall4000>1) {
+                                    || !check4000Leftpress1 && check4000Leftpress2 && countall4000>1 ||
+                                    !check4000Leftpress1 && !check4000Leftpress2 && countall4000==3) {
                                 goNextPage();
                             }else{
                                 startTimerFirst4000(isLeft);
@@ -317,13 +329,25 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 checkPass=false;
                 tvFrequency.setText("Frequency-"+String.valueOf(500));
                 if(playTone==null){
-                    playTone = new PlayTone(StartrealtestNewActivity.this);
+                    playTone = new PlayTone(StartrealtestNewActivity.this, StartrealtestNewActivity.this);
                 }
                 playTone.play(flag, 500, 0.02, 3000);
 
                 cTimer = new CountDownTimer(getInternal(), 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
+                        String leftright="";
+                        if(flag){
+                            leftright="Left";
+                        }else{
+                            leftright="Right";
+                        }
+                        tvDisplay.setText("500hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
+                        if(String.valueOf(millisUntilFinished/1000).equalsIgnoreCase("0")){
+                            ableClick=false;
+                        }else{
+                            ableClick=true;
+                        }
                     }
                     public void onFinish() {
                         Log.d("test", "testnopress500-isleft-"+String.valueOf(isLeft));
@@ -385,13 +409,25 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 checkPass=false;
                 tvFrequency.setText("Frequency-"+String.valueOf(1000));
                 if(playTone==null){
-                    playTone = new PlayTone(StartrealtestNewActivity.this);
+                    playTone = new PlayTone(StartrealtestNewActivity.this, StartrealtestNewActivity.this);
                 }
                 playTone.play(flag, 1000, 0.02, 3000);
 
                 cTimer = new CountDownTimer(getInternal(), 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
+                        String leftright="";
+                        if(flag){
+                            leftright="Left";
+                        }else{
+                            leftright="Right";
+                        }
+                        tvDisplay.setText("1000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
+                        if(String.valueOf(millisUntilFinished/1000).equalsIgnoreCase("0")){
+                            ableClick=false;
+                        }else{
+                            ableClick=true;
+                        }
                     }
                     public void onFinish() {
 
@@ -445,13 +481,25 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 checkPass=false;
                 tvFrequency.setText("Frequency-"+String.valueOf(2000));
                 if(playTone==null){
-                    playTone = new PlayTone(StartrealtestNewActivity.this);
+                    playTone = new PlayTone(StartrealtestNewActivity.this, StartrealtestNewActivity.this);
                 }
                 playTone.play(flag, 2000, 0.02, 3000);
 
                 cTimer = new CountDownTimer(getInternal(), 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
+                        String leftright="";
+                        if(flag){
+                            leftright="Left";
+                        }else{
+                            leftright="Right";
+                        }
+                        tvDisplay.setText("2000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
+                        if(String.valueOf(millisUntilFinished/1000).equalsIgnoreCase("0")){
+                            ableClick=false;
+                        }else{
+                            ableClick=true;
+                        }
                     }
                     public void onFinish() {
 
@@ -506,13 +554,25 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 checkPass=false;
                 tvFrequency.setText("Frequency-"+String.valueOf(4000));
                 if(playTone==null){
-                    playTone = new PlayTone(StartrealtestNewActivity.this);
+                    playTone = new PlayTone(StartrealtestNewActivity.this, StartrealtestNewActivity.this);
                 }
                 playTone.play(flag, 4000, 0.02, 3000);
 
                 cTimer = new CountDownTimer(getInternal(), 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
+                        String leftright="";
+                        if(flag){
+                            leftright="Left";
+                        }else{
+                            leftright="Right";
+                        }
+                        tvDisplay.setText("4000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
+                        if(String.valueOf(millisUntilFinished/1000).equalsIgnoreCase("0")){
+                            ableClick=false;
+                        }else{
+                            ableClick=true;
+                        }
                     }
                     public void onFinish() {
 
@@ -607,6 +667,13 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
         intent.putExtra("left4000", Str4000Left);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Toast.makeText(StartrealtestNewActivity.this, "Press back, back once. Press again to quit app", Toast.LENGTH_SHORT).show();
     }
 
 }

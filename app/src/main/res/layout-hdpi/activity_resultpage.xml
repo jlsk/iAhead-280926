@@ -60,7 +60,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="DATE &amp; Time"
+                android:text="Date &amp; Time"
                 android:textSize="20dp"
                 android:textColor="@color/black"/>
 
@@ -75,6 +75,7 @@
                 android:textColor="@color/black"/>
 
             <TextView
+                android:visibility="gone"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
@@ -94,6 +95,7 @@
                 android:textColor="@color/black"/>
 
             <TextView
+                android:visibility="gone"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
@@ -305,20 +307,27 @@
                 <LinearLayout
                     android:id="@+id/ll_whatsapp"
                     android:padding="5dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
                     android:background="@drawable/et_grey"
                     android:gravity="center_horizontal"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content">
 
+                    <ImageView
+                        android:background="@drawable/whatsapp_icon"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"/>
+
                     <TextView
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
                         android:id="@+id/tv_repeat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Whatsapp"
-                        android:textSize="24dp"
+                        android:textSize="16dp"
                         android:textStyle="bold"
                         android:textColor="@color/black"/>
                 </LinearLayout>
@@ -326,19 +335,27 @@
                 <LinearLayout
                     android:id="@+id/ll_email"
                     android:padding="5dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
                     android:background="@drawable/et_grey"
                     android:gravity="center_horizontal"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:background="@drawable/email_icon"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"/>
+
                     <TextView
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
                         android:id="@+id/tv_proceed"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Email"
-                        android:textSize="24dp"
+                        android:textSize="16dp"
                         android:textStyle="bold"
                         android:layout_centerHorizontal="true"
                         android:textColor="@color/black"/>

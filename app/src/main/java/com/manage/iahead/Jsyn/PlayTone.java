@@ -1,5 +1,6 @@
 package com.manage.iahead.Jsyn;
 
+import android.app.Activity;
 import android.os.CountDownTimer;
 import android.util.Log;
 
@@ -29,8 +30,8 @@ public class PlayTone {
 
     private PlayToneListener playToneListener;
 
-    public PlayTone(PlayToneListener playToneListener) {
-        mSynth = JSyn.createSynthesizer( new AndroidAudio());
+    public PlayTone(PlayToneListener playToneListener, Activity activity) {
+        mSynth = JSyn.createSynthesizer( new AndroidAudio(activity));
         mOsc1 = new SineOscillator();
 //        mOsc2 = new SineOscillator();
         mSynth.add(mAmpJack = new LinearRamp());

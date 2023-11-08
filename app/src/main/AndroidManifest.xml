@@ -48,7 +48,11 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".StartrealtestNewActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".StartrealtestNewNoisyActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".ResultpageActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ResultpageNoisyActivity"
             android:screenOrientation="portrait"/>
     </application>
 

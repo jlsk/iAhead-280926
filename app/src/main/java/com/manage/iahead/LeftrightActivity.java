@@ -61,6 +61,9 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
         ll_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(playTone==null){
+                    return;
+                }
                 playTone.stop();
                 playTone=null;
                 if(checkLeft) {
@@ -82,6 +85,9 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
         ll_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(playTone==null){
+                    return;
+                }
                 playTone.stop();
                 playTone=null;
                 if(myToast!=null){
@@ -94,7 +100,7 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
         });
         tv_proceed = findViewById(R.id.tv_proceed);
         ivClose = findViewById(R.id.ivClose);
-        playTone = new PlayTone(this);
+        playTone = new PlayTone(this, LeftrightActivity.this);
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,7 +126,7 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
                 myToast = Toast.makeText(LeftrightActivity.this, "Now presenting a tone on the RIGHT ear.", Toast.LENGTH_SHORT);
                 myToast.show();
                 if(playTone==null){
-                    playTone = new PlayTone(LeftrightActivity.this);
+                    playTone = new PlayTone(LeftrightActivity.this, LeftrightActivity.this);
                 }
                 playTone.play(isLeft, 1000, 0.02, 2000);
                 startTimer(0);
@@ -175,7 +181,7 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
     }
 
     private void startTimer(int type){
-                int random = new Random().nextInt((5 - 2) + 1) + 2;
+                int random = new Random().nextInt((6 - 3) + 1) + 3;
                 random=random*1000;
                 cTimer = new CountDownTimer(random, 1000) {
                     public void onTick(long millisUntilFinished) {
@@ -192,7 +198,7 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
                             }
 
                             if(playTone==null){
-                                playTone = new PlayTone(LeftrightActivity.this);
+                                playTone = new PlayTone(LeftrightActivity.this, LeftrightActivity.this);
                             }
                             checkLeft=true;
                             countTone++;
@@ -250,7 +256,7 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
                                 countTone++;
                                 if(countTone<6) {
                                     if(playTone==null){
-                                        playTone = new PlayTone(LeftrightActivity.this);
+                                        playTone = new PlayTone(LeftrightActivity.this, LeftrightActivity.this);
                                     }
 
                                     playTone.play(true, 1000, 0.02, 2000);
@@ -300,5 +306,12 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
     protected void onPause() {
         super.onPause();
         cancelTimer();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Toast.makeText(LeftrightActivity.this, "Press back, back once. Press again to quit app", Toast.LENGTH_SHORT).show();
     }
 }

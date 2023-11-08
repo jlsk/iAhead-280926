@@ -78,6 +78,7 @@
         android:layout_height="wrap_content"
         android:hint="Phone Number"
         android:textSize="16dp"
+        android:inputType="number"
         android:textColor="@color/black"/>
 
     <EditText

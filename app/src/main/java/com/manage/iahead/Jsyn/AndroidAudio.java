@@ -1,5 +1,6 @@
 package com.manage.iahead.Jsyn;
 
+import android.app.Activity;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
@@ -9,6 +10,7 @@ import android.os.Process;
 import com.jsyn.devices.AudioDeviceInputStream;
 import com.jsyn.devices.AudioDeviceManager;
 import com.jsyn.devices.AudioDeviceOutputStream;
+import com.manage.iahead.Utility.SharedPref;
 
 import java.util.ArrayList;
 
@@ -18,7 +20,9 @@ public class AndroidAudio implements AudioDeviceManager {
     private double suggestedInputLatency = 0.100;
     private int defaultInputDeviceID = -1;
     private int defaultOutputDeviceID = -1;
-    public AndroidAudio() {
+    private Activity activity;
+    public AndroidAudio(Activity activity) {
+        this.activity=activity;
         deviceRecords = new ArrayList<DeviceInfo>();
         DeviceInfo deviceInfo = new DeviceInfo();
         deviceInfo.name = "Android Audio";
@@ -80,7 +84,13 @@ public class AndroidAudio implements AudioDeviceManager {
 
             LoudnessEnhancer enhancer = new LoudnessEnhancer(audioTrack.getAudioSessionId());
 
-            enhancer.setTargetGain(8000);
+            SharedPref.init(activity);
+            String screeninglevel = SharedPref.read(SharedPref.SCREENINGLEVEL, "");
+            if(screeninglevel.equalsIgnoreCase("40")) {
+                enhancer.setTargetGain(8000);
+            }else{
+                enhancer.setTargetGain(4000);
+            }
             enhancer.setEnabled(true);
             audioTrack.play();
         }

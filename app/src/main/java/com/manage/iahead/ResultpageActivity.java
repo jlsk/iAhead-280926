@@ -74,15 +74,15 @@ public class ResultpageActivity extends AppCompatActivity {
 
         tv_date = findViewById(R.id.tv_date);
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yy hh:mm");
+        SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yy hh:mm aa");
         datetime1 = dateformat.format(c.getTime());
         tv_date.setText(datetime1);
 
         tv_location = findViewById(R.id.tv_location);
-        tv_location.setText(testlocation);
+        tv_location.setText("Test Location : "+testlocation);
 
         tv_screening = findViewById(R.id.tv_screening);
-        tv_screening.setText(screeninglevel+ "db");
+        tv_screening.setText("Screening Level : "+screeninglevel+ "db");
 
         ll_whatsapp = findViewById(R.id.ll_whatsapp);
         ll_whatsapp.setOnClickListener(new View.OnClickListener() {
@@ -154,16 +154,25 @@ public class ResultpageActivity extends AppCompatActivity {
         text+="\nTest Location :"+testlocation+"\n";
         text+="\nScreening Level: "+screeninglevel+"db\n";
         text+="\nRight:";
-        text+="\n500hz : "+right500;
+        text += "\n500hz : " + right500;
+
         text+="\n1000hz : "+right1000;
         text+="\n2000hz : "+right2000;
         text+="\n4000hz : "+right4000;
         text+="\nLeft:";
-        text+="\n500hz : "+left500;
+        text += "\n500hz : " + left500;
+
         text+="\n1000hz : "+left1000;
         text+="\n2000hz : "+left2000;
         text+="\n4000hz : "+left4000;
 
         return text;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Toast.makeText(ResultpageActivity.this, "Press back, back once. Press again to quit app", Toast.LENGTH_SHORT).show();
     }
 }

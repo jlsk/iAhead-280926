@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,6 +25,7 @@ public class HeadphonesettingActivity extends AppCompatActivity implements PlayT
     private ImageView iv_alert;
     private LinearLayout ll_next;
     private PlayTone playTone;
+    private Handler handler;
 
     @Override
     public void onPlay() {
@@ -40,7 +43,7 @@ public class HeadphonesettingActivity extends AppCompatActivity implements PlayT
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_headphonesetting);
 
-        playTone = new PlayTone(this);
+        playTone = new PlayTone(this, HeadphonesettingActivity.this);
         ll_next = findViewById(R.id.ll_next);
         ll_next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +51,7 @@ public class HeadphonesettingActivity extends AppCompatActivity implements PlayT
                 if(playTone!=null) {
                     playTone.stop();
                 }
+                handler.removeCallbacksAndMessages(null);
                 Intent intent = new Intent(HeadphonesettingActivity.this, LeftrightActivity.class);
                 startActivity(intent);
                 finish();
@@ -83,6 +87,7 @@ public class HeadphonesettingActivity extends AppCompatActivity implements PlayT
                         Toast.makeText(getApplicationContext(), "microphone plugged in",
                                 Toast.LENGTH_LONG).show();
                         playTone.play(false, 1000, 0.02, 2000);
+                        repeatPlay();
                     }
                 }
             }
@@ -90,5 +95,33 @@ public class HeadphonesettingActivity extends AppCompatActivity implements PlayT
         IntentFilter receiverFilter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
         registerReceiver(broadcastReceiver, receiverFilter);
 
+    }
+
+    private void repeatPlay(){
+        handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                playTone.stop();
+                playTone.play(false, 1000, 0.02, 2000);
+                repeatPlay();
+            }
+        }, 4000);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Toast.makeText(HeadphonesettingActivity.this, "Press back, back once. Press again to quit app", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacksAndMessages(null);
+        if(playTone!=null){
+            playTone.stop();
+        }
     }
 }

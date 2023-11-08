@@ -3,8 +3,11 @@ package com.manage.iahead;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -26,6 +29,7 @@ import androidx.core.content.ContextCompat;
 import com.manage.iahead.Utility.SharedPref;
 
 import java.util.Calendar;
+import java.util.regex.Pattern;
 
 public class EnteridActivity extends AppCompatActivity {
     private TextView tv_type;
@@ -39,6 +43,7 @@ public class EnteridActivity extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private RadioGroup radiogroup;
     private String dbStr="";
+    private boolean booleanId=false, booleanName=false, booleanDateofbirth=false, booleanPhone=false, booleanEmail=false;
 
     private InputFilter filter = new InputFilter() {
 
@@ -72,9 +77,93 @@ public class EnteridActivity extends AppCompatActivity {
                 }
             }
         });
+
+        intent = getIntent();
+        String type = intent.getStringExtra("type");
         et_name = findViewById(R.id.et_name);
+        et_name.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(et_name.getText().toString().length()>2){
+                    booleanName=true;
+                    if(type.equalsIgnoreCase("child")) {
+                        if (booleanId && booleanName && booleanDateofbirth){
+                            ll_enter.setBackgroundColor(getResources().getColor(R.color.light_blue));
+                        }else{
+                            ll_enter.setBackgroundColor(getResources().getColor(R.color.dark_grey));
+                        }
+                    }
+                }else{
+                    booleanName=false;
+                    ll_enter.setBackgroundColor(getResources().getColor(R.color.dark_grey));
+                }
+            }
+        });
+
         et_phone = findViewById(R.id.et_phone);
+        et_phone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(et_phone.getText().toString().length()>2){
+                    booleanPhone=true;
+                    if (booleanId && booleanPhone && booleanEmail){
+                        ll_enter.setBackgroundColor(getResources().getColor(R.color.light_blue));
+                    }else{
+                        ll_enter.setBackgroundColor(getResources().getColor(R.color.dark_grey));
+                    }
+                }else{
+                    booleanPhone=false;
+                    ll_enter.setBackgroundColor(getResources().getColor(R.color.dark_grey));
+                }
+            }
+        });
         et_email = findViewById(R.id.et_email);
+        et_email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(et_email.getText().toString().length()>2){
+                    booleanEmail=true;
+                    if (booleanId && booleanPhone && booleanEmail){
+                        ll_enter.setBackgroundColor(getResources().getColor(R.color.light_blue));
+                    }else{
+                        ll_enter.setBackgroundColor(getResources().getColor(R.color.dark_grey));
+                    }
+                }else{
+                    booleanEmail=false;
+                    ll_enter.setBackgroundColor(getResources().getColor(R.color.dark_grey));
+                }
+            }
+        });
         et_calendar = findViewById(R.id.et_calendar);
         et_calendar.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -89,8 +178,6 @@ public class EnteridActivity extends AppCompatActivity {
         rl_calendar = findViewById(R.id.rl_calendar);
         chk = findViewById(R.id.chk);
         iv_twin = findViewById(R.id.iv_twin);
-        intent = getIntent();
-        String type = intent.getStringExtra("type");
         tv_type = findViewById(R.id.tv_type);
         if(type.equalsIgnoreCase("child")){
             rl_calendar.setVisibility(View.VISIBLE);
@@ -112,6 +199,40 @@ public class EnteridActivity extends AppCompatActivity {
         }
         et_id = findViewById(R.id.et_id);
         et_id.setFilters(new InputFilter[] { filter });
+        et_id.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(et_id.getText().toString().length()>2){
+                    booleanId=true;
+                    if(type.equalsIgnoreCase("child")) {
+                        if (booleanId && booleanName && booleanDateofbirth){
+                            ll_enter.setBackgroundColor(getResources().getColor(R.color.light_blue));
+                        }else{
+                            ll_enter.setBackgroundColor(getResources().getColor(R.color.dark_grey));
+                        }
+                    }else{
+                        if (booleanId && booleanPhone && booleanEmail){
+                            ll_enter.setBackgroundColor(getResources().getColor(R.color.light_blue));
+                        }else{
+                            ll_enter.setBackgroundColor(getResources().getColor(R.color.dark_grey));
+                        }
+                    }
+                }else{
+                    booleanId=false;
+                    ll_enter.setBackgroundColor(getResources().getColor(R.color.dark_grey));
+                }
+            }
+        });
         chk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -133,7 +254,7 @@ public class EnteridActivity extends AppCompatActivity {
                     return;
                 }
                 if(et_id.getText().toString().length()<3){
-                    Toast.makeText(EnteridActivity.this, "Minumum 3 Characters.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EnteridActivity.this, "Minumum 3 Characters for ID.", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(type.equalsIgnoreCase("child")) {
@@ -145,6 +266,10 @@ public class EnteridActivity extends AppCompatActivity {
                         Toast.makeText(EnteridActivity.this, "Please enter your name.", Toast.LENGTH_SHORT).show();
                         return;
                     }
+                    if(et_name.getText().toString().length()<3){
+                        Toast.makeText(EnteridActivity.this, "Minumum 3 Characters for name.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                 } else{
                     if(!chk.isChecked()){
                         Toast.makeText(EnteridActivity.this, "Please check the checkbox.", Toast.LENGTH_SHORT).show();
@@ -154,8 +279,22 @@ public class EnteridActivity extends AppCompatActivity {
                         Toast.makeText(EnteridActivity.this, "Please enter your phone.", Toast.LENGTH_SHORT).show();
                         return;
                     }
+                    if(et_phone.getText().toString().length()<3){
+                        Toast.makeText(EnteridActivity.this, "Minumum 3 Characters for phone.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     if(et_email.getText().toString().length()== 0){
                         Toast.makeText(EnteridActivity.this, "Please enter your email.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if(et_email.getText().toString().length()<3){
+                        Toast.makeText(EnteridActivity.this, "Minumum 3 Characters for email.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if(isValidEmailId(et_email.getText().toString().trim())){
+                        //valid email
+                    }else{
+                        Toast.makeText(getApplicationContext(), "Invalid Email Address.", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }
@@ -189,6 +328,16 @@ public class EnteridActivity extends AppCompatActivity {
                     InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                     inputMethodManager.hideSoftInputFromWindow(view1.getWindowToken(), 0);
                 }
+                if(et_calendar.getText().toString().length()>2){
+                    booleanDateofbirth=true;
+                }else{
+                    booleanDateofbirth=false;
+                }
+                if (booleanId && booleanName && booleanDateofbirth){
+                    ll_enter.setBackgroundColor(getResources().getColor(R.color.light_blue));
+                }else{
+                    ll_enter.setBackgroundColor(getResources().getColor(R.color.dark_grey));
+                }
             }
         };
 
@@ -199,5 +348,22 @@ public class EnteridActivity extends AppCompatActivity {
         datePickerDialog = new DatePickerDialog(EnteridActivity.this,
                 dateSetListener, mYear, mMonth, mDay);
         datePickerDialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Toast.makeText(EnteridActivity.this, "Press back, back once. Press again to quit app", Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean isValidEmailId(String email){
+
+        return Pattern.compile("^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
+                + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
+                + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
+                + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$").matcher(email).matches();
     }
 }

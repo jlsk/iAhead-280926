@@ -57,7 +57,7 @@ public class StarttestActivity extends AppCompatActivity implements PlayToneList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starttest);
 
-        playTone = new PlayTone(this);
+        playTone = new PlayTone(this, StarttestActivity.this);
 
         tv_next = findViewById(R.id.tv_next);
         tv_next.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +119,7 @@ public class StarttestActivity extends AppCompatActivity implements PlayToneList
 //                    isLeft=false;
 //                }
                 if(playTone==null){
-                    playTone = new PlayTone(StarttestActivity.this);
+                    playTone = new PlayTone(StarttestActivity.this, StarttestActivity.this);
                 }
                 playTone.play(true, 1000, 0.02, 3000);
                 count++;
@@ -144,7 +144,7 @@ public class StarttestActivity extends AppCompatActivity implements PlayToneList
                     isLeft=false;
                 }
                 if(playTone==null){
-                    playTone = new PlayTone(StarttestActivity.this);
+                    playTone = new PlayTone(StarttestActivity.this, StarttestActivity.this);
                 }
                 playTone.play(isLeft, 1000, 0.02, 3000);
 

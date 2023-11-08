@@ -64,7 +64,7 @@ public class StartrealtestActivity extends AppCompatActivity implements PlayTone
         setContentView(R.layout.activity_starttest);
 
         updateTv();
-        playTone = new PlayTone(this);
+        playTone = new PlayTone(this, StartrealtestActivity.this);
 
         tv_next = findViewById(R.id.tv_next);
         tv_next.setOnClickListener(new View.OnClickListener() {

@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -28,8 +29,8 @@ public class SelectnoisyquietActivity extends AppCompatActivity {
         ivNoisy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPref.write(SharedPref.TESTLOCATION, "noise");
-                Intent intent = new Intent(SelectnoisyquietActivity.this, StartrealtestNewActivity.class);
+                SharedPref.write(SharedPref.TESTLOCATION, "Noisy");
+                Intent intent = new Intent(SelectnoisyquietActivity.this, StartrealtestNewNoisyActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -38,7 +39,7 @@ public class SelectnoisyquietActivity extends AppCompatActivity {
         ivQuiet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPref.write(SharedPref.TESTLOCATION, "quiet");
+                SharedPref.write(SharedPref.TESTLOCATION, "Quiet");
                 Intent intent = new Intent(SelectnoisyquietActivity.this, StartrealtestNewActivity.class);
                 startActivity(intent);
                 finish();
@@ -67,5 +68,12 @@ public class SelectnoisyquietActivity extends AppCompatActivity {
                 }
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Toast.makeText(SelectnoisyquietActivity.this, "Press back, back once. Press again to quit app", Toast.LENGTH_SHORT).show();
     }
 }
