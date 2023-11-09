@@ -38,10 +38,11 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
     private ArrayList<String>arrtone1000=new ArrayList<>();
     private ArrayList<String>arrtone2000=new ArrayList<>();
     private ArrayList<String>arrtone4000=new ArrayList<>();
-    private int type=0;
+    private int type=0, countSeq=0;
     final int min = 0;
     final int max = 1;
     private String result="";
+    private Handler handler1;
     private boolean check500press1=false, check500press2=false, check500press3=false,
             check1000press1=false, check1000press2=false, check1000press3=false, check2000press1=false, check2000press2=false,
             check2000press3=false, check4000press1=false, check4000press2=false, check4000press3=false, check500Leftpress1=false,
@@ -63,7 +64,9 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
     @Override
     protected void onPause() {
         super.onPause();
-
+        if(handler1!=null){
+            handler1.removeCallbacksAndMessages(null);
+        }
         handler.removeCallbacksAndMessages(null);
         cancelTimer();
     }
@@ -331,8 +334,15 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 if(playTone==null){
                     playTone = new PlayTone(StartrealtestNewActivity.this, StartrealtestNewActivity.this);
                 }
-                playTone.play(flag, 500, 0.02, 3000);
-
+                handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        handler.removeCallbacksAndMessages(null);
+                        playTone.play(flag, 500, 0.02, 3000);
+                    }
+                }, 200);
+                countSeq++;
                 cTimer = new CountDownTimer(getInternal(), 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
@@ -342,7 +352,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                         }else{
                             leftright="Right";
                         }
-                        tvDisplay.setText("500hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
+                        tvDisplay.setText(String.valueOf(countSeq)+", 500hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
                         if(String.valueOf(millisUntilFinished/1000).equalsIgnoreCase("0")){
                             ableClick=false;
                         }else{
@@ -411,8 +421,15 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 if(playTone==null){
                     playTone = new PlayTone(StartrealtestNewActivity.this, StartrealtestNewActivity.this);
                 }
-                playTone.play(flag, 1000, 0.02, 3000);
-
+                handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        handler.removeCallbacksAndMessages(null);
+                        playTone.play(flag, 1000, 0.02, 3000);
+                    }
+                }, 200);
+                countSeq++;
                 cTimer = new CountDownTimer(getInternal(), 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
@@ -422,7 +439,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                         }else{
                             leftright="Right";
                         }
-                        tvDisplay.setText("1000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
+                        tvDisplay.setText(String.valueOf(countSeq)+", 1000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
                         if(String.valueOf(millisUntilFinished/1000).equalsIgnoreCase("0")){
                             ableClick=false;
                         }else{
@@ -483,8 +500,15 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 if(playTone==null){
                     playTone = new PlayTone(StartrealtestNewActivity.this, StartrealtestNewActivity.this);
                 }
-                playTone.play(flag, 2000, 0.02, 3000);
-
+                handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        handler.removeCallbacksAndMessages(null);
+                        playTone.play(flag, 2000, 0.02, 3000);
+                    }
+                }, 200);
+                countSeq++;
                 cTimer = new CountDownTimer(getInternal(), 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
@@ -494,7 +518,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                         }else{
                             leftright="Right";
                         }
-                        tvDisplay.setText("2000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
+                        tvDisplay.setText(String.valueOf(countSeq)+", 2000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
                         if(String.valueOf(millisUntilFinished/1000).equalsIgnoreCase("0")){
                             ableClick=false;
                         }else{
@@ -556,8 +580,15 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 if(playTone==null){
                     playTone = new PlayTone(StartrealtestNewActivity.this, StartrealtestNewActivity.this);
                 }
-                playTone.play(flag, 4000, 0.02, 3000);
-
+                handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        handler.removeCallbacksAndMessages(null);
+                        playTone.play(flag, 4000, 0.02, 3000);
+                    }
+                }, 200);
+                countSeq++;
                 cTimer = new CountDownTimer(getInternal(), 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
@@ -567,7 +598,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                         }else{
                             leftright="Right";
                         }
-                        tvDisplay.setText("4000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
+                        tvDisplay.setText(String.valueOf(countSeq)+", 4000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
                         if(String.valueOf(millisUntilFinished/1000).equalsIgnoreCase("0")){
                             ableClick=false;
                         }else{

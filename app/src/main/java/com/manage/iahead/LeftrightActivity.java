@@ -34,6 +34,7 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
     private Toast myToast;
     private int dpInt=0;
     private int countTone=0;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,7 +129,15 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
                 if(playTone==null){
                     playTone = new PlayTone(LeftrightActivity.this, LeftrightActivity.this);
                 }
-                playTone.play(isLeft, 1000, 0.02, 2000);
+                handler = new Handler(Looper.getMainLooper());
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        handler.removeCallbacksAndMessages(null);
+                        playTone.play(isLeft, 1000, 0.02, 2000);
+                    }
+                }, 200);
+
                 startTimer(0);
             }
         });
@@ -187,6 +196,9 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
                     public void onTick(long millisUntilFinished) {
                     }
                     public void onFinish() {
+                        if(playTone!=null) {
+                            playTone.stop();
+                        }
                         playTone=null;
                         cancelTimer();
                         if(type==0) {
@@ -204,7 +216,14 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
                             countTone++;
                             Log.d("test", "test-"+String.valueOf(countTone));
                             if(countTone>2) {
-                                playTone.play(true, 1000, 0.02, 2000);
+                                handler = new Handler(Looper.getMainLooper());
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        handler.removeCallbacksAndMessages(null);
+                                        playTone.play(true, 1000, 0.02, 2000);
+                                    }
+                                }, 200);
                                 RelativeLayout.LayoutParams params;
                                 if(dpInt<350){
                                     params = new RelativeLayout.LayoutParams(
@@ -226,7 +245,14 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
                                 startTimer(1);
                             }else{
                                 //right
-                                playTone.play(false, 1000, 0.02, 2000);
+                                handler = new Handler(Looper.getMainLooper());
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        handler.removeCallbacksAndMessages(null);
+                                        playTone.play(false, 1000, 0.02, 2000);
+                                    }
+                                }, 200);
                                 RelativeLayout.LayoutParams paramsRight;
                                 if(dpInt<350){
                                     paramsRight = new RelativeLayout.LayoutParams(
@@ -258,8 +284,14 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
                                     if(playTone==null){
                                         playTone = new PlayTone(LeftrightActivity.this, LeftrightActivity.this);
                                     }
-
-                                    playTone.play(true, 1000, 0.02, 2000);
+                                    handler = new Handler(Looper.getMainLooper());
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            handler.removeCallbacksAndMessages(null);
+                                            playTone.play(true, 1000, 0.02, 2000);
+                                        }
+                                    }, 200);
                                     RelativeLayout.LayoutParams params;
                                     if(dpInt<350){
                                         params = new RelativeLayout.LayoutParams(
@@ -306,6 +338,9 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
     protected void onPause() {
         super.onPause();
         cancelTimer();
+        if(handler!=null){
+            handler.removeCallbacksAndMessages(null);
+        }
     }
 
     @Override
@@ -313,5 +348,11 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
         super.onBackPressed();
 
         Toast.makeText(LeftrightActivity.this, "Press back, back once. Press again to quit app", Toast.LENGTH_SHORT).show();
+    }
+
+    private int getInternal(){
+        int randomInt = new Random().nextInt((6 - 3) + 1) + 3;
+        randomInt=randomInt*1000;
+        return randomInt;
     }
 }

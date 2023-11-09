@@ -77,4 +77,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Toast.makeText(MainActivity.this, "Press back, back once. Press again to quit app", Toast.LENGTH_SHORT).show();
+    }
 }

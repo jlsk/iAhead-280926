@@ -25,7 +25,7 @@ public class HeadphonesettingActivity extends AppCompatActivity implements PlayT
     private ImageView iv_alert;
     private LinearLayout ll_next;
     private PlayTone playTone;
-    private Handler handler;
+    private Handler handler, handler1;
 
     @Override
     public void onPlay() {
@@ -86,7 +86,14 @@ public class HeadphonesettingActivity extends AppCompatActivity implements PlayT
                         Microphone_Plugged_in = true;
                         Toast.makeText(getApplicationContext(), "microphone plugged in",
                                 Toast.LENGTH_LONG).show();
-                        playTone.play(false, 1000, 0.02, 2000);
+                        handler1 = new Handler(Looper.getMainLooper());
+                        handler1.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                handler1.removeCallbacksAndMessages(null);
+                                playTone.play(false, 1000, 0.02, 2000);
+                            }
+                        }, 200);
                         repeatPlay();
                     }
                 }
@@ -120,8 +127,12 @@ public class HeadphonesettingActivity extends AppCompatActivity implements PlayT
     protected void onPause() {
         super.onPause();
         handler.removeCallbacksAndMessages(null);
+        if(handler1!=null){
+            handler1.removeCallbacksAndMessages(null);
+        }
         if(playTone!=null){
             playTone.stop();
         }
+        unregisterReceiver(broadcastReceiver);
     }
 }

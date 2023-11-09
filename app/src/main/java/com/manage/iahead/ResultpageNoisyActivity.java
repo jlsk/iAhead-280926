@@ -147,10 +147,12 @@ public class ResultpageNoisyActivity extends AppCompatActivity {
         text+="\nTest Location :"+testlocation+"\n";
         text+="\nScreening Level: "+screeninglevel+"db\n";
         text+="\nRight:";
+        text+= "\n500hz : N/A";
         text+="\n1000hz : "+right1000;
         text+="\n2000hz : "+right2000;
         text+="\n4000hz : "+right4000;
         text+="\nLeft:";
+        text+= "\n500hz : N/A";
         text+="\n1000hz : "+left1000;
         text+="\n2000hz : "+left2000;
         text+="\n4000hz : "+left4000;

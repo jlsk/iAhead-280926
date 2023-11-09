@@ -63,6 +63,8 @@ public class EnteridActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enterid);
 
+        intent = getIntent();
+        String type = intent.getStringExtra("type");
         radiogroup = findViewById(R.id.radiogroup);
         radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -70,16 +72,32 @@ public class EnteridActivity extends AppCompatActivity {
                 switch(i) {
                     case R.id.radio1:
                         dbStr="25";
+                        if(type.equalsIgnoreCase("child")) {
+                            if (booleanId && booleanName && booleanDateofbirth && !dbStr.equalsIgnoreCase("")) {
+                                ll_enter.setBackgroundColor(getResources().getColor(R.color.light_blue));
+                            }
+                        }else{
+                            if (booleanId && booleanPhone && booleanEmail && !dbStr.equalsIgnoreCase("")){
+                                ll_enter.setBackgroundColor(getResources().getColor(R.color.light_blue));
+                            }
+                        }
                         break;
                     case R.id.radio2:
                         dbStr="40";
+                        if(type.equalsIgnoreCase("child")) {
+                            if (booleanId && booleanName && booleanDateofbirth && !dbStr.equalsIgnoreCase("")) {
+                                ll_enter.setBackgroundColor(getResources().getColor(R.color.light_blue));
+                            }
+                        }else{
+                            if (booleanId && booleanPhone && booleanEmail && !dbStr.equalsIgnoreCase("")){
+                                ll_enter.setBackgroundColor(getResources().getColor(R.color.light_blue));
+                            }
+                        }
                         break;
                 }
             }
         });
 
-        intent = getIntent();
-        String type = intent.getStringExtra("type");
         et_name = findViewById(R.id.et_name);
         et_name.addTextChangedListener(new TextWatcher() {
             @Override
@@ -97,7 +115,7 @@ public class EnteridActivity extends AppCompatActivity {
                 if(et_name.getText().toString().length()>2){
                     booleanName=true;
                     if(type.equalsIgnoreCase("child")) {
-                        if (booleanId && booleanName && booleanDateofbirth){
+                        if (booleanId && booleanName && booleanDateofbirth && !dbStr.equalsIgnoreCase("")){
                             ll_enter.setBackgroundColor(getResources().getColor(R.color.light_blue));
                         }else{
                             ll_enter.setBackgroundColor(getResources().getColor(R.color.dark_grey));
@@ -126,7 +144,7 @@ public class EnteridActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(et_phone.getText().toString().length()>2){
                     booleanPhone=true;
-                    if (booleanId && booleanPhone && booleanEmail){
+                    if (booleanId && booleanPhone && booleanEmail && !dbStr.equalsIgnoreCase("")){
                         ll_enter.setBackgroundColor(getResources().getColor(R.color.light_blue));
                     }else{
                         ll_enter.setBackgroundColor(getResources().getColor(R.color.dark_grey));
@@ -153,7 +171,7 @@ public class EnteridActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(et_email.getText().toString().length()>2){
                     booleanEmail=true;
-                    if (booleanId && booleanPhone && booleanEmail){
+                    if (booleanId && booleanPhone && booleanEmail && !dbStr.equalsIgnoreCase("")){
                         ll_enter.setBackgroundColor(getResources().getColor(R.color.light_blue));
                     }else{
                         ll_enter.setBackgroundColor(getResources().getColor(R.color.dark_grey));
@@ -215,13 +233,13 @@ public class EnteridActivity extends AppCompatActivity {
                 if(et_id.getText().toString().length()>2){
                     booleanId=true;
                     if(type.equalsIgnoreCase("child")) {
-                        if (booleanId && booleanName && booleanDateofbirth){
+                        if (booleanId && booleanName && booleanDateofbirth && !dbStr.equalsIgnoreCase("")){
                             ll_enter.setBackgroundColor(getResources().getColor(R.color.light_blue));
                         }else{
                             ll_enter.setBackgroundColor(getResources().getColor(R.color.dark_grey));
                         }
                     }else{
-                        if (booleanId && booleanPhone && booleanEmail){
+                        if (booleanId && booleanPhone && booleanEmail && !dbStr.equalsIgnoreCase("")){
                             ll_enter.setBackgroundColor(getResources().getColor(R.color.light_blue));
                         }else{
                             ll_enter.setBackgroundColor(getResources().getColor(R.color.dark_grey));
@@ -333,7 +351,7 @@ public class EnteridActivity extends AppCompatActivity {
                 }else{
                     booleanDateofbirth=false;
                 }
-                if (booleanId && booleanName && booleanDateofbirth){
+                if (booleanId && booleanName && booleanDateofbirth && !dbStr.equalsIgnoreCase("")){
                     ll_enter.setBackgroundColor(getResources().getColor(R.color.light_blue));
                 }else{
                     ll_enter.setBackgroundColor(getResources().getColor(R.color.dark_grey));
