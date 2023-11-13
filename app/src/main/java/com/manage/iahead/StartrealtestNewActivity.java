@@ -1,11 +1,14 @@
 package com.manage.iahead;
 
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -77,6 +80,14 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starttest);
 
+        AudioManager am =
+                (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+        am.setStreamVolume(
+                AudioManager.STREAM_MUSIC,
+                80,
+                0);
+
         playTone = new PlayTone(this, StartrealtestNewActivity.this);
 
         SharedPref.init(this);
@@ -142,26 +153,22 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                         }
                     }
                     if(!isLeft) {
-                        if (!check500press1 && !check500press2 && countall500==2) {
-                            startTimerFirst500(isLeft);
-                        } else {
-                            if(check500press1 && check500press2 || check500press1 && !check500press2 && countall500==2
-                                    || !check500press1 && check500press2 && countall500==2 ||
-                                    !check500press1 && !check500press2 && countall500==3) {
+                        if(check500press1 && check500press2){
+                            startTimerFirst1000(isLeft);
+                        }else{
+                            if(countall500==3){
                                 startTimerFirst1000(isLeft);
-                            }else{
+                            }else {
                                 startTimerFirst500(isLeft);
                             }
                         }
                     }else{
-                        if (!check500Leftpress1 && !check500Leftpress2 && countall500==2) {
-                            startTimerFirst500(isLeft);
-                        } else {
-                            if(check500Leftpress1 && check500Leftpress2 || check500Leftpress1 && !check500Leftpress2 && countall500>1
-                                    || !check500Leftpress1 && check500Leftpress2 && countall500>1 ||
-                                    !check500Leftpress1 && !check500Leftpress2 && countall500==3) {
+                        if(check500Leftpress1 && check500Leftpress2){
+                            startTimerFirst1000(isLeft);
+                        }else{
+                            if(countall500==3){
                                 startTimerFirst1000(isLeft);
-                            }else{
+                            }else {
                                 startTimerFirst500(isLeft);
                             }
                         }
@@ -187,26 +194,22 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                         }
                     }
                     if(!isLeft) {
-                        if (!check1000press1 && !check1000press2 && countall1000==2) {
-                            startTimerFirst1000(isLeft);
-                        } else {
-                            if(check1000press1 && check1000press2 || check1000press1 && !check1000press2 && countall1000>1
-                                    || !check1000press1 && check1000press2 && countall1000>1 ||
-                                    !check1000press1 && !check1000press2 && countall1000==3) {
+                        if(check1000press1 && check1000press2){
+                            startTimerFirst2000(isLeft);
+                        }else{
+                            if(countall1000==3){
                                 startTimerFirst2000(isLeft);
-                            }else{
-                                startTimerFirst1000((isLeft));
+                            }else {
+                                startTimerFirst1000(isLeft);
                             }
                         }
                     }else{
-                        if (!check1000Leftpress1 && !check1000Leftpress2 && countall1000==2) {
-                            startTimerFirst1000(isLeft);
-                        } else {
-                            if(check1000Leftpress1 && check1000Leftpress2 || check1000Leftpress1 && !check1000Leftpress2 && countall1000>1
-                                    || !check1000Leftpress1 && check1000Leftpress2 && countall1000>1||
-                                    !check1000Leftpress1 && !check1000Leftpress2 && countall1000==3) {
+                        if(check1000Leftpress1 && check1000Leftpress2){
+                            startTimerFirst2000(isLeft);
+                        }else{
+                            if(countall1000==3){
                                 startTimerFirst2000(isLeft);
-                            }else{
+                            }else {
                                 startTimerFirst1000(isLeft);
                             }
                         }
@@ -232,26 +235,22 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                         }
                     }
                     if(!isLeft) {
-                        if (!check2000press1 && !check2000press2 && countall2000==2) {
-                            startTimerFirst2000(isLeft);
-                        } else {
-                            if(check2000press1 && check2000press2 || check2000press1 && !check2000press2 && countall2000>1
-                                    || !check2000press1 && check2000press2 && countall2000>1 ||
-                                    !check2000press1 && !check2000press2 && countall2000==3) {
+                        if(check2000press1 && check2000press2){
+                            startTimerFirst4000(isLeft);
+                        }else{
+                            if(countall2000==3){
                                 startTimerFirst4000(isLeft);
-                            }else{
+                            }else {
                                 startTimerFirst2000(isLeft);
                             }
                         }
                     }else{
-                        if (!check2000Leftpress1 && !check2000Leftpress2 && countall2000==2) {
-                            startTimerFirst2000(isLeft);
-                        } else {
-                            if(check2000Leftpress1 && check2000Leftpress2 || check2000Leftpress1 && !check2000Leftpress2 && countall2000>1
-                                    || !check2000Leftpress1 && check2000Leftpress2 && countall2000>1 ||
-                                    !check2000Leftpress1 && !check2000Leftpress2 && countall2000==3) {
+                        if(check2000Leftpress1 && check2000Leftpress2){
+                            startTimerFirst4000(isLeft);
+                        }else{
+                            if(countall2000==3){
                                 startTimerFirst4000(isLeft);
-                            }else{
+                            }else {
                                 startTimerFirst2000(isLeft);
                             }
                         }
@@ -277,12 +276,16 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                         }
                     }
                     if(!isLeft) {
-                        if (!check4000press1 && !check4000press2 && countall4000==2) {
-                            startTimerFirst4000(isLeft);
-                        } else {
-                            if(check4000press1 && check4000press2 || check4000press1 && !check4000press2 && countall4000>1
-                                    || !check4000press1 && check4000press2 && countall4000>1 ||
-                                    !check4000press1 && !check4000press2 && countall4000==3) {
+                        if(check4000press1 && check4000press2){
+                            isLeft=true;
+                            type=0;
+                            countall500=0;
+                            countall1000=0;
+                            countall2000=0;
+                            countall4000=0;
+                            startTimerFirst500(isLeft);
+                        }else{
+                            if(countall4000==3){
                                 isLeft=true;
                                 type=0;
                                 countall500=0;
@@ -290,19 +293,17 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                                 countall2000=0;
                                 countall4000=0;
                                 startTimerFirst500(isLeft);
-                            }else{
+                            }else {
                                 startTimerFirst4000(isLeft);
                             }
                         }
                     }else{
-                        if (!check4000Leftpress1 && !check4000Leftpress2 && countall4000==2) {
-                            startTimerFirst4000(isLeft);
-                        } else {
-                            if(check4000Leftpress1 && check4000Leftpress2 || check4000Leftpress1 && !check4000Leftpress2 && countall4000>1
-                                    || !check4000Leftpress1 && check4000Leftpress2 && countall4000>1 ||
-                                    !check4000Leftpress1 && !check4000Leftpress2 && countall4000==3) {
+                        if(check4000Leftpress1 && check4000Leftpress2){
+                            goNextPage();
+                        }else{
+                            if(countall4000==3){
                                 goNextPage();
-                            }else{
+                            }else {
                                 startTimerFirst4000(isLeft);
                             }
                         }
@@ -370,32 +371,22 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                         }
 
                         if(!isLeft) {
-                            if(countall500==3){
+                            if(check500press1 && check500press2){
                                 startTimerFirst1000(isLeft);
-                                return;
-                            }
-                            if (!check500press1 && !check500press2 && countall500==2) {
-                                startTimerFirst500(isLeft);
-                            } else {
-                                if(check500press1 && check500press2 || check500press1 && !check500press2
-                                || !check500press1 && check500press2 || !check500press1 && !check500press2 && countall500==3) {
+                            }else{
+                                if(countall500==3){
                                     startTimerFirst1000(isLeft);
-                                }else{
+                                }else {
                                     startTimerFirst500(isLeft);
                                 }
                             }
                         }else{
-                            if(countall500==3){
+                            if(check500Leftpress1 && check500Leftpress2){
                                 startTimerFirst1000(isLeft);
-                                return;
-                            }
-                            if (!check500Leftpress1 && !check500Leftpress2 && countall500==2) {
-                                startTimerFirst500(isLeft);
-                            } else {
-                                if(check500Leftpress1 && check500Leftpress2 || check500Leftpress1 && !check500Leftpress2
-                                        || !check500Leftpress1 && check500Leftpress2 || !check500Leftpress1 && !check500Leftpress2 && countall500==3) {
+                            }else{
+                                if(countall500==3){
                                     startTimerFirst1000(isLeft);
-                                }else{
+                                }else {
                                     startTimerFirst500(isLeft);
                                 }
                             }
@@ -457,24 +448,22 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                             arrtone1000.add("N");
                         }
                         if(!isLeft) {
-                            if (!check1000press1 && !check1000press2 && countall1000==2) {
-                                startTimerFirst1000(isLeft);
-                            } else {
-                                if(check1000press1 && check1000press2 || check1000press1 && !check1000press2
-                                        || !check1000press1 && check1000press2 || !check1000press1 && !check1000press2 && countall1000==3) {
+                            if(check1000press1 && check1000press2){
+                                startTimerFirst2000(isLeft);
+                            }else{
+                                if(countall1000==3){
                                     startTimerFirst2000(isLeft);
-                                }else{
+                                }else {
                                     startTimerFirst1000(isLeft);
                                 }
                             }
                         }else{
-                            if (!check1000Leftpress1 && !check1000Leftpress2 && countall1000==2) {
-                                startTimerFirst1000(isLeft);
-                            } else {
-                                if(check1000Leftpress1 && check1000Leftpress2  || check1000Leftpress1 && !check1000Leftpress2
-                                        || !check1000Leftpress1 && check1000Leftpress2 || !check1000Leftpress1 && !check1000Leftpress2 && countall1000==3) {
+                            if(check1000Leftpress1 && check1000Leftpress2){
+                                startTimerFirst2000(isLeft);
+                            }else{
+                                if(countall1000==3){
                                     startTimerFirst2000(isLeft);
-                                }else{
+                                }else {
                                     startTimerFirst1000(isLeft);
                                 }
                             }
@@ -537,24 +526,22 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                             arrtone2000.add("N");
                         }
                         if(!isLeft) {
-                            if (!check2000press1 && !check2000press2 && countall2000==2) {
-                                startTimerFirst2000(isLeft);
-                            } else {
-                                if(check2000press1 && check2000press2 || check2000press1 && !check2000press2
-                                        || !check2000press1 && check2000press2 || !check2000press1 && !check2000press2 && countall2000==3) {
+                            if(check2000press1 && check2000press2){
+                                startTimerFirst4000(isLeft);
+                            }else{
+                                if(countall2000==3){
                                     startTimerFirst4000(isLeft);
-                                }else{
+                                }else {
                                     startTimerFirst2000(isLeft);
                                 }
                             }
                         }else{
-                            if (!check2000Leftpress1 && !check2000Leftpress2 && countall2000==2) {
-                                startTimerFirst2000(isLeft);
-                            } else {
-                                if(check2000Leftpress1 && check2000Leftpress2 || check2000Leftpress1 && !check2000Leftpress2
-                                        || !check2000Leftpress1 && check2000Leftpress2 || !check2000Leftpress1 && !check2000Leftpress2 && countall2000==3) {
+                            if(check2000Leftpress1 && check2000Leftpress2){
+                                startTimerFirst4000(isLeft);
+                            }else{
+                                if(countall2000==3){
                                     startTimerFirst4000(isLeft);
-                                }else{
+                                }else {
                                     startTimerFirst2000(isLeft);
                                 }
                             }
@@ -617,24 +604,34 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                             arrtone4000.add("N");
                         }
                         if(!isLeft) {
-                            if (!check4000press1 && !check4000press2 && countall4000==2) {
-                                startTimerFirst4000(isLeft);
-                            } else {
-                                if(check4000Leftpress1 && check4000Leftpress2  || check4000press1 && !check4000press2
-                                        || !check4000press1 && check4000press2 || !check4000press1 && !check4000press2 && countall4000==3) {
-                                    goNextPage();
-                                }else{
+                            if(check4000press1 && check4000press2){
+                                isLeft=true;
+                                type=0;
+                                countall500=0;
+                                countall1000=0;
+                                countall2000=0;
+                                countall4000=0;
+                                startTimerFirst500(isLeft);
+                            }else{
+                                if(countall4000==3){
+                                    isLeft=true;
+                                    type=0;
+                                    countall500=0;
+                                    countall1000=0;
+                                    countall2000=0;
+                                    countall4000=0;
+                                    startTimerFirst500(isLeft);
+                                }else {
                                     startTimerFirst4000(isLeft);
                                 }
                             }
                         }else{
-                            if (!check4000Leftpress1 && !check4000Leftpress2 && countall4000==2) {
-                                startTimerFirst4000(isLeft);
-                            } else {
-                                if(check4000Leftpress1 && check4000Leftpress2  || check4000Leftpress1 && !check4000Leftpress2
-                                        || !check4000Leftpress1 && check4000Leftpress2 || !check4000Leftpress1 && !check4000Leftpress2 && countall4000==3) {
+                            if(check4000Leftpress1 && check4000Leftpress2){
+                                goNextPage();
+                            }else{
+                                if(countall4000==3){
                                     goNextPage();
-                                }else{
+                                }else {
                                     startTimerFirst4000(isLeft);
                                 }
                             }
@@ -704,7 +701,25 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
     public void onBackPressed() {
         super.onBackPressed();
 
-        Toast.makeText(StartrealtestNewActivity.this, "Press back, back once. Press again to quit app", Toast.LENGTH_SHORT).show();
+        Toast.makeText(StartrealtestNewActivity.this, "Press back again to quit the app", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        int action = event.getAction();
+        int keyCode = event.getKeyCode();
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                if (action == KeyEvent.ACTION_DOWN) {
+                }
+                return true;
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+                if (action == KeyEvent.ACTION_DOWN) {
+                }
+                return true;
+            default:
+                return super.dispatchKeyEvent(event);
+        }
     }
 
 }

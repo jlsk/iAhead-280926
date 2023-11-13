@@ -1,12 +1,15 @@
 package com.manage.iahead;
 
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -41,6 +44,14 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leftright);
+
+        AudioManager am =
+                (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+        am.setStreamVolume(
+                AudioManager.STREAM_MUSIC,
+                80,
+                0);
 
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
@@ -347,12 +358,30 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
     public void onBackPressed() {
         super.onBackPressed();
 
-        Toast.makeText(LeftrightActivity.this, "Press back, back once. Press again to quit app", Toast.LENGTH_SHORT).show();
+        Toast.makeText(LeftrightActivity.this, "Press back again to quit the app", Toast.LENGTH_SHORT).show();
     }
 
     private int getInternal(){
         int randomInt = new Random().nextInt((6 - 3) + 1) + 3;
         randomInt=randomInt*1000;
         return randomInt;
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        int action = event.getAction();
+        int keyCode = event.getKeyCode();
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_VOLUME_UP:
+                if (action == KeyEvent.ACTION_DOWN) {
+                }
+                return true;
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+                if (action == KeyEvent.ACTION_DOWN) {
+                }
+                return true;
+            default:
+                return super.dispatchKeyEvent(event);
+        }
     }
 }

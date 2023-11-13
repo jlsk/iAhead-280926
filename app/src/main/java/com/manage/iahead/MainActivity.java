@@ -82,6 +82,6 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        Toast.makeText(MainActivity.this, "Press back, back once. Press again to quit app", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, "Press back again to quit the app", Toast.LENGTH_SHORT).show();
     }
 }

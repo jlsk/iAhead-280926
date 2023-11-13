@@ -173,6 +173,6 @@ public class ResultpageActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        Toast.makeText(ResultpageActivity.this, "Press back, back once. Press again to quit app", Toast.LENGTH_SHORT).show();
+        Toast.makeText(ResultpageActivity.this, "Press back again to quit the app", Toast.LENGTH_SHORT).show();
     }
 }

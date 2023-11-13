@@ -372,7 +372,7 @@ public class EnteridActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        Toast.makeText(EnteridActivity.this, "Press back, back once. Press again to quit app", Toast.LENGTH_SHORT).show();
+        Toast.makeText(EnteridActivity.this, "Press back again to quit the app", Toast.LENGTH_SHORT).show();
     }
 
     private boolean isValidEmailId(String email){

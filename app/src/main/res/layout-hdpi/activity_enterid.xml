@@ -41,7 +41,7 @@
         android:id="@+id/et_id"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:hint="ID"
+        android:hint="ID (minimum 3 char)"
         android:textSize="16dp"
         android:textColor="@color/black"/>
 
