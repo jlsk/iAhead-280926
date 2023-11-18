@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -17,6 +18,8 @@ import com.manage.iahead.Utility.SharedPref;
 
 public class SelectnoisyquietActivity extends AppCompatActivity {
     private ImageView ivNoisy, ivQuiet;
+    private int countBack=0;
+    private CountDownTimer cTimerBack = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +75,34 @@ public class SelectnoisyquietActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
 
-        Toast.makeText(SelectnoisyquietActivity.this, "Press back again to quit the app", Toast.LENGTH_SHORT).show();
+        if(countBack==0) {
+            cTimerBack = new CountDownTimer(3000, 1000) {
+                public void onTick(long millisUntilFinished) {
+                }
+                public void onFinish() {
+                    countBack=0;
+                }
+            };
+            cTimerBack.start();
+            Toast.makeText(SelectnoisyquietActivity.this, "Press back again to quit the app", Toast.LENGTH_SHORT).show();
+            countBack = 1;
+        }else{
+            cancelTimerBack();
+            finishAndRemoveTask();
+        }
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        cancelTimerBack();
+    }
+
+    private void cancelTimerBack(){
+        if(cTimerBack!=null) {
+            cTimerBack.cancel();
+        }
     }
 }

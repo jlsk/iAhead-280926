@@ -3,6 +3,7 @@ package com.manage.iahead;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,6 +27,8 @@ public class ResultpageActivity extends AppCompatActivity {
     private String left, right;
     private String Id, leftStr, rightStr, noisy, result, type, name, phone, email, typecat, datetime, testlocation,
     screeninglevel, right500, right1000, right2000, right4000, left500, left1000, left2000, left4000, datetime1;
+    private int countBack=0;
+    private CountDownTimer cTimerBack = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,8 +174,34 @@ public class ResultpageActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
 
-        Toast.makeText(ResultpageActivity.this, "Press back again to quit the app", Toast.LENGTH_SHORT).show();
+        if(countBack==0) {
+            cTimerBack = new CountDownTimer(3000, 1000) {
+                public void onTick(long millisUntilFinished) {
+                }
+                public void onFinish() {
+                    countBack=0;
+                }
+            };
+            cTimerBack.start();
+            Toast.makeText(ResultpageActivity.this, "Press back again to quit the app", Toast.LENGTH_SHORT).show();
+            countBack = 1;
+        }else{
+            cancelTimerBack();
+            finishAndRemoveTask();
+        }
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        cancelTimerBack();
+    }
+
+    private void cancelTimerBack(){
+        if(cTimerBack!=null) {
+            cTimerBack.cancel();
+        }
     }
 }

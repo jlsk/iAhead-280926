@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.manage.iahead.Jsyn.PlayTone;
 import com.manage.iahead.Jsyn.PlayToneListener;
+import com.manage.iahead.Utility.SharedPref;
 
 import java.util.Random;
 
@@ -38,6 +39,9 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
     private int dpInt=0;
     private int countTone=0;
     private Handler handler;
+    private int countBack=0;
+    private CountDownTimer cTimerBack = null;
+    private int random, randomInt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +52,19 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
         AudioManager am =
                 (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
-        am.setStreamVolume(
-                AudioManager.STREAM_MUSIC,
-                80,
-                0);
+        SharedPref.init(this);
+        String screeninglevel = SharedPref.read(SharedPref.SCREENINGLEVEL, "");
+        if(screeninglevel.equalsIgnoreCase("40")) {
+            am.setStreamVolume(
+                    AudioManager.STREAM_MUSIC,
+                    2,
+                    0);
+        }else{
+            am.setStreamVolume(
+                    AudioManager.STREAM_MUSIC,
+                    1,
+                    0);
+        }
 
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
@@ -140,14 +153,7 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
                 if(playTone==null){
                     playTone = new PlayTone(LeftrightActivity.this, LeftrightActivity.this);
                 }
-                handler = new Handler(Looper.getMainLooper());
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        handler.removeCallbacksAndMessages(null);
-                        playTone.play(isLeft, 1000, 0.02, 2000);
-                    }
-                }, 200);
+                playTone.play(isLeft, 1000, 0.02, 2000);
 
                 startTimer(0);
             }
@@ -201,9 +207,9 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
     }
 
     private void startTimer(int type){
-                int random = new Random().nextInt((6 - 3) + 1) + 3;
-                random=random*1000;
-                cTimer = new CountDownTimer(random, 1000) {
+//                random = new Random().nextInt((6 - 3) + 1) + 3;
+//                random=random*1000;
+                cTimer = new CountDownTimer(getInternal(), 1000) {
                     public void onTick(long millisUntilFinished) {
                     }
                     public void onFinish() {
@@ -211,119 +217,109 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
                             playTone.stop();
                         }
                         playTone=null;
-                        cancelTimer();
-                        if(type==0) {
-                            if (!rightclick) {
-                                myToast = Toast.makeText(LeftrightActivity.this, "you have no click RIGHT side", Toast.LENGTH_SHORT);
-                                myToast.show();
+                        handler = new Handler(Looper.getMainLooper());
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                handler.removeCallbacksAndMessages(null);
 
-                                rightMargin();
-                            }
+                                cancelTimer();
+                                if(type==0) {
+                                    if (!rightclick) {
+                                        myToast = Toast.makeText(LeftrightActivity.this, "you have no click RIGHT side", Toast.LENGTH_SHORT);
+                                        myToast.show();
 
-                            if(playTone==null){
-                                playTone = new PlayTone(LeftrightActivity.this, LeftrightActivity.this);
-                            }
-                            checkLeft=true;
-                            countTone++;
-                            Log.d("test", "test-"+String.valueOf(countTone));
-                            if(countTone>2) {
-                                handler = new Handler(Looper.getMainLooper());
-                                handler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        handler.removeCallbacksAndMessages(null);
-                                        playTone.play(true, 1000, 0.02, 2000);
+                                        rightMargin();
                                     }
-                                }, 200);
-                                RelativeLayout.LayoutParams params;
-                                if(dpInt<350){
-                                    params = new RelativeLayout.LayoutParams(
-                                            200,
-                                            600
-                                    );
-                                }else {
-                                    params = new RelativeLayout.LayoutParams(
-                                            300,
-                                            900
-                                    );
-                                }
-                                params.setMargins(0, 0, 30, 0);
-                                params.addRule(RelativeLayout.CENTER_VERTICAL);
-                                ll_left.setLayoutParams(params);
 
-                                myToast = Toast.makeText(LeftrightActivity.this, "Now presenting a tone on the LEFT ear.", Toast.LENGTH_SHORT);
-                                myToast.show();
-                                startTimer(1);
-                            }else{
-                                //right
-                                handler = new Handler(Looper.getMainLooper());
-                                handler.postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        handler.removeCallbacksAndMessages(null);
-                                        playTone.play(false, 1000, 0.02, 2000);
-                                    }
-                                }, 200);
-                                RelativeLayout.LayoutParams paramsRight;
-                                if(dpInt<350){
-                                    paramsRight = new RelativeLayout.LayoutParams(
-                                            200,
-                                            600
-                                    );
-                                }else {
-                                    paramsRight = new RelativeLayout.LayoutParams(
-                                            300,
-                                            900
-                                    );
-                                }
-                                paramsRight.setMargins(30, 0, 0, 0);
-                                paramsRight.addRule(RelativeLayout.CENTER_VERTICAL);
-                                paramsRight.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                                ll_right.setLayoutParams(paramsRight);
-
-                                startTimer(0);
-                            }
-                        }else if(type==1){
-                            if(!leftclick) {
-                                myToast = Toast.makeText(LeftrightActivity.this, "you have no click LEFT side", Toast.LENGTH_SHORT);
-                                myToast.show();
-                                leftMargin();
-                            }
-
-                                countTone++;
-                                if(countTone<6) {
                                     if(playTone==null){
                                         playTone = new PlayTone(LeftrightActivity.this, LeftrightActivity.this);
                                     }
-                                    handler = new Handler(Looper.getMainLooper());
-                                    handler.postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            handler.removeCallbacksAndMessages(null);
-                                            playTone.play(true, 1000, 0.02, 2000);
-                                        }
-                                    }, 200);
-                                    RelativeLayout.LayoutParams params;
-                                    if(dpInt<350){
-                                        params = new RelativeLayout.LayoutParams(
-                                                200,
-                                                600
-                                        );
-                                    }else {
-                                        params = new RelativeLayout.LayoutParams(
-                                                300,
-                                                900
-                                        );
-                                    }
-                                    params.setMargins(0, 0, 30, 0);
-                                    params.addRule(RelativeLayout.CENTER_VERTICAL);
-                                    ll_left.setLayoutParams(params);
+                                    checkLeft=true;
+                                    countTone++;
+                                    Log.d("test", "test-"+String.valueOf(countTone));
+                                    if(countTone>2) {
+                                        playTone.play(true, 1000, 0.02, randomInt);
 
-                                    startTimer(1);
-                                }else{
-                                    ll_proceed.setVisibility(View.VISIBLE);
+                                        RelativeLayout.LayoutParams params;
+                                        if(dpInt<350){
+                                            params = new RelativeLayout.LayoutParams(
+                                                    200,
+                                                    600
+                                            );
+                                        }else {
+                                            params = new RelativeLayout.LayoutParams(
+                                                    300,
+                                                    900
+                                            );
+                                        }
+                                        params.setMargins(0, 0, 30, 0);
+                                        params.addRule(RelativeLayout.CENTER_VERTICAL);
+                                        ll_left.setLayoutParams(params);
+
+                                        myToast = Toast.makeText(LeftrightActivity.this, "Now presenting a tone on the LEFT ear.", Toast.LENGTH_SHORT);
+                                        myToast.show();
+                                        startTimer(1);
+                                    }else{
+                                        //right
+                                        playTone.play(false, 1000, 0.02, randomInt);
+
+                                        RelativeLayout.LayoutParams paramsRight;
+                                        if(dpInt<350){
+                                            paramsRight = new RelativeLayout.LayoutParams(
+                                                    200,
+                                                    600
+                                            );
+                                        }else {
+                                            paramsRight = new RelativeLayout.LayoutParams(
+                                                    300,
+                                                    900
+                                            );
+                                        }
+                                        paramsRight.setMargins(30, 0, 0, 0);
+                                        paramsRight.addRule(RelativeLayout.CENTER_VERTICAL);
+                                        paramsRight.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                                        ll_right.setLayoutParams(paramsRight);
+
+                                        startTimer(0);
+                                    }
+                                }else if(type==1){
+                                    if(!leftclick) {
+                                        myToast = Toast.makeText(LeftrightActivity.this, "you have no click LEFT side", Toast.LENGTH_SHORT);
+                                        myToast.show();
+                                        leftMargin();
+                                    }
+
+                                        countTone++;
+                                        if(countTone<6) {
+                                            if(playTone==null){
+                                                playTone = new PlayTone(LeftrightActivity.this, LeftrightActivity.this);
+                                            }
+                                            playTone.play(true, 1000, 0.02, randomInt);
+
+                                            RelativeLayout.LayoutParams params;
+                                            if(dpInt<350){
+                                                params = new RelativeLayout.LayoutParams(
+                                                        200,
+                                                        600
+                                                );
+                                            }else {
+                                                params = new RelativeLayout.LayoutParams(
+                                                        300,
+                                                        900
+                                                );
+                                            }
+                                            params.setMargins(0, 0, 30, 0);
+                                            params.addRule(RelativeLayout.CENTER_VERTICAL);
+                                            ll_left.setLayoutParams(params);
+
+                                            startTimer(1);
+                                        }else{
+                                            ll_proceed.setVisibility(View.VISIBLE);
+                                        }
                                 }
-                        }
+                            }
+                        }, 2000);
                     }
                 };
 
@@ -349,6 +345,7 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
     protected void onPause() {
         super.onPause();
         cancelTimer();
+        cancelTimerBack();
         if(handler!=null){
             handler.removeCallbacksAndMessages(null);
         }
@@ -356,13 +353,33 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
 
-        Toast.makeText(LeftrightActivity.this, "Press back again to quit the app", Toast.LENGTH_SHORT).show();
+        if(countBack==0) {
+            cTimerBack = new CountDownTimer(3000, 1000) {
+                public void onTick(long millisUntilFinished) {
+                }
+                public void onFinish() {
+                    countBack=0;
+                }
+            };
+            cTimerBack.start();
+            Toast.makeText(LeftrightActivity.this, "Press back again to quit the app", Toast.LENGTH_SHORT).show();
+            countBack = 1;
+        }else{
+            cancelTimerBack();
+            finishAndRemoveTask();
+        }
+
+    }
+
+    private void cancelTimerBack(){
+        if(cTimerBack!=null) {
+            cTimerBack.cancel();
+        }
     }
 
     private int getInternal(){
-        int randomInt = new Random().nextInt((6 - 3) + 1) + 3;
+        randomInt = new Random().nextInt((6 - 3) + 1) + 3;
         randomInt=randomInt*1000;
         return randomInt;
     }

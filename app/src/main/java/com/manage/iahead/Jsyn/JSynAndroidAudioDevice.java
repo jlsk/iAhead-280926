@@ -1,12 +1,15 @@
 package com.manage.iahead.Jsyn;
 
+import android.app.Activity;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
+import android.media.audiofx.LoudnessEnhancer;
 
 import com.jsyn.devices.AudioDeviceInputStream;
 import com.jsyn.devices.AudioDeviceManager;
 import com.jsyn.devices.AudioDeviceOutputStream;
+import com.manage.iahead.Utility.SharedPref;
 
 import java.util.ArrayList;
 
@@ -18,12 +21,14 @@ public class JSynAndroidAudioDevice implements AudioDeviceManager
 	private double suggestedInputLatency = 0.100;
 	private int defaultInputDeviceID = -1;
 	private int defaultOutputDeviceID = -1;
+	private Activity activity;
+	private LoudnessEnhancer enhancer;
 
-	public JSynAndroidAudioDevice()
+	public JSynAndroidAudioDevice(Activity activity)
 	{
 		deviceRecords = new ArrayList<DeviceInfo>();
 		DeviceInfo deviceInfo = new DeviceInfo();
-
+		this.activity=activity;
 		deviceInfo.name = "Android Audio";
 		deviceInfo.maxInputs = 0;
 		deviceInfo.maxOutputs = 2;
@@ -77,6 +82,12 @@ public class JSynAndroidAudioDevice implements AudioDeviceManager
 
 	}
 
+	public void enhancerRelease(){
+		if(enhancer!=null) {
+			enhancer.release();
+		}
+	}
+
 	private class AndroidAudioOutputStream extends AndroidAudioStream implements AudioDeviceOutputStream
 	{
 		public AndroidAudioOutputStream(int deviceID, int frameRate, int samplesPerFrame)
@@ -98,6 +109,17 @@ public class JSynAndroidAudioDevice implements AudioDeviceManager
 					AudioFormat.CHANNEL_OUT_STEREO,
 					AudioFormat.ENCODING_PCM_16BIT, bufferSize,
 					AudioTrack.MODE_STREAM );
+
+			enhancer = new LoudnessEnhancer(audioTrack.getAudioSessionId());
+
+			SharedPref.init(activity);
+			String screeninglevel = SharedPref.read(SharedPref.SCREENINGLEVEL, "");
+			if(screeninglevel.equalsIgnoreCase("40")) {
+				enhancer.setTargetGain(8000);
+			}else{
+				enhancer.setTargetGain(4000);
+			}
+			enhancer.setEnabled(true);
 			audioTrack.play();
 		}
 

@@ -53,6 +53,9 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
             check1000Leftpress1=false, check1000Leftpress2=false, check1000Leftpress3=false, check2000Leftpress1=false,
             check2000Leftpress2=false,
             check2000Leftpress3=false, check4000Leftpress1=false, check4000Leftpress2=false, check4000Leftpress3=false, ableClick=true;
+    private int countBack=0;
+    private CountDownTimer cTimerBack = null;
+    private int randomInt;
 
     @Override
     public void onPlay() {
@@ -72,6 +75,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
         }
         handler.removeCallbacksAndMessages(null);
         cancelTimer();
+        cancelTimerBack();
     }
 
     @Override
@@ -83,14 +87,22 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
         AudioManager am =
                 (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
-        am.setStreamVolume(
-                AudioManager.STREAM_MUSIC,
-                80,
-                0);
+        SharedPref.init(this);
+        String screeninglevel = SharedPref.read(SharedPref.SCREENINGLEVEL, "");
+        if(screeninglevel.equalsIgnoreCase("40")) {
+            am.setStreamVolume(
+                    AudioManager.STREAM_MUSIC,
+                    2,
+                    0);
+        }else{
+            am.setStreamVolume(
+                    AudioManager.STREAM_MUSIC,
+                    1,
+                    0);
+        }
 
         playTone = new PlayTone(this, StartrealtestNewActivity.this);
 
-        SharedPref.init(this);
         String DEBUGMODESTR = SharedPref.read(SharedPref.DEBUGMODE, "");
 
         tvDisplay = findViewById(R.id.tvDisplay);
@@ -317,7 +329,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
     }
 
     private int getInternal(){
-        int randomInt = new Random().nextInt((6 - 3) + 1) + 3;
+        randomInt = new Random().nextInt((6 - 3) + 1) + 3;
         randomInt=randomInt*1000;
         return randomInt;
     }
@@ -335,16 +347,11 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 if(playTone==null){
                     playTone = new PlayTone(StartrealtestNewActivity.this, StartrealtestNewActivity.this);
                 }
-                handler = new Handler(Looper.getMainLooper());
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        handler.removeCallbacksAndMessages(null);
-                        playTone.play(flag, 500, 0.02, 3000);
-                    }
-                }, 200);
+                    playTone.play(flag, 500, 0.02, getInternal());
+                    Log.d("test","test-random-"+String.valueOf(randomInt));
+
                 countSeq++;
-                cTimer = new CountDownTimer(getInternal(), 1000) {
+                cTimer = new CountDownTimer(randomInt, 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
                         String leftright="";
@@ -363,39 +370,50 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                     public void onFinish() {
                         Log.d("test", "testnopress500-isleft-"+String.valueOf(isLeft));
                         Log.d("test", "testnopress500-type-"+String.valueOf(type));
+                        if(playTone!=null) {
+                            playTone.stop();
+                        }
                         playTone=null;
-                        cancelTimer();
-                        if(!checkPass){
-                            ivHit.setBackground(getResources().getDrawable(R.drawable.tryagain));
-                            arrtone500.add("N");
-                        }
 
-                        if(!isLeft) {
-                            if(check500press1 && check500press2){
-                                startTimerFirst1000(isLeft);
-                            }else{
-                                if(countall500==3){
-                                    startTimerFirst1000(isLeft);
-                                }else {
-                                    startTimerFirst500(isLeft);
+                        handler = new Handler(Looper.getMainLooper());
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                handler.removeCallbacksAndMessages(null);
+                                cancelTimer();
+                                if(!checkPass){
+                                    ivHit.setBackground(getResources().getDrawable(R.drawable.tryagain));
+                                    arrtone500.add("N");
+                                }
+
+                                if(!isLeft) {
+                                    if(check500press1 && check500press2){
+                                        startTimerFirst1000(isLeft);
+                                    }else{
+                                        if(countall500==3){
+                                            startTimerFirst1000(isLeft);
+                                        }else {
+                                            startTimerFirst500(isLeft);
+                                        }
+                                    }
+                                }else{
+                                    if(check500Leftpress1 && check500Leftpress2){
+                                        startTimerFirst1000(isLeft);
+                                    }else{
+                                        if(countall500==3){
+                                            startTimerFirst1000(isLeft);
+                                        }else {
+                                            startTimerFirst500(isLeft);
+                                        }
+                                    }
                                 }
                             }
-                        }else{
-                            if(check500Leftpress1 && check500Leftpress2){
-                                startTimerFirst1000(isLeft);
-                            }else{
-                                if(countall500==3){
-                                    startTimerFirst1000(isLeft);
-                                }else {
-                                    startTimerFirst500(isLeft);
-                                }
-                            }
-                        }
+                        }, 2000);
                     }
                 };
                 cTimer.start();
             }
-        }, 3000);
+        }, 2000);
     }
 
     private void startTimerFirst1000(boolean flag) {
@@ -412,16 +430,11 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 if(playTone==null){
                     playTone = new PlayTone(StartrealtestNewActivity.this, StartrealtestNewActivity.this);
                 }
-                handler = new Handler(Looper.getMainLooper());
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        handler.removeCallbacksAndMessages(null);
-                        playTone.play(flag, 1000, 0.02, 3000);
-                    }
-                }, 200);
+                playTone.play(flag, 1000, 0.02, getInternal());
+                Log.d("test","test-random-"+String.valueOf(randomInt));
+
                 countSeq++;
-                cTimer = new CountDownTimer(getInternal(), 1000) {
+                cTimer = new CountDownTimer(randomInt, 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
                         String leftright="";
@@ -441,33 +454,44 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
 
                         Log.d("test", "testnopress1000-isleft-"+String.valueOf(isLeft));
                         Log.d("test", "testnopress1000-type-"+String.valueOf(type));
+                        if(playTone!=null){
+                            playTone.stop();
+                        }
                         playTone=null;
-                        cancelTimer();
-                        if(!checkPass){
-                            ivHit.setBackground(getResources().getDrawable(R.drawable.tryagain));
-                            arrtone1000.add("N");
-                        }
-                        if(!isLeft) {
-                            if(check1000press1 && check1000press2){
-                                startTimerFirst2000(isLeft);
-                            }else{
-                                if(countall1000==3){
-                                    startTimerFirst2000(isLeft);
-                                }else {
-                                    startTimerFirst1000(isLeft);
+
+                        handler = new Handler(Looper.getMainLooper());
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                handler.removeCallbacksAndMessages(null);
+                                cancelTimer();
+                                if(!checkPass){
+                                    ivHit.setBackground(getResources().getDrawable(R.drawable.tryagain));
+                                    arrtone1000.add("N");
+                                }
+                                if(!isLeft) {
+                                    if(check1000press1 && check1000press2){
+                                        startTimerFirst2000(isLeft);
+                                    }else{
+                                        if(countall1000==3){
+                                            startTimerFirst2000(isLeft);
+                                        }else {
+                                            startTimerFirst1000(isLeft);
+                                        }
+                                    }
+                                }else{
+                                    if(check1000Leftpress1 && check1000Leftpress2){
+                                        startTimerFirst2000(isLeft);
+                                    }else{
+                                        if(countall1000==3){
+                                            startTimerFirst2000(isLeft);
+                                        }else {
+                                            startTimerFirst1000(isLeft);
+                                        }
+                                    }
                                 }
                             }
-                        }else{
-                            if(check1000Leftpress1 && check1000Leftpress2){
-                                startTimerFirst2000(isLeft);
-                            }else{
-                                if(countall1000==3){
-                                    startTimerFirst2000(isLeft);
-                                }else {
-                                    startTimerFirst1000(isLeft);
-                                }
-                            }
-                        }
+                        }, 2000);
                     }
                 };
                 cTimer.start();
@@ -489,16 +513,11 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 if(playTone==null){
                     playTone = new PlayTone(StartrealtestNewActivity.this, StartrealtestNewActivity.this);
                 }
-                handler = new Handler(Looper.getMainLooper());
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        handler.removeCallbacksAndMessages(null);
-                        playTone.play(flag, 2000, 0.02, 3000);
-                    }
-                }, 200);
+                    playTone.play(flag, 2000, 0.02, getInternal());
+                    Log.d("test","test-random-"+String.valueOf(randomInt));
+
                 countSeq++;
-                cTimer = new CountDownTimer(getInternal(), 1000) {
+                cTimer = new CountDownTimer(randomInt, 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
                         String leftright="";
@@ -519,33 +538,44 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                         Log.d("test", "testnopress2000-isleft-"+String.valueOf(isLeft));
                         Log.d("test", "testnopress2000-type-"+String.valueOf(type));
 
+                        if(playTone!=null){
+                            playTone.stop();
+                        }
                         playTone=null;
-                        cancelTimer();
-                        if(!checkPass){
-                            ivHit.setBackground(getResources().getDrawable(R.drawable.tryagain));
-                            arrtone2000.add("N");
-                        }
-                        if(!isLeft) {
-                            if(check2000press1 && check2000press2){
-                                startTimerFirst4000(isLeft);
-                            }else{
-                                if(countall2000==3){
-                                    startTimerFirst4000(isLeft);
-                                }else {
-                                    startTimerFirst2000(isLeft);
+
+                        handler = new Handler(Looper.getMainLooper());
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                handler.removeCallbacksAndMessages(null);
+                                cancelTimer();
+                                if(!checkPass){
+                                    ivHit.setBackground(getResources().getDrawable(R.drawable.tryagain));
+                                    arrtone2000.add("N");
+                                }
+                                if(!isLeft) {
+                                    if(check2000press1 && check2000press2){
+                                        startTimerFirst4000(isLeft);
+                                    }else{
+                                        if(countall2000==3){
+                                            startTimerFirst4000(isLeft);
+                                        }else {
+                                            startTimerFirst2000(isLeft);
+                                        }
+                                    }
+                                }else{
+                                    if(check2000Leftpress1 && check2000Leftpress2){
+                                        startTimerFirst4000(isLeft);
+                                    }else{
+                                        if(countall2000==3){
+                                            startTimerFirst4000(isLeft);
+                                        }else {
+                                            startTimerFirst2000(isLeft);
+                                        }
+                                    }
                                 }
                             }
-                        }else{
-                            if(check2000Leftpress1 && check2000Leftpress2){
-                                startTimerFirst4000(isLeft);
-                            }else{
-                                if(countall2000==3){
-                                    startTimerFirst4000(isLeft);
-                                }else {
-                                    startTimerFirst2000(isLeft);
-                                }
-                            }
-                        }
+                        }, 2000);
                     }
                 };
                 cTimer.start();
@@ -567,16 +597,11 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 if(playTone==null){
                     playTone = new PlayTone(StartrealtestNewActivity.this, StartrealtestNewActivity.this);
                 }
-                handler = new Handler(Looper.getMainLooper());
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        handler.removeCallbacksAndMessages(null);
-                        playTone.play(flag, 4000, 0.02, 3000);
-                    }
-                }, 200);
+                    playTone.play(flag, 4000, 0.02, getInternal());
+                    Log.d("test","test-random-"+String.valueOf(randomInt));
+
                 countSeq++;
-                cTimer = new CountDownTimer(getInternal(), 1000) {
+                cTimer = new CountDownTimer(randomInt, 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
                         String leftright="";
@@ -597,45 +622,56 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                         Log.d("test", "testnopress4000-isleft-"+String.valueOf(isLeft));
                         Log.d("test", "testnopress4000-type-"+String.valueOf(type));
 
+                        if(playTone!=null){
+                            playTone.stop();
+                        }
                         playTone=null;
-                        cancelTimer();
-                        if(!checkPass){
-                            ivHit.setBackground(getResources().getDrawable(R.drawable.tryagain));
-                            arrtone4000.add("N");
-                        }
-                        if(!isLeft) {
-                            if(check4000press1 && check4000press2){
-                                isLeft=true;
-                                type=0;
-                                countall500=0;
-                                countall1000=0;
-                                countall2000=0;
-                                countall4000=0;
-                                startTimerFirst500(isLeft);
-                            }else{
-                                if(countall4000==3){
-                                    isLeft=true;
-                                    type=0;
-                                    countall500=0;
-                                    countall1000=0;
-                                    countall2000=0;
-                                    countall4000=0;
-                                    startTimerFirst500(isLeft);
-                                }else {
-                                    startTimerFirst4000(isLeft);
+
+                        handler = new Handler(Looper.getMainLooper());
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                handler.removeCallbacksAndMessages(null);
+                                cancelTimer();
+                                if(!checkPass){
+                                    ivHit.setBackground(getResources().getDrawable(R.drawable.tryagain));
+                                    arrtone4000.add("N");
+                                }
+                                if(!isLeft) {
+                                    if(check4000press1 && check4000press2){
+                                        isLeft=true;
+                                        type=0;
+                                        countall500=0;
+                                        countall1000=0;
+                                        countall2000=0;
+                                        countall4000=0;
+                                        startTimerFirst500(isLeft);
+                                    }else{
+                                        if(countall4000==3){
+                                            isLeft=true;
+                                            type=0;
+                                            countall500=0;
+                                            countall1000=0;
+                                            countall2000=0;
+                                            countall4000=0;
+                                            startTimerFirst500(isLeft);
+                                        }else {
+                                            startTimerFirst4000(isLeft);
+                                        }
+                                    }
+                                }else{
+                                    if(check4000Leftpress1 && check4000Leftpress2){
+                                        goNextPage();
+                                    }else{
+                                        if(countall4000==3){
+                                            goNextPage();
+                                        }else {
+                                            startTimerFirst4000(isLeft);
+                                        }
+                                    }
                                 }
                             }
-                        }else{
-                            if(check4000Leftpress1 && check4000Leftpress2){
-                                goNextPage();
-                            }else{
-                                if(countall4000==3){
-                                    goNextPage();
-                                }else {
-                                    startTimerFirst4000(isLeft);
-                                }
-                            }
-                        }
+                        }, 2000);
                     }
                 };
                 cTimer.start();
@@ -699,9 +735,29 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
 
-        Toast.makeText(StartrealtestNewActivity.this, "Press back again to quit the app", Toast.LENGTH_SHORT).show();
+        if(countBack==0) {
+            cTimerBack = new CountDownTimer(3000, 1000) {
+                public void onTick(long millisUntilFinished) {
+                }
+                public void onFinish() {
+                    countBack=0;
+                }
+            };
+            cTimerBack.start();
+            Toast.makeText(StartrealtestNewActivity.this, "Press back again to quit the app", Toast.LENGTH_SHORT).show();
+            countBack = 1;
+        }else{
+            cancelTimerBack();
+            finishAndRemoveTask();
+        }
+
+    }
+
+    private void cancelTimerBack(){
+        if(cTimerBack!=null) {
+            cTimerBack.cancel();
+        }
     }
 
     @Override

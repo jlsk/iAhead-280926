@@ -53,6 +53,9 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
             check1000Leftpress1=false, check1000Leftpress2=false, check1000Leftpress3=false, check2000Leftpress1=false,
             check2000Leftpress2=false,
             check2000Leftpress3=false, check4000Leftpress1=false, check4000Leftpress2=false, check4000Leftpress3=false, ableClick=true;
+    private int countBack=0;
+    private CountDownTimer cTimerBack = null;
+    private int randomInt;
 
     @Override
     public void onPlay() {
@@ -72,6 +75,7 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
         }
         handler.removeCallbacksAndMessages(null);
         cancelTimer();
+        cancelTimerBack();
     }
 
     @Override
@@ -83,14 +87,21 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
         AudioManager am =
                 (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
-        am.setStreamVolume(
-                AudioManager.STREAM_MUSIC,
-                80,
-                0);
-
+        SharedPref.init(this);
+        String screeninglevel = SharedPref.read(SharedPref.SCREENINGLEVEL, "");
+        if(screeninglevel.equalsIgnoreCase("40")) {
+            am.setStreamVolume(
+                    AudioManager.STREAM_MUSIC,
+                    2,
+                    0);
+        }else{
+            am.setStreamVolume(
+                    AudioManager.STREAM_MUSIC,
+                    1,
+                    0);
+        }
         playTone = new PlayTone(this, StartrealtestNewNoisyActivity.this);
 
-        SharedPref.init(this);
         String DEBUGMODESTR = SharedPref.read(SharedPref.DEBUGMODE, "");
 
         tvDisplay = findViewById(R.id.tvDisplay);
@@ -274,7 +285,7 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
     }
 
     private int getInternal(){
-        int randomInt = new Random().nextInt((6 - 3) + 1) + 3;
+        randomInt = new Random().nextInt((6 - 3) + 1) + 3;
         randomInt=randomInt*1000;
         return randomInt;
     }
@@ -293,16 +304,10 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
                 if(playTone==null){
                     playTone = new PlayTone(StartrealtestNewNoisyActivity.this, StartrealtestNewNoisyActivity.this);
                 }
-                handler = new Handler(Looper.getMainLooper());
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        handler.removeCallbacksAndMessages(null);
-                        playTone.play(flag, 1000, 0.02, 3000);
-                    }
-                }, 200);
+                playTone.play(flag, 1000, 0.02, getInternal());
+
                 countSeq++;
-                cTimer = new CountDownTimer(getInternal(), 1000) {
+                cTimer = new CountDownTimer(randomInt, 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
                         String leftright="";
@@ -322,6 +327,9 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
 
                         Log.d("test", "testnopress1000-isleft-"+String.valueOf(isLeft));
                         Log.d("test", "testnopress1000-type-"+String.valueOf(type));
+                        if(playTone!=null){
+                            playTone.stop();
+                        }
                         playTone=null;
                         cancelTimer();
                         if(!checkPass){
@@ -370,16 +378,10 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
                 if(playTone==null){
                     playTone = new PlayTone(StartrealtestNewNoisyActivity.this, StartrealtestNewNoisyActivity.this);
                 }
-                handler = new Handler(Looper.getMainLooper());
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        handler.removeCallbacksAndMessages(null);
-                        playTone.play(flag, 2000, 0.02, 3000);
-                    }
-                }, 200);
+                playTone.play(flag, 2000, 0.02, getInternal());
+
                 countSeq++;
-                cTimer = new CountDownTimer(getInternal(), 1000) {
+                cTimer = new CountDownTimer(randomInt, 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
                         String leftright="";
@@ -400,6 +402,9 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
                         Log.d("test", "testnopress2000-isleft-"+String.valueOf(isLeft));
                         Log.d("test", "testnopress2000-type-"+String.valueOf(type));
 
+                        if(playTone!=null){
+                            playTone.stop();
+                        }
                         playTone=null;
                         cancelTimer();
                         if(!checkPass){
@@ -448,16 +453,10 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
                 if(playTone==null){
                     playTone = new PlayTone(StartrealtestNewNoisyActivity.this, StartrealtestNewNoisyActivity.this);
                 }
-                handler = new Handler(Looper.getMainLooper());
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        handler.removeCallbacksAndMessages(null);
-                        playTone.play(flag, 4000, 0.02, 3000);
-                    }
-                }, 200);
+                playTone.play(flag, 4000, 0.02, getInternal());
+
                 countSeq++;
-                cTimer = new CountDownTimer(getInternal(), 1000) {
+                cTimer = new CountDownTimer(randomInt, 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
                         String leftright="";
@@ -478,6 +477,9 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
                         Log.d("test", "testnopress4000-isleft-"+String.valueOf(isLeft));
                         Log.d("test", "testnopress4000-type-"+String.valueOf(type));
 
+                        if(playTone!=null){
+                            playTone.stop();
+                        }
                         playTone=null;
                         cancelTimer();
                         if(!checkPass){
@@ -570,9 +572,29 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
 
-        Toast.makeText(StartrealtestNewNoisyActivity.this, "Press back again to quit the app", Toast.LENGTH_SHORT).show();
+        if(countBack==0) {
+            cTimerBack = new CountDownTimer(3000, 1000) {
+                public void onTick(long millisUntilFinished) {
+                }
+                public void onFinish() {
+                    countBack=0;
+                }
+            };
+            cTimerBack.start();
+            Toast.makeText(StartrealtestNewNoisyActivity.this, "Press back again to quit the app", Toast.LENGTH_SHORT).show();
+            countBack = 1;
+        }else{
+            cancelTimerBack();
+            finishAndRemoveTask();
+        }
+
+    }
+
+    private void cancelTimerBack(){
+        if(cTimerBack!=null) {
+            cTimerBack.cancel();
+        }
     }
 
     @Override

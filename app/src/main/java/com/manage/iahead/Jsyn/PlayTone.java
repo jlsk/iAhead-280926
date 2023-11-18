@@ -29,9 +29,11 @@ public class PlayTone {
     private LinearRamp mAmpJack;
 
     private PlayToneListener playToneListener;
+    private JSynAndroidAudioDevice jSynAndroidAudioDevice;
 
     public PlayTone(PlayToneListener playToneListener, Activity activity) {
-        mSynth = JSyn.createSynthesizer( new AndroidAudio(activity));
+        jSynAndroidAudioDevice = new JSynAndroidAudioDevice(activity);
+        mSynth = JSyn.createSynthesizer(jSynAndroidAudioDevice);
         mOsc1 = new SineOscillator();
 //        mOsc2 = new SineOscillator();
         mSynth.add(mAmpJack = new LinearRamp());
@@ -69,6 +71,7 @@ public class PlayTone {
                 mSynth.stop();
                 mLineOut.stop();
                 playToneListener.onSleep();
+                jSynAndroidAudioDevice.enhancerRelease();
             }
         }.start();
 

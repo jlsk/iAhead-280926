@@ -17,7 +17,7 @@
 //    private final LineOut mLineOut; // stereo output
 //
 //    public SineSynth() {
-//        mSynth = JSyn.createSynthesizer( new AndroidAudio() );
+//        mSynth = JSyn.createSynthesizer( new JSynAndroidAudioDevice() );
 //
 //        // Create the unit generators and add them to the synthesizer.
 //        mSynth.add(mAmpJack = new LinearRamp());

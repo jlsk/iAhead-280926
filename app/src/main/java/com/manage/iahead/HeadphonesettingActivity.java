@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,6 +21,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.manage.iahead.Jsyn.PlayTone;
 import com.manage.iahead.Jsyn.PlayToneListener;
+import com.manage.iahead.Utility.SharedPref;
 import com.manage.iahead.Utility.Uti;
 
 public class HeadphonesettingActivity extends AppCompatActivity implements PlayToneListener {
@@ -28,15 +31,15 @@ public class HeadphonesettingActivity extends AppCompatActivity implements PlayT
     private LinearLayout ll_next;
     private PlayTone playTone;
     private Handler handler, handler1;
+    private int countBack=0;
+    private CountDownTimer cTimerBack = null;
 
     @Override
     public void onPlay() {
-
     }
 
     @Override
     public void onSleep() {
-
     }
 
     @Override
@@ -48,10 +51,19 @@ public class HeadphonesettingActivity extends AppCompatActivity implements PlayT
         AudioManager am =
                 (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
-        am.setStreamVolume(
-                AudioManager.STREAM_MUSIC,
-                80,
-                0);
+        SharedPref.init(this);
+        String screeninglevel = SharedPref.read(SharedPref.SCREENINGLEVEL, "");
+        if(screeninglevel.equalsIgnoreCase("40")) {
+            am.setStreamVolume(
+                    AudioManager.STREAM_MUSIC,
+                    2,
+                    0);
+        }else{
+            am.setStreamVolume(
+                    AudioManager.STREAM_MUSIC,
+                    1,
+                    0);
+        }
 
         playTone = new PlayTone(this, HeadphonesettingActivity.this);
         ll_next = findViewById(R.id.ll_next);
@@ -62,6 +74,9 @@ public class HeadphonesettingActivity extends AppCompatActivity implements PlayT
                     playTone.stop();
                 }
                 handler.removeCallbacksAndMessages(null);
+                if(handler1!=null){
+                    handler1.removeCallbacksAndMessages(null);
+                }
                 Intent intent = new Intent(HeadphonesettingActivity.this, LeftrightActivity.class);
                 startActivity(intent);
                 finish();
@@ -96,14 +111,7 @@ public class HeadphonesettingActivity extends AppCompatActivity implements PlayT
                         Microphone_Plugged_in = true;
                         Toast.makeText(getApplicationContext(), "microphone plugged in",
                                 Toast.LENGTH_LONG).show();
-                        handler1 = new Handler(Looper.getMainLooper());
-                        handler1.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                handler1.removeCallbacksAndMessages(null);
-                                playTone.play(false, 1000, 0.02, 2000);
-                            }
-                        }, 200);
+                        playTone.play(false, 1000, 0.02, 2000);
                         repeatPlay();
                     }
                 }
@@ -119,6 +127,7 @@ public class HeadphonesettingActivity extends AppCompatActivity implements PlayT
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                handler.removeCallbacksAndMessages(null);
                 playTone.stop();
                 playTone.play(false, 1000, 0.02, 2000);
                 repeatPlay();
@@ -128,9 +137,29 @@ public class HeadphonesettingActivity extends AppCompatActivity implements PlayT
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
 
-        Toast.makeText(HeadphonesettingActivity.this, "Press back again to quit the app", Toast.LENGTH_SHORT).show();
+        if(countBack==0) {
+            cTimerBack = new CountDownTimer(3000, 1000) {
+                public void onTick(long millisUntilFinished) {
+                }
+                public void onFinish() {
+                    countBack=0;
+                }
+            };
+            cTimerBack.start();
+            Toast.makeText(HeadphonesettingActivity.this, "Press back again to quit the app", Toast.LENGTH_SHORT).show();
+            countBack = 1;
+        }else{
+            cancelTimerBack();
+            finishAndRemoveTask();
+        }
+
+    }
+
+    private void cancelTimerBack(){
+        if(cTimerBack!=null) {
+            cTimerBack.cancel();
+        }
     }
 
     @Override
@@ -144,6 +173,7 @@ public class HeadphonesettingActivity extends AppCompatActivity implements PlayT
             playTone.stop();
         }
         unregisterReceiver(broadcastReceiver);
+        cancelTimerBack();
     }
 
     @Override
