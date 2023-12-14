@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Test done!"
-                android:textSize="35dp"
+                android:textSize="33dp"
                 android:textColor="@color/black"/>
 
             <TextView
@@ -41,7 +41,7 @@
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:textColor="@color/black"/>
 
             <TextView
@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="RESULTS"
-                android:textSize="28dp"
+                android:textSize="18dp"
                 android:textColor="@color/black"/>
 
             <TextView
@@ -61,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Date &amp; Time"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:textColor="@color/black"/>
 
             <TextView
@@ -71,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="23dp"
+                android:textSize="21dp"
                 android:textColor="@color/black"/>
 
             <TextView
@@ -81,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TEST LOCATION"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:textColor="@color/black"/>
 
             <TextView
@@ -91,7 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="23dp"
+                android:textSize="21dp"
                 android:textColor="@color/black"/>
 
             <TextView
@@ -101,7 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="SCREENING LEVEL"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:textColor="@color/black"/>
 
             <TextView
@@ -111,7 +111,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="23dp"
+                android:textSize="21dp"
                 android:textColor="@color/black"/>
 
             <LinearLayout
@@ -131,7 +131,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="LEFT"
-                        android:textSize="20dp"
+                        android:textSize="18dp"
                         android:textColor="@color/black"/>
 
                     <View
@@ -148,7 +148,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textSize="20dp"
+                        android:textSize="18dp"
                         android:textColor="@color/black"/>
 
                     <View
@@ -165,7 +165,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textSize="20dp"
+                        android:textSize="18dp"
                         android:textColor="@color/black"/>
 
                     <View
@@ -182,7 +182,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textSize="20dp"
+                        android:textSize="18dp"
                         android:textColor="@color/black"/>
 
                     <View
@@ -199,7 +199,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textSize="20dp"
+                        android:textSize="18dp"
                         android:textColor="@color/black"/>
 
                 </RelativeLayout>
@@ -216,7 +216,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="RIGHT"
-                        android:textSize="20dp"
+                        android:textSize="18dp"
                         android:textColor="@color/black"/>
 
                     <View
@@ -234,7 +234,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textSize="20dp"
+                        android:textSize="18dp"
                         android:textColor="@color/black"/>
 
                     <View
@@ -252,7 +252,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textSize="20dp"
+                        android:textSize="18dp"
                         android:textColor="@color/black"/>
 
                     <View
@@ -270,7 +270,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textSize="20dp"
+                        android:textSize="18dp"
                         android:textColor="@color/black"/>
 
                     <View
@@ -288,7 +288,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textSize="20dp"
+                        android:textSize="18dp"
                         android:textColor="@color/black"/>
 
                 </RelativeLayout>
@@ -364,7 +364,7 @@
 
             <LinearLayout
                 android:id="@+id/ll_home"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -380,7 +380,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Home"
-                    android:textSize="30dp"
+                    android:textSize="25dp"
                     android:textColor="@color/white"/>
             </LinearLayout>
 

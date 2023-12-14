@@ -733,26 +733,26 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
         finish();
     }
 
-    @Override
-    public void onBackPressed() {
-
-        if(countBack==0) {
-            cTimerBack = new CountDownTimer(3000, 1000) {
-                public void onTick(long millisUntilFinished) {
-                }
-                public void onFinish() {
-                    countBack=0;
-                }
-            };
-            cTimerBack.start();
-            Toast.makeText(StartrealtestNewActivity.this, "Press back again to quit the app", Toast.LENGTH_SHORT).show();
-            countBack = 1;
-        }else{
-            cancelTimerBack();
-            finishAndRemoveTask();
-        }
-
-    }
+//    @Override
+//    public void onBackPressed() {
+//
+//        if(countBack==0) {
+//            cTimerBack = new CountDownTimer(3000, 1000) {
+//                public void onTick(long millisUntilFinished) {
+//                }
+//                public void onFinish() {
+//                    countBack=0;
+//                }
+//            };
+//            cTimerBack.start();
+//            Toast.makeText(StartrealtestNewActivity.this, "Press back again to quit the app", Toast.LENGTH_SHORT).show();
+//            countBack = 1;
+//        }else{
+//            cancelTimerBack();
+//            finish();
+//        }
+//
+//    }
 
     private void cancelTimerBack(){
         if(cTimerBack!=null) {

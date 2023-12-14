@@ -3,6 +3,7 @@ package com.manage.iahead;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -44,6 +45,9 @@ public class EnteridActivity extends AppCompatActivity {
     private RadioGroup radiogroup;
     private String dbStr="";
     private boolean booleanId=false, booleanName=false, booleanDateofbirth=false, booleanPhone=false, booleanEmail=false;
+
+    private int countBack=0;
+    private CountDownTimer cTimerBack = null;
 
     private InputFilter filter = new InputFilter() {
 
@@ -368,12 +372,26 @@ public class EnteridActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        Toast.makeText(EnteridActivity.this, "Press back again to quit the app", Toast.LENGTH_SHORT).show();
-    }
+//    @Override
+//    public void onBackPressed() {
+//
+//        if(countBack==0) {
+//            cTimerBack = new CountDownTimer(3000, 1000) {
+//                public void onTick(long millisUntilFinished) {
+//                }
+//                public void onFinish() {
+//                    countBack=0;
+//                }
+//            };
+//            cTimerBack.start();
+//            Toast.makeText(EnteridActivity.this, "Press back again to quit the app", Toast.LENGTH_SHORT).show();
+//            countBack = 1;
+//        }else{
+//            cancelTimerBack();
+//            finish();
+//        }
+//
+//    }
 
     private boolean isValidEmailId(String email){
 
@@ -383,5 +401,17 @@ public class EnteridActivity extends AppCompatActivity {
                 + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
                 + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
                 + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$").matcher(email).matches();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        cancelTimerBack();
+    }
+
+    private void cancelTimerBack(){
+        if(cTimerBack!=null) {
+            cTimerBack.cancel();
+        }
     }
 }

@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("type", "child");
                 SharedPref.write(SharedPref.TYPE, "child");
                 startActivity(intent);
-                finish();
             }
         });
         iv_parent = findViewById(R.id.iv_parent);
@@ -69,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("type", "parent");
                 SharedPref.write(SharedPref.TYPE, "parent");
                 startActivity(intent);
-                finish();
             }
         });
         iv_therapist = findViewById(R.id.iv_therapist);
@@ -79,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("type", "therapist");
                 SharedPref.write(SharedPref.TYPE, "therapist");
                 startActivity(intent);
-                finish();
             }
         });
     }
