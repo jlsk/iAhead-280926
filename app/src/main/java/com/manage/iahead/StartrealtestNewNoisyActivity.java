@@ -1,7 +1,9 @@
 package com.manage.iahead;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -17,9 +19,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.manage.iahead.Jsyn.PlayTone;
 import com.manage.iahead.Jsyn.PlayToneListener;
+import com.manage.iahead.Service.NoiseLevelService;
 import com.manage.iahead.Utility.SharedPref;
 
 import java.util.ArrayList;
@@ -32,7 +36,7 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
     private int count=0, random, countall500=0, countall1000=0, countall2000=0, countall4000=0;
     private boolean checkPass=false;
     private PlayTone playTone;
-    private TextView tvText, tvTime, tv_next, tvFrequency, tvDisplay;
+    private TextView tvText, tvTime, tv_next, tvFrequency, tvDisplay, tvDb;
     private String levelType="level1left";
     private String leftStr="Refer", rightStr="Refer";
     private Handler handler;
@@ -56,6 +60,21 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
     private int countBack=0;
     private CountDownTimer cTimerBack = null;
     private int randomInt;
+    private ArrayList<String>arr_noisy=new ArrayList<>();
+
+    private BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(NoiseLevelService.ACTION_DATA_UPDATED)) {
+                String data = intent.getStringExtra(NoiseLevelService.EXTRA_DATA);
+                String frequency = intent.getStringExtra(NoiseLevelService.EXTRA_DATA1);
+//                if(data.equalsIgnoreCase("Noisy")){
+//                    arr_noisy.add(frequency);
+//                }
+                tvDb.setText(frequency);
+            }
+        }
+    };
 
     @Override
     public void onPlay() {
@@ -79,10 +98,24 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Unregister the BroadcastReceiver when the activity is destroyed
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starttest);
+
+        tvDb = findViewById(R.id.tvDb);
+        Intent serviceIntent = new Intent(this, NoiseLevelService.class);
+        startService(serviceIntent);
+
+        IntentFilter filter = new IntentFilter(NoiseLevelService.ACTION_DATA_UPDATED);
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
 
         AudioManager am =
                 (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -533,6 +566,10 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
     }
 
     private void goNextPage(){
+
+        Intent serviceIntent = new Intent(this, NoiseLevelService.class);
+        stopService(serviceIntent);
+
         Intent intent = new Intent(StartrealtestNewNoisyActivity.this, ResultpageNoisyActivity.class);
         String Str1000 = "REFER", Str2000 = "REFER", Str4000 = "REFER";
         String Str1000Left = "REFER", Str2000Left = "REFER", Str4000Left = "REFER";
