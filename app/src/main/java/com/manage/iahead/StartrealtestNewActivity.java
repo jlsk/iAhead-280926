@@ -24,6 +24,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.manage.iahead.Jsyn.PlayTone;
 import com.manage.iahead.Jsyn.PlayToneListener;
 import com.manage.iahead.Service.NoiseLevelService;
+import com.manage.iahead.Utility.AppLogger;
 import com.manage.iahead.Utility.SharedPref;
 
 import java.util.ArrayList;
@@ -61,6 +62,8 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
     private CountDownTimer cTimerBack = null;
     private int randomInt;
     private ArrayList<String>arr_noisy=new ArrayList<>();
+    private Intent serviceIntent;
+    private String TAG="QuietSelection";
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -110,12 +113,16 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starttest);
 
+        String DEBUGMODESTR = SharedPref.read(SharedPref.DEBUGMODE, "");
+        if(DEBUGMODESTR.equalsIgnoreCase("Y")){
+            AppLogger.isDebug=true;
+        }
         tvDb = findViewById(R.id.tvDb);
-        Intent serviceIntent = new Intent(this, NoiseLevelService.class);
-        startService(serviceIntent);
-
-        IntentFilter filter = new IntentFilter(NoiseLevelService.ACTION_DATA_UPDATED);
-        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
+//        Intent serviceIntent = new Intent(this, NoiseLevelService.class);
+//        startService(serviceIntent);
+//
+//        IntentFilter filter = new IntentFilter(NoiseLevelService.ACTION_DATA_UPDATED);
+//        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
 
         AudioManager am =
                 (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -136,14 +143,14 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
 
         playTone = new PlayTone(this, StartrealtestNewActivity.this);
 
-        String DEBUGMODESTR = SharedPref.read(SharedPref.DEBUGMODE, "");
+//        String DEBUGMODESTR = SharedPref.read(SharedPref.DEBUGMODE, "");
 
         tvDisplay = findViewById(R.id.tvDisplay);
         tvFrequency = findViewById(R.id.tvFrequency);
-        tvFrequency.setText("Frequency-"+String.valueOf(500));
-        if(DEBUGMODESTR.equalsIgnoreCase("")){
-            tvFrequency.setVisibility(View.GONE);
-        }
+//        tvFrequency.setText("Frequency-"+String.valueOf(500));
+//        if(DEBUGMODESTR.equalsIgnoreCase("")){
+            tvFrequency.setVisibility(View.INVISIBLE);
+//        }
         tv_next = findViewById(R.id.tv_next);
         tv_next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,6 +171,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
         ivHit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AppLogger.i(TAG, "PRESS-"+tvFrequency.getText().toString()+", 0.02amp, "+isLeft+", DB-"+tvDb.getText().toString());
                 Log.d("test", "testpress-isleft-"+String.valueOf(isLeft));
                 Log.d("test", "testpress-type-"+String.valueOf(type));
                 if(!ableClick){
@@ -368,6 +376,10 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
     }
 
     private void startTimerFirst500(boolean flag) {
+        if(countall500==0) {
+            restartNoiseService();
+        }
+        AppLogger.i(TAG, "Frequency 500 start");
         handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
             @Override
@@ -394,6 +406,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                             leftright="Right";
                         }
                         tvDisplay.setText(String.valueOf(countSeq)+", 500hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
+                        AppLogger.i(TAG, String.valueOf(countSeq)+", 500hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright+", DB-"+tvDb.getText().toString());
                         if(String.valueOf(millisUntilFinished/1000).equalsIgnoreCase("0")){
                             ableClick=false;
                         }else{
@@ -450,6 +463,10 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
     }
 
     private void startTimerFirst1000(boolean flag) {
+        if(countall1000==0) {
+            restartNoiseService();
+        }
+        AppLogger.i(TAG, "Frequency 1000 start");
         type=1;
         handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
@@ -477,6 +494,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                             leftright="Right";
                         }
                         tvDisplay.setText(String.valueOf(countSeq)+", 1000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
+                        AppLogger.i(TAG, String.valueOf(countSeq)+", 1000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright+", DB-"+tvDb.getText().toString());
                         if(String.valueOf(millisUntilFinished/1000).equalsIgnoreCase("0")){
                             ableClick=false;
                         }else{
@@ -533,6 +551,10 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
     }
 
     private void startTimerFirst2000(boolean flag) {
+        if(countall2000==0) {
+            restartNoiseService();
+        }
+        AppLogger.i(TAG, "Frequency 2000 start");
         type=2;
         handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
@@ -560,6 +582,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                             leftright="Right";
                         }
                         tvDisplay.setText(String.valueOf(countSeq)+", 2000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
+                        AppLogger.i(TAG, String.valueOf(countSeq)+", 2000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright+", DB-"+tvDb.getText().toString());
                         if(String.valueOf(millisUntilFinished/1000).equalsIgnoreCase("0")){
                             ableClick=false;
                         }else{
@@ -617,6 +640,10 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
     }
 
     private void startTimerFirst4000(boolean flag) {
+        if(countall4000==0) {
+            restartNoiseService();
+        }
+        AppLogger.i(TAG, "Frequency 4000 start");
         type=3;
         handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
@@ -644,6 +671,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                             leftright="Right";
                         }
                         tvDisplay.setText(String.valueOf(countSeq)+", 4000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
+                        AppLogger.i(TAG, String.valueOf(countSeq)+", 4000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright+", DB-"+tvDb.getText().toString());
                         if(String.valueOf(millisUntilFinished/1000).equalsIgnoreCase("0")){
                             ableClick=false;
                         }else{
@@ -723,6 +751,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
         Intent serviceIntent = new Intent(this, NoiseLevelService.class);
         stopService(serviceIntent);
 
+        AppLogger.i(TAG, "---------------------------------");
         Intent intent = new Intent(StartrealtestNewActivity.this, ResultpageActivity.class);
         String Str500 = "REFER", Str1000 = "REFER", Str2000 = "REFER", Str4000 = "REFER";
         String Str500Left = "REFER", Str1000Left = "REFER", Str2000Left = "REFER", Str4000Left = "REFER";
@@ -813,6 +842,19 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
             default:
                 return super.dispatchKeyEvent(event);
         }
+    }
+
+    private void restartNoiseService(){
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+
+        if(serviceIntent!=null) {
+            stopService(serviceIntent);
+        }
+        serviceIntent = new Intent(this, NoiseLevelService.class);
+        startService(serviceIntent);
+
+        IntentFilter filter = new IntentFilter(NoiseLevelService.ACTION_DATA_UPDATED);
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
     }
 
 }

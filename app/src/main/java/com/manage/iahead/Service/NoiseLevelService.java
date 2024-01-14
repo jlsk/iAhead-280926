@@ -117,6 +117,8 @@ public class NoiseLevelService extends Service {
 
         startListening(gain);
 
+        Log.d("testinreset","testinreset");
+
         return START_STICKY;
     }
 

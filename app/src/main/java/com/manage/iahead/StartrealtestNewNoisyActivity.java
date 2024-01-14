@@ -24,6 +24,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.manage.iahead.Jsyn.PlayTone;
 import com.manage.iahead.Jsyn.PlayToneListener;
 import com.manage.iahead.Service.NoiseLevelService;
+import com.manage.iahead.Utility.AppLogger;
 import com.manage.iahead.Utility.SharedPref;
 
 import java.util.ArrayList;
@@ -61,6 +62,8 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
     private CountDownTimer cTimerBack = null;
     private int randomInt;
     private ArrayList<String>arr_noisy=new ArrayList<>();
+    private Intent serviceIntent;
+    private String TAG="NoisySelection";
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -104,18 +107,35 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
     }
 
+    private void restartNoiseService(){
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+
+        if(serviceIntent!=null) {
+            stopService(serviceIntent);
+        }
+        serviceIntent = new Intent(this, NoiseLevelService.class);
+        startService(serviceIntent);
+
+        IntentFilter filter = new IntentFilter(NoiseLevelService.ACTION_DATA_UPDATED);
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starttest);
 
+        String DEBUGMODESTR = SharedPref.read(SharedPref.DEBUGMODE, "");
+        if(DEBUGMODESTR.equalsIgnoreCase("Y")){
+            AppLogger.isDebug=true;
+        }
         tvDb = findViewById(R.id.tvDb);
-        Intent serviceIntent = new Intent(this, NoiseLevelService.class);
-        startService(serviceIntent);
-
-        IntentFilter filter = new IntentFilter(NoiseLevelService.ACTION_DATA_UPDATED);
-        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
+//        serviceIntent = new Intent(this, NoiseLevelService.class);
+//        startService(serviceIntent);
+//
+//        IntentFilter filter = new IntentFilter(NoiseLevelService.ACTION_DATA_UPDATED);
+//        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
 
         AudioManager am =
                 (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -135,14 +155,13 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
         }
         playTone = new PlayTone(this, StartrealtestNewNoisyActivity.this);
 
-        String DEBUGMODESTR = SharedPref.read(SharedPref.DEBUGMODE, "");
-
         tvDisplay = findViewById(R.id.tvDisplay);
         tvFrequency = findViewById(R.id.tvFrequency);
-        tvFrequency.setText("Frequency-"+String.valueOf(500));
-        if(DEBUGMODESTR.equalsIgnoreCase("")){
-            tvFrequency.setVisibility(View.GONE);
-        }
+//        tvFrequency.setText("Frequency-"+String.valueOf(500));
+        tvFrequency.setVisibility(View.INVISIBLE);
+//        if(DEBUGMODESTR.equalsIgnoreCase("")){
+//            tvFrequency.setVisibility(View.GONE);
+//        }
         tv_next = findViewById(R.id.tv_next);
         tv_next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,6 +182,8 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
         ivHit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                AppLogger.i(TAG, "PRESS-"+tvFrequency.getText().toString()+", 0.02amp, "+isLeft+", DB-"+tvDb.getText().toString());
+
                 Log.d("test", "testpress-isleft-"+String.valueOf(isLeft));
                 Log.d("test", "testpress-type-"+String.valueOf(type));
                 if(!ableClick){
@@ -324,6 +345,11 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
     }
 
     private void startTimerFirst1000(boolean flag) {
+        if(countall1000==0) {
+            restartNoiseService();
+        }
+        AppLogger.i(TAG, "Frequency 1000 start");
+
         type=1;
         handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
@@ -350,6 +376,7 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
                             leftright="Right";
                         }
                         tvDisplay.setText(String.valueOf(countSeq)+", 1000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
+                        AppLogger.i(TAG, String.valueOf(countSeq)+", 1000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright+", DB-"+tvDb.getText().toString());
                         if(String.valueOf(millisUntilFinished/1000).equalsIgnoreCase("0")){
                             ableClick=false;
                         }else{
@@ -398,6 +425,10 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
     }
 
     private void startTimerFirst2000(boolean flag) {
+        if(countall2000==0) {
+            restartNoiseService();
+        }
+        AppLogger.i(TAG, "Frequency 2000 start");
         type=2;
         handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
@@ -424,6 +455,7 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
                             leftright="Right";
                         }
                         tvDisplay.setText(String.valueOf(countSeq)+", 2000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
+                        AppLogger.i(TAG, String.valueOf(countSeq)+", 2000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright+", DB-"+tvDb.getText().toString());
                         if(String.valueOf(millisUntilFinished/1000).equalsIgnoreCase("0")){
                             ableClick=false;
                         }else{
@@ -473,6 +505,10 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
     }
 
     private void startTimerFirst4000(boolean flag) {
+        if(countall4000==0) {
+            restartNoiseService();
+        }
+        AppLogger.i(TAG, "Frequency 4000 start");
         type=3;
         handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
@@ -499,6 +535,7 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
                             leftright="Right";
                         }
                         tvDisplay.setText(String.valueOf(countSeq)+", 4000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
+                        AppLogger.i(TAG, String.valueOf(countSeq)+", 4000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright+", DB-"+tvDb.getText().toString());
                         if(String.valueOf(millisUntilFinished/1000).equalsIgnoreCase("0")){
                             ableClick=false;
                         }else{
@@ -567,9 +604,10 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
 
     private void goNextPage(){
 
-        Intent serviceIntent = new Intent(this, NoiseLevelService.class);
+        serviceIntent = new Intent(this, NoiseLevelService.class);
         stopService(serviceIntent);
 
+        AppLogger.i(TAG, "---------------------------------");
         Intent intent = new Intent(StartrealtestNewNoisyActivity.this, ResultpageNoisyActivity.class);
         String Str1000 = "REFER", Str2000 = "REFER", Str4000 = "REFER";
         String Str1000Left = "REFER", Str2000Left = "REFER", Str4000Left = "REFER";
