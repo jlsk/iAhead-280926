@@ -105,11 +105,11 @@ public class HeadphonesettingActivity extends AppCompatActivity implements PlayT
                     if (iii == 0) {
                         Microphone_Plugged_in = false;
                         iv_alert.setVisibility(View.VISIBLE);
-                        Toast.makeText(getApplicationContext(), "microphone not plugged in", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Earphones and Microphone not plugged in", Toast.LENGTH_LONG).show();
                     }
                     if (iii == 1) {
                         Microphone_Plugged_in = true;
-                        Toast.makeText(getApplicationContext(), "microphone plugged in",
+                        Toast.makeText(getApplicationContext(), "Earphones and Microphone plugged in",
                                 Toast.LENGTH_LONG).show();
                         playTone.play(false, 1000, 0.02, 2000);
                         repeatPlay();

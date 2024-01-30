@@ -32,7 +32,7 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
     private CountDownTimer cTimer = null;
     private PlayTone playTone;
     private boolean isLeft=false, leftclick=false, rightclick=false;
-    private LinearLayout ll_left, ll_right, ll_proceed;
+    private LinearLayout ll_left, ll_right, ll_proceed, ll_skip;
     private int type=-1, count=0;
     private boolean checkLeft=false;
     private Toast myToast;
@@ -66,6 +66,16 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
                     0);
         }
 
+        ll_skip = findViewById(R.id.ll_skip);
+        ll_skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancelTimer();
+                Intent intent = new Intent(LeftrightActivity.this, SelectnoisyquietActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
         float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
@@ -98,6 +108,7 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
                     Log.d("test","test-"+String.valueOf(countTone));
                     if(countTone>4) {
                         ll_proceed.setVisibility(View.VISIBLE);
+                        ll_skip.setVisibility(View.GONE);
                     }
                     leftclick = true;
                     leftMargin();
@@ -226,7 +237,7 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
                                 cancelTimer();
                                 if(type==0) {
                                     if (!rightclick) {
-                                        myToast = Toast.makeText(LeftrightActivity.this, "you have no click RIGHT side", Toast.LENGTH_SHORT);
+                                        myToast = Toast.makeText(LeftrightActivity.this, "You did not press RIGHT", Toast.LENGTH_SHORT);
                                         myToast.show();
 
                                         rightMargin();
@@ -285,7 +296,7 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
                                     }
                                 }else if(type==1){
                                     if(!leftclick) {
-                                        myToast = Toast.makeText(LeftrightActivity.this, "you have no click LEFT side", Toast.LENGTH_SHORT);
+                                        myToast = Toast.makeText(LeftrightActivity.this, "You did not press LEFT", Toast.LENGTH_SHORT);
                                         myToast.show();
                                         leftMargin();
                                     }
@@ -316,6 +327,7 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
                                             startTimer(1);
                                         }else{
                                             ll_proceed.setVisibility(View.VISIBLE);
+                                            ll_skip.setVisibility(View.GONE);
                                         }
                                 }
                             }

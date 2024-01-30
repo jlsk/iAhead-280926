@@ -4,6 +4,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <Button
+        android:visibility="gone"
+        android:id="@+id/btnLogs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="5dp"
+        android:text="Logs"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -80,12 +89,12 @@
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TEST LOCATION"
+                android:text="SCREENING LEVEL"
                 android:textSize="18dp"
                 android:textColor="@color/black"/>
 
             <TextView
-                android:id="@+id/tv_location"
+                android:id="@+id/tv_screening"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
@@ -100,12 +109,12 @@
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SCREENING LEVEL"
+                android:text="TEST LOCATION"
                 android:textSize="18dp"
                 android:textColor="@color/black"/>
 
             <TextView
-                android:id="@+id/tv_screening"
+                android:id="@+id/tv_location"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
@@ -152,8 +161,25 @@
                         android:textColor="@color/black"/>
 
                     <View
-                        android:id="@+id/view11"
+                        android:id="@+id/view50"
                         android:layout_below="@+id/tv500left"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/black"/>
+
+                    <TextView
+                        android:layout_marginLeft="30dp"
+                        android:layout_below="@+id/view50"
+                        android:id="@+id/tv1000leftnoise"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="18dp"
+                        android:textColor="@color/black"/>
+
+                    <View
+                        android:id="@+id/view11"
+                        android:layout_below="@+id/tv1000leftnoise"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/black"/>
@@ -169,8 +195,25 @@
                         android:textColor="@color/black"/>
 
                     <View
-                        android:id="@+id/view12"
+                        android:id="@+id/view51"
                         android:layout_below="@+id/tv1000left"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/black"/>
+
+                    <TextView
+                        android:layout_marginLeft="30dp"
+                        android:layout_below="@+id/view51"
+                        android:id="@+id/tv2000leftnoise"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="18dp"
+                        android:textColor="@color/black"/>
+
+                    <View
+                        android:id="@+id/view12"
+                        android:layout_below="@+id/tv2000leftnoise"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/black"/>
@@ -186,8 +229,25 @@
                         android:textColor="@color/black"/>
 
                     <View
-                        android:id="@+id/view13"
+                        android:id="@+id/view52"
                         android:layout_below="@+id/tv2000left"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/black"/>
+
+                    <TextView
+                        android:layout_marginLeft="30dp"
+                        android:layout_below="@+id/view52"
+                        android:id="@+id/tv4000leftnoise"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="18dp"
+                        android:textColor="@color/black"/>
+
+                    <View
+                        android:id="@+id/view13"
+                        android:layout_below="@+id/tv4000leftnoise"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/black"/>
@@ -238,8 +298,26 @@
                         android:textColor="@color/black"/>
 
                     <View
-                        android:id="@+id/view21"
+                        android:id="@+id/view53"
                         android:layout_below="@+id/tv500right"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/black"/>
+
+                    <TextView
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="30dp"
+                        android:layout_below="@+id/view53"
+                        android:id="@+id/tv1000rightnoise"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="18dp"
+                        android:textColor="@color/black"/>
+
+                    <View
+                        android:id="@+id/view21"
+                        android:layout_below="@+id/tv1000rightnoise"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/black"/>
@@ -256,8 +334,26 @@
                         android:textColor="@color/black"/>
 
                     <View
-                        android:id="@+id/view22"
+                        android:id="@+id/view54"
                         android:layout_below="@+id/tv1000right"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/black"/>
+
+                    <TextView
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="30dp"
+                        android:layout_below="@+id/view54"
+                        android:id="@+id/tv2000rightnoise"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="18dp"
+                        android:textColor="@color/black"/>
+
+                    <View
+                        android:id="@+id/view22"
+                        android:layout_below="@+id/tv2000rightnoise"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/black"/>
@@ -274,8 +370,26 @@
                         android:textColor="@color/black"/>
 
                     <View
-                        android:id="@+id/view23"
+                        android:id="@+id/view55"
                         android:layout_below="@+id/tv2000right"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/black"/>
+
+                    <TextView
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="30dp"
+                        android:layout_below="@+id/view55"
+                        android:id="@+id/tv4000rightnoise"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textSize="18dp"
+                        android:textColor="@color/black"/>
+                    
+                    <View
+                        android:id="@+id/view23"
+                        android:layout_below="@+id/tv4000rightnoise"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/black"/>

@@ -64,6 +64,8 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
     private ArrayList<String>arr_noisy=new ArrayList<>();
     private Intent serviceIntent;
     private String TAG="QuietSelection";
+    private String appendStr="", screeninglevel, Left500db="", Left1000db="", Left2000db="", Left4000db="",
+            Right500db="", Right1000db="", Right2000db="", Right4000db="";
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -113,11 +115,16 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starttest);
 
+        tvDb = findViewById(R.id.tvDb);
+        tvDisplay = findViewById(R.id.tvDisplay);
+
         String DEBUGMODESTR = SharedPref.read(SharedPref.DEBUGMODE, "");
         if(DEBUGMODESTR.equalsIgnoreCase("Y")){
             AppLogger.isDebug=true;
+        }else{
+            tvDb.setVisibility(View.GONE);
+            tvDisplay.setVisibility(View.GONE);
         }
-        tvDb = findViewById(R.id.tvDb);
 //        Intent serviceIntent = new Intent(this, NoiseLevelService.class);
 //        startService(serviceIntent);
 //
@@ -128,7 +135,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
         SharedPref.init(this);
-        String screeninglevel = SharedPref.read(SharedPref.SCREENINGLEVEL, "");
+        screeninglevel = SharedPref.read(SharedPref.SCREENINGLEVEL, "");
         if(screeninglevel.equalsIgnoreCase("40")) {
             am.setStreamVolume(
                     AudioManager.STREAM_MUSIC,
@@ -145,7 +152,6 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
 
 //        String DEBUGMODESTR = SharedPref.read(SharedPref.DEBUGMODE, "");
 
-        tvDisplay = findViewById(R.id.tvDisplay);
         tvFrequency = findViewById(R.id.tvFrequency);
 //        tvFrequency.setText("Frequency-"+String.valueOf(500));
 //        if(DEBUGMODESTR.equalsIgnoreCase("")){
@@ -171,202 +177,220 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
         ivHit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppLogger.i(TAG, "PRESS-"+tvFrequency.getText().toString()+", 0.02amp, "+isLeft+", DB-"+tvDb.getText().toString());
-                Log.d("test", "testpress-isleft-"+String.valueOf(isLeft));
-                Log.d("test", "testpress-type-"+String.valueOf(type));
-                if(!ableClick){
-                    return;
-                }
-                checkPass=true;
-                cancelTimer();
-                ivHit.setBackground(getResources().getDrawable(R.drawable.yay));
-                if(playTone==null){
-                    return;
-                }
-                playTone.stop();
-                playTone=null;
-                if(type==0) {
-                    if(countall500==1){
-                        if(!isLeft) {
-                            check500press1 = true;
-                        }else{
-                            check500Leftpress1 = true;
-                        }
-                    }else if(countall500==2){
-                        if(!isLeft) {
-                            check500press2 = true;
-                        }else{
-                            check500Leftpress2 = true;
-                        }
-                    }else if(countall500==3){
-                        if(!isLeft) {
-                            check500press3 = true;
-                        }else{
-                            check500Leftpress3 = true;
-                        }
-                    }
-                    if(!isLeft) {
-                        if(check500press1 && check500press2){
-                            startTimerFirst1000(isLeft);
-                        }else{
-                            if(countall500==3){
-                                startTimerFirst1000(isLeft);
-                            }else {
-                                startTimerFirst500(isLeft);
-                            }
-                        }
-                    }else{
-                        if(check500Leftpress1 && check500Leftpress2){
-                            startTimerFirst1000(isLeft);
-                        }else{
-                            if(countall500==3){
-                                startTimerFirst1000(isLeft);
-                            }else {
-                                startTimerFirst500(isLeft);
-                            }
-                        }
-                    }
-                }else if(type==1) {
-                    if(countall1000==1){
-                        if(!isLeft) {
-                            check1000press1 = true;
-                        }else{
-                            check1000Leftpress1 = true;
-                        }
-                    }else if(countall1000==2){
-                        if(!isLeft) {
-                            check1000press2 = true;
-                        }else{
-                            check1000Leftpress2 = true;
-                        }
-                    }else if(countall1000==3){
-                        if(!isLeft) {
-                            check1000press3 = true;
-                        }else{
-                            check1000Leftpress3 = true;
-                        }
-                    }
-                    if(!isLeft) {
-                        if(check1000press1 && check1000press2){
-                            startTimerFirst2000(isLeft);
-                        }else{
-                            if(countall1000==3){
-                                startTimerFirst2000(isLeft);
-                            }else {
-                                startTimerFirst1000(isLeft);
-                            }
-                        }
-                    }else{
-                        if(check1000Leftpress1 && check1000Leftpress2){
-                            startTimerFirst2000(isLeft);
-                        }else{
-                            if(countall1000==3){
-                                startTimerFirst2000(isLeft);
-                            }else {
-                                startTimerFirst1000(isLeft);
-                            }
-                        }
-                    }
-                }else if(type==2) {
-                    if(countall2000==1){
-                        if(!isLeft) {
-                            check2000press1 = true;
-                        }else{
-                            check2000Leftpress1 = true;
-                        }
-                    }else if(countall2000==2){
-                        if(!isLeft) {
-                            check2000press2 = true;
-                        }else{
-                            check2000Leftpress2 = true;
-                        }
-                    }else if(countall2000==3){
-                        if(!isLeft) {
-                            check2000press3 = true;
-                        }else{
-                            check2000Leftpress3 = true;
-                        }
-                    }
-                    if(!isLeft) {
-                        if(check2000press1 && check2000press2){
-                            startTimerFirst4000(isLeft);
-                        }else{
-                            if(countall2000==3){
-                                startTimerFirst4000(isLeft);
-                            }else {
-                                startTimerFirst2000(isLeft);
-                            }
-                        }
-                    }else{
-                        if(check2000Leftpress1 && check2000Leftpress2){
-                            startTimerFirst4000(isLeft);
-                        }else{
-                            if(countall2000==3){
-                                startTimerFirst4000(isLeft);
-                            }else {
-                                startTimerFirst2000(isLeft);
-                            }
-                        }
-                    }
-                }else if(type==3) {
-                    if(countall4000==1){
-                        if(!isLeft) {
-                            check4000press1 = true;
-                        }else{
-                            check4000Leftpress1 = true;
-                        }
-                    }else if(countall4000==2){
-                        if(!isLeft) {
-                            check4000press2 = true;
-                        }else{
-                            check4000Leftpress2 = true;
-                        }
-                    }else if(countall4000==3){
-                        if(!isLeft) {
-                            check4000press3 = true;
-                        }else{
-                            check4000Leftpress3 = true;
-                        }
-                    }
-                    if(!isLeft) {
-                        if(check4000press1 && check4000press2){
-                            isLeft=true;
-                            type=0;
-                            countall500=0;
-                            countall1000=0;
-                            countall2000=0;
-                            countall4000=0;
-                            startTimerFirst500(isLeft);
-                        }else{
-                            if(countall4000==3){
-                                isLeft=true;
-                                type=0;
-                                countall500=0;
-                                countall1000=0;
-                                countall2000=0;
-                                countall4000=0;
-                                startTimerFirst500(isLeft);
-                            }else {
-                                startTimerFirst4000(isLeft);
-                            }
-                        }
-                    }else{
-                        if(check4000Leftpress1 && check4000Leftpress2){
-                            goNextPage();
-                        }else{
-                            if(countall4000==3){
-                                goNextPage();
-                            }else {
-                                startTimerFirst4000(isLeft);
-                            }
-                        }
-                    }
+                if (tvFrequency.getText().toString().length() > 0) {
+                    AppLogger.i(TAG, "PRESS-" + tvFrequency.getText().toString() + ", 0.02amp, " + isLeft + ", DB-" + tvDb.getText().toString());
+                    appendStr += "\n " + TAG + " PRESS-" + tvFrequency.getText().toString() + ", 0.02amp, " + isLeft + ", DB-" + tvDb.getText().toString() + ", " + checkStatus(tvFrequency.getText().toString(), returnMax(), isLeft);
 
+                    Log.d("test", "testpress-isleft-" + String.valueOf(isLeft));
+                    Log.d("test", "testpress-type-" + String.valueOf(type));
+                    if (!ableClick) {
+                        return;
+                    }
+                    checkPass = true;
+                    cancelTimer();
+                    ivHit.setBackground(getResources().getDrawable(R.drawable.yay));
+                    if (playTone == null) {
+                        return;
+                    }
+                    playTone.stop();
+                    playTone = null;
+                    if (type == 0) {
+                        if (countall500 == 1) {
+                            if (!isLeft) {
+                                check500press1 = true;
+                            } else {
+                                check500Leftpress1 = true;
+                            }
+                        } else if (countall500 == 2) {
+                            if (!isLeft) {
+                                check500press2 = true;
+                            } else {
+                                check500Leftpress2 = true;
+                            }
+                        } else if (countall500 == 3) {
+                            if (!isLeft) {
+                                check500press3 = true;
+                            } else {
+                                check500Leftpress3 = true;
+                            }
+                        }
+                        if (!isLeft) {
+                            if (check500press1 && check500press2) {
+                                startTimerFirst1000(isLeft);
+                            } else {
+                                if (countall500 == 3) {
+                                    startTimerFirst1000(isLeft);
+                                } else {
+                                    startTimerFirst500(isLeft);
+                                }
+                            }
+                        } else {
+                            if (check500Leftpress1 && check500Leftpress2) {
+                                startTimerFirst1000(isLeft);
+                            } else {
+                                if (countall500 == 3) {
+                                    startTimerFirst1000(isLeft);
+                                } else {
+                                    startTimerFirst500(isLeft);
+                                }
+                            }
+                        }
+                    } else if (type == 1) {
+                        if (countall1000 == 1) {
+                            if (!isLeft) {
+                                check1000press1 = true;
+                            } else {
+                                check1000Leftpress1 = true;
+                            }
+                        } else if (countall1000 == 2) {
+                            if (!isLeft) {
+                                check1000press2 = true;
+                            } else {
+                                check1000Leftpress2 = true;
+                            }
+                        } else if (countall1000 == 3) {
+                            if (!isLeft) {
+                                check1000press3 = true;
+                            } else {
+                                check1000Leftpress3 = true;
+                            }
+                        }
+                        if (!isLeft) {
+                            if (check1000press1 && check1000press2) {
+                                startTimerFirst2000(isLeft);
+                            } else {
+                                if (countall1000 == 3) {
+                                    startTimerFirst2000(isLeft);
+                                } else {
+                                    startTimerFirst1000(isLeft);
+                                }
+                            }
+                        } else {
+                            if (check1000Leftpress1 && check1000Leftpress2) {
+                                startTimerFirst2000(isLeft);
+                            } else {
+                                if (countall1000 == 3) {
+                                    startTimerFirst2000(isLeft);
+                                } else {
+                                    startTimerFirst1000(isLeft);
+                                }
+                            }
+                        }
+                    } else if (type == 2) {
+                        if (countall2000 == 1) {
+                            if (!isLeft) {
+                                check2000press1 = true;
+                            } else {
+                                check2000Leftpress1 = true;
+                            }
+                        } else if (countall2000 == 2) {
+                            if (!isLeft) {
+                                check2000press2 = true;
+                            } else {
+                                check2000Leftpress2 = true;
+                            }
+                        } else if (countall2000 == 3) {
+                            if (!isLeft) {
+                                check2000press3 = true;
+                            } else {
+                                check2000Leftpress3 = true;
+                            }
+                        }
+                        if (!isLeft) {
+                            if (check2000press1 && check2000press2) {
+                                startTimerFirst4000(isLeft);
+                            } else {
+                                if (countall2000 == 3) {
+                                    startTimerFirst4000(isLeft);
+                                } else {
+                                    startTimerFirst2000(isLeft);
+                                }
+                            }
+                        } else {
+                            if (check2000Leftpress1 && check2000Leftpress2) {
+                                startTimerFirst4000(isLeft);
+                            } else {
+                                if (countall2000 == 3) {
+                                    startTimerFirst4000(isLeft);
+                                } else {
+                                    startTimerFirst2000(isLeft);
+                                }
+                            }
+                        }
+                    } else if (type == 3) {
+                        if (countall4000 == 1) {
+                            if (!isLeft) {
+                                check4000press1 = true;
+                            } else {
+                                check4000Leftpress1 = true;
+                            }
+                        } else if (countall4000 == 2) {
+                            if (!isLeft) {
+                                check4000press2 = true;
+                            } else {
+                                check4000Leftpress2 = true;
+                            }
+                        } else if (countall4000 == 3) {
+                            if (!isLeft) {
+                                check4000press3 = true;
+                            } else {
+                                check4000Leftpress3 = true;
+                            }
+                        }
+                        if (!isLeft) {
+                            if (check4000press1 && check4000press2) {
+                                isLeft = true;
+                                type = 0;
+                                countall500 = 0;
+                                countall1000 = 0;
+                                countall2000 = 0;
+                                countall4000 = 0;
+                                startTimerFirst500(isLeft);
+                            } else {
+                                if (countall4000 == 3) {
+                                    isLeft = true;
+                                    type = 0;
+                                    countall500 = 0;
+                                    countall1000 = 0;
+                                    countall2000 = 0;
+                                    countall4000 = 0;
+                                    startTimerFirst500(isLeft);
+                                } else {
+                                    startTimerFirst4000(isLeft);
+                                }
+                            }
+                        } else {
+                            if (check4000Leftpress1 && check4000Leftpress2) {
+                                goNextPage();
+                            } else {
+                                if (countall4000 == 3) {
+                                    goNextPage();
+                                } else {
+                                    startTimerFirst4000(isLeft);
+                                }
+                            }
+                        }
+
+                    }
                 }
             }
         });
         type=0;
         startTimerFirst500(isLeft);
+    }
+
+    private int returnMax(){
+        String checkmax = tvDb.getText().toString();
+        String mySentence = "MAX-";
+        int index = checkmax.indexOf(mySentence);
+        checkmax=checkmax.substring(index+4, checkmax.length());
+        int intValue=0;
+        try {
+            double parsedValue = Double.parseDouble(checkmax);
+            intValue = (int) parsedValue;
+        } catch (NumberFormatException e) {
+        }
+        return intValue;
     }
 
     private int getInternal(){
@@ -380,6 +404,14 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
             restartNoiseService();
         }
         AppLogger.i(TAG, "Frequency 500 start");
+        String maxmin;
+        if(screeninglevel.equalsIgnoreCase("25")){
+            maxmin="41";
+        }else{
+            maxmin="56";
+        }
+        appendStr+="\n "+TAG +" "+ "Frequency 2000 start,"+screeninglevel+"db,,,Max-"+maxmin;
+
         handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
             @Override
@@ -392,11 +424,11 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 if(playTone==null){
                     playTone = new PlayTone(StartrealtestNewActivity.this, StartrealtestNewActivity.this);
                 }
-                    playTone.play(flag, 500, 0.02, getInternal());
+                    playTone.play(flag, 500, 0.02, 2000);
                     Log.d("test","test-random-"+String.valueOf(randomInt));
 
                 countSeq++;
-                cTimer = new CountDownTimer(randomInt, 1000) {
+                cTimer = new CountDownTimer(getInternal(), 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
                         String leftright="";
@@ -406,7 +438,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                             leftright="Right";
                         }
                         tvDisplay.setText(String.valueOf(countSeq)+", 500hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
-                        AppLogger.i(TAG, String.valueOf(countSeq)+", 500hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright+", DB-"+tvDb.getText().toString());
+
                         if(String.valueOf(millisUntilFinished/1000).equalsIgnoreCase("0")){
                             ableClick=false;
                         }else{
@@ -414,6 +446,9 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                         }
                     }
                     public void onFinish() {
+                        AppLogger.i(TAG, String.valueOf(countSeq)+", 500hz, "+String.valueOf(0)+ "secs, 0.02amp, "+isLeft+", DB-"+tvDb.getText().toString());
+                        appendStr+="\n "+TAG+" "+String.valueOf(countSeq)+", 500hz, "+String.valueOf(0)+ "secs, 0.02amp, "+isLeft+", DB-"+tvDb.getText().toString()+", "+checkStatus("Frequency-500", returnMax(), isLeft);
+
                         Log.d("test", "testnopress500-isleft-"+String.valueOf(isLeft));
                         Log.d("test", "testnopress500-type-"+String.valueOf(type));
                         if(playTone!=null) {
@@ -467,6 +502,14 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
             restartNoiseService();
         }
         AppLogger.i(TAG, "Frequency 1000 start");
+        String maxmin;
+        if(screeninglevel.equalsIgnoreCase("25")){
+            maxmin="46";
+        }else{
+            maxmin="61";
+        }
+        appendStr+="\n "+TAG +" "+ "Frequency 1000 start,"+screeninglevel+"db,,,Max-"+maxmin;
+
         type=1;
         handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
@@ -480,11 +523,11 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 if(playTone==null){
                     playTone = new PlayTone(StartrealtestNewActivity.this, StartrealtestNewActivity.this);
                 }
-                playTone.play(flag, 1000, 0.02, getInternal());
+                playTone.play(flag, 1000, 0.02, 2000);
                 Log.d("test","test-random-"+String.valueOf(randomInt));
 
                 countSeq++;
-                cTimer = new CountDownTimer(randomInt, 1000) {
+                cTimer = new CountDownTimer(getInternal(), 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
                         String leftright="";
@@ -494,7 +537,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                             leftright="Right";
                         }
                         tvDisplay.setText(String.valueOf(countSeq)+", 1000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
-                        AppLogger.i(TAG, String.valueOf(countSeq)+", 1000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright+", DB-"+tvDb.getText().toString());
+
                         if(String.valueOf(millisUntilFinished/1000).equalsIgnoreCase("0")){
                             ableClick=false;
                         }else{
@@ -502,6 +545,8 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                         }
                     }
                     public void onFinish() {
+                        AppLogger.i(TAG, String.valueOf(countSeq)+", 1000hz, "+String.valueOf(0)+ "secs, 0.02amp, "+isLeft+", DB-"+tvDb.getText().toString());
+                        appendStr+="\n "+TAG+" "+String.valueOf(countSeq)+", 1000hz, "+String.valueOf(0)+ "secs, 0.02amp, "+isLeft+", DB-"+tvDb.getText().toString()+", "+checkStatus("Frequency-1000", returnMax(), isLeft);
 
                         Log.d("test", "testnopress1000-isleft-"+String.valueOf(isLeft));
                         Log.d("test", "testnopress1000-type-"+String.valueOf(type));
@@ -555,6 +600,14 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
             restartNoiseService();
         }
         AppLogger.i(TAG, "Frequency 2000 start");
+        String maxmin;
+        if(screeninglevel.equalsIgnoreCase("25")){
+            maxmin="54";
+        }else{
+            maxmin="69";
+        }
+        appendStr+="\n "+TAG +" "+ "Frequency 2000 start,"+screeninglevel+"db,,,Max-"+maxmin;
+
         type=2;
         handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
@@ -568,11 +621,11 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 if(playTone==null){
                     playTone = new PlayTone(StartrealtestNewActivity.this, StartrealtestNewActivity.this);
                 }
-                    playTone.play(flag, 2000, 0.02, getInternal());
+                    playTone.play(flag, 2000, 0.02, 2000);
                     Log.d("test","test-random-"+String.valueOf(randomInt));
 
                 countSeq++;
-                cTimer = new CountDownTimer(randomInt, 1000) {
+                cTimer = new CountDownTimer(getInternal(), 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
                         String leftright="";
@@ -582,7 +635,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                             leftright="Right";
                         }
                         tvDisplay.setText(String.valueOf(countSeq)+", 2000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
-                        AppLogger.i(TAG, String.valueOf(countSeq)+", 2000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright+", DB-"+tvDb.getText().toString());
+
                         if(String.valueOf(millisUntilFinished/1000).equalsIgnoreCase("0")){
                             ableClick=false;
                         }else{
@@ -590,6 +643,8 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                         }
                     }
                     public void onFinish() {
+                        AppLogger.i(TAG, String.valueOf(countSeq)+", 2000hz, "+String.valueOf(0)+ "secs, 0.02amp, "+isLeft+", DB-"+tvDb.getText().toString());
+                        appendStr+="\n "+TAG+" "+String.valueOf(countSeq)+", 2000hz, "+String.valueOf(0)+ "secs, 0.02amp, "+isLeft+", DB-"+tvDb.getText().toString()+", "+checkStatus("Frequency-2000", returnMax(), isLeft);
 
                         Log.d("test", "testnopress2000-isleft-"+String.valueOf(isLeft));
                         Log.d("test", "testnopress2000-type-"+String.valueOf(type));
@@ -644,6 +699,13 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
             restartNoiseService();
         }
         AppLogger.i(TAG, "Frequency 4000 start");
+        String maxmin;
+        if(screeninglevel.equalsIgnoreCase("25")){
+            maxmin="57";
+        }else{
+            maxmin="72";
+        }
+        appendStr+="\n "+TAG +" "+ "Frequency 4000 start,"+screeninglevel+"db,,,Max-"+maxmin;
         type=3;
         handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
@@ -657,11 +719,11 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 if(playTone==null){
                     playTone = new PlayTone(StartrealtestNewActivity.this, StartrealtestNewActivity.this);
                 }
-                    playTone.play(flag, 4000, 0.02, getInternal());
+                    playTone.play(flag, 4000, 0.02, 2000);
                     Log.d("test","test-random-"+String.valueOf(randomInt));
 
                 countSeq++;
-                cTimer = new CountDownTimer(randomInt, 1000) {
+                cTimer = new CountDownTimer(getInternal(), 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
                         String leftright="";
@@ -671,7 +733,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                             leftright="Right";
                         }
                         tvDisplay.setText(String.valueOf(countSeq)+", 4000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
-                        AppLogger.i(TAG, String.valueOf(countSeq)+", 4000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright+", DB-"+tvDb.getText().toString());
+
                         if(String.valueOf(millisUntilFinished/1000).equalsIgnoreCase("0")){
                             ableClick=false;
                         }else{
@@ -679,6 +741,8 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                         }
                     }
                     public void onFinish() {
+                        AppLogger.i(TAG, String.valueOf(countSeq)+", 4000hz, "+String.valueOf(0)+ "secs, 0.02amp, "+isLeft+", DB-"+tvDb.getText().toString());
+                        appendStr+="\n "+TAG+" "+String.valueOf(countSeq)+", 4000hz, "+String.valueOf(0)+ "secs, 0.02amp, "+isLeft+", DB-"+tvDb.getText().toString()+", "+checkStatus("Frequency-4000", returnMax(), isLeft);
 
                         Log.d("test", "testnopress4000-isleft-"+String.valueOf(isLeft));
                         Log.d("test", "testnopress4000-type-"+String.valueOf(type));
@@ -752,6 +816,8 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
         stopService(serviceIntent);
 
         AppLogger.i(TAG, "---------------------------------");
+        appendStr+="\n "+TAG+" ------------------------------------";
+
         Intent intent = new Intent(StartrealtestNewActivity.this, ResultpageActivity.class);
         String Str500 = "REFER", Str1000 = "REFER", Str2000 = "REFER", Str4000 = "REFER";
         String Str500Left = "REFER", Str1000Left = "REFER", Str2000Left = "REFER", Str4000Left = "REFER";
@@ -795,6 +861,57 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
         intent.putExtra("left1000", Str1000Left);
         intent.putExtra("left2000", Str2000Left);
         intent.putExtra("left4000", Str4000Left);
+        String Right500dbnew, Right1000dbnew="", Right2000dbnew="", Right4000dbnew="",
+                Left500dbnew, Left1000dbnew="", Left2000dbnew="", Left4000dbnew="";
+        if(Right500db.contains("Fail")){
+            Right500dbnew="Fail";
+        }else{
+            Right500dbnew="Pass";
+        }
+        intent.putExtra("right500db", Right500dbnew);
+        if(Right1000db.contains("Fail")){
+            Right1000dbnew="Fail";
+        }else{
+            Right1000dbnew="Pass";
+        }
+        intent.putExtra("right1000db", Right1000dbnew);
+        if(Right2000db.contains("Fail")){
+            Right2000dbnew="Fail";
+        }else{
+            Right2000dbnew="Pass";
+        }
+        intent.putExtra("right2000db", Right2000dbnew);
+        if(Right4000db.contains("Fail")){
+            Right4000dbnew="Fail";
+        }else{
+            Right4000dbnew="Pass";
+        }
+        intent.putExtra("right4000db", Right4000dbnew);
+        if(Left500db.contains("Fail")){
+            Left500dbnew="Fail";
+        }else{
+            Left500dbnew="Pass";
+        }
+        intent.putExtra("left500db", Left500dbnew);
+        if(Left1000db.contains("Fail")){
+            Left1000dbnew="Fail";
+        }else{
+            Left1000dbnew="Pass";
+        }
+        intent.putExtra("left1000db", Left1000dbnew);
+        if(Left2000db.contains("Fail")){
+            Left2000dbnew="Fail";
+        }else{
+            Left2000dbnew="Pass";
+        }
+        intent.putExtra("left2000db", Left2000dbnew);
+        if(Left4000db.contains("Fail")){
+            Left4000dbnew="Fail";
+        }else{
+            Left4000dbnew="Pass";
+        }
+        intent.putExtra("left4000db", Left4000dbnew);
+        intent.putExtra("logs", appendStr);
         startActivity(intent);
         finish();
     }
@@ -855,6 +972,94 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
 
         IntentFilter filter = new IntentFilter(NoiseLevelService.ACTION_DATA_UPDATED);
         LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
+    }
+
+    private String checkStatus(String frequency, int dbnoise, boolean isLeft){
+        String status="FAIL";
+        String db = SharedPref.read(SharedPref.SCREENINGLEVEL, "");
+        if(db.equalsIgnoreCase("25")){
+            switch (frequency){
+                case "Frequency-500":
+                    if(dbnoise<41){
+                        status="PASS";
+                    }
+                    break;
+                case "Frequency-1000":
+                    if(dbnoise<46){
+                        status="PASS";
+                    }
+                    break;
+                case "Frequency-2000":
+                    if(dbnoise<54){
+                        status="PASS";
+                    }
+                    break;
+                case "Frequency-4000":
+                    if(dbnoise<57){
+                        status="PASS";
+                    }
+                    break;
+            }
+        }else{
+            switch (frequency){
+                case "Frequency-500":
+                    if(dbnoise<56){
+                        status="PASS";
+                    }
+                    break;
+                case "Frequency-1000":
+                    if(dbnoise<61){
+                        status="PASS";
+                    }
+                    break;
+                case "Frequency-2000":
+                    if(dbnoise<69){
+                        status="PASS";
+                    }
+                    break;
+                case "Frequency-4000":
+                    if(dbnoise<72){
+                        status="PASS";
+                    }
+                    break;
+            }
+        }
+        //check noisy level
+        String newstatus="Fail";
+        if(status.equalsIgnoreCase("PASS")){
+            newstatus="Pass";
+        }
+        switch (frequency){
+            case "Frequency-500":
+                if(isLeft){
+                    Left500db=Left500db+newstatus+"/";
+                }else{
+                    Right500db=Right500db+newstatus+"/";
+                }
+                break;
+            case "Frequency-1000":
+                if(isLeft){
+                    Left1000db=Left1000db+newstatus+"/";
+                }else{
+                    Right1000db=Right1000db+newstatus+"/";
+                }
+                break;
+            case "Frequency-2000":
+                if(isLeft){
+                    Left2000db=Left2000db+newstatus+"/";
+                }else{
+                    Right2000db=Right2000db+newstatus+"/";
+                }
+                break;
+            case "Frequency-4000":
+                if(isLeft){
+                    Left4000db=Left4000db+newstatus+"/";
+                }else{
+                    Right4000db=Right4000db+newstatus+"/";
+                }
+                break;
+        }
+        return status;
     }
 
 }

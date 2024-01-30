@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,12 +24,17 @@ import java.util.TimeZone;
 public class ResultpageActivity extends AppCompatActivity {
     private LinearLayout ll_home, ll_whatsapp, ll_email;
     private TextView tv_id, tvLeft, tvRight, tvNoise, tv_date, tv_location, tv_screening,
-            tv500left, tv1000left, tv2000left, tv4000left, tv500right, tv1000right, tv2000right, tv4000right;
+            tv500left, tv1000left, tv2000left, tv4000left, tv500right, tv1000right, tv2000right, tv4000right,
+            tv500leftNoise, tv1000leftNoise, tv2000leftNoise, tv4000leftNoise,
+            tv500rightNoise, tv1000rightNoise, tv2000rightNoise, tv4000rightNoise;
     private String left, right;
     private String Id, leftStr, rightStr, noisy, result, type, name, phone, email, typecat, datetime, testlocation,
-    screeninglevel, right500, right1000, right2000, right4000, left500, left1000, left2000, left4000, datetime1;
+    screeninglevel, right500, right1000, right2000, right4000, left500, left1000, left2000, left4000, datetime1,
+            left500db, left1000db, left2000db, left4000db,
+            right500db, right1000db, right2000db, right4000db;
     private int countBack=0;
     private CountDownTimer cTimerBack = null;
+    private Button btnLogs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +52,16 @@ public class ResultpageActivity extends AppCompatActivity {
         left2000 = intent.getStringExtra("left2000");
         left4000 = intent.getStringExtra("left4000");
 
+        right500db = intent.getStringExtra("right500db");
+        right1000db = intent.getStringExtra("right1000db");
+        right2000db = intent.getStringExtra("right2000db");
+        right4000db = intent.getStringExtra("right4000db");
+        left500db = intent.getStringExtra("left500db");
+        left1000db = intent.getStringExtra("left1000db");
+        left2000db = intent.getStringExtra("left2000db");
+        left4000db = intent.getStringExtra("left4000db");
+        String logs = intent.getStringExtra("logs");
+
         tv500left = findViewById(R.id.tv500left);
         tv1000left = findViewById(R.id.tv1000left);
         tv2000left = findViewById(R.id.tv2000left);
@@ -54,6 +70,23 @@ public class ResultpageActivity extends AppCompatActivity {
         tv1000right = findViewById(R.id.tv1000right);
         tv2000right = findViewById(R.id.tv2000right);
         tv4000right = findViewById(R.id.tv4000right);
+
+        tv500leftNoise = findViewById(R.id.tv500leftNoise);
+        tv1000leftNoise = findViewById(R.id.tv1000leftNoise);
+        tv2000leftNoise = findViewById(R.id.tv2000leftNoise);
+        tv4000leftNoise = findViewById(R.id.tv4000leftNoise);
+        tv500rightNoise = findViewById(R.id.tv500rightNoise);
+        tv1000rightNoise = findViewById(R.id.tv1000rightNoise);
+        tv2000rightNoise = findViewById(R.id.tv2000rightNoise);
+        tv4000rightNoise = findViewById(R.id.tv4000rightNoise);
+        tv500leftNoise.setText("Noise: "+left500db);
+        tv1000leftNoise.setText("Noise: "+left1000db);
+        tv2000leftNoise.setText("Noise: "+left2000db);
+        tv4000leftNoise.setText("Noise: "+left4000db);
+        tv500rightNoise.setText("Noise: "+right500db);
+        tv1000rightNoise.setText("Noise: "+right1000db);
+        tv2000rightNoise.setText("Noise: "+right2000db);
+        tv4000rightNoise.setText("Noise: "+right4000db);
 
         tv500left.setText("500hz: "+left500);
         tv1000left.setText("1000hz: "+left1000);
@@ -75,9 +108,24 @@ public class ResultpageActivity extends AppCompatActivity {
         testlocation = SharedPref.read(SharedPref.TESTLOCATION, "");
         screeninglevel = SharedPref.read(SharedPref.SCREENINGLEVEL, "");
 
+        String DEBUGMODESTR = SharedPref.read(SharedPref.DEBUGMODE, "");
+
+        btnLogs = findViewById(R.id.btnLogs);
+        btnLogs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ResultpageActivity.this, LogsActivity.class);
+                intent.putExtra("logs", logs);
+                startActivity(intent);
+            }
+        });
+        if(DEBUGMODESTR.equalsIgnoreCase("Y")){
+            btnLogs.setVisibility(View.VISIBLE);
+        }
+
         tv_date = findViewById(R.id.tv_date);
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yy hh:mm aa");
+        SimpleDateFormat dateformat = new SimpleDateFormat("dd/M/yy hh:mm aa");
         datetime1 = dateformat.format(c.getTime());
         tv_date.setText(datetime1);
 
@@ -96,10 +144,10 @@ public class ResultpageActivity extends AppCompatActivity {
                 sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
                 String gmtDateString = sdf.format(currentDate);
                 String textContent = getResultAsText();
-                String shareContent = textContent + "\n\nShared on: " + gmtDateString;
+//                String shareContent = textContent + "\n\nShared on: " + gmtDateString;
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
-                shareIntent.putExtra(Intent.EXTRA_TEXT, shareContent);
+//                shareIntent.putExtra(Intent.EXTRA_TEXT, shareContent);
                 startActivity(Intent.createChooser(shareIntent, "Share With"));
             }
         });
@@ -153,20 +201,30 @@ public class ResultpageActivity extends AppCompatActivity {
 
         text+="iAhead Test Result:";
         text+="\nID: "+Id;
+        String type = SharedPref.read(SharedPref.TYPE, "");
+        if(type.equalsIgnoreCase("child")){
+            text+="\nName : "+ name;
+        }
         text+="\nDate & Time : "+ datetime1;
+        text+="\nScreening Level: "+screeninglevel+"db";
         text+="\nTest Location :"+testlocation+"\n";
-        text+="\nScreening Level: "+screeninglevel+"db\n";
         text+="\nRight:";
+        text += "\nNoise : " + right500db;
         text += "\n500hz : " + right500;
-
+        text += "\nNoise : " + right1000db;
         text+="\n1000hz : "+right1000;
+        text += "\nNoise : " + right2000db;
         text+="\n2000hz : "+right2000;
+        text += "\nNoise : " + right4000db;
         text+="\n4000hz : "+right4000;
         text+="\nLeft:";
+        text += "\nNoise : " + left500db;
         text += "\n500hz : " + left500;
-
+        text += "\nNoise : " + left1000db;
         text+="\n1000hz : "+left1000;
+        text += "\nNoise : " + left2000db;
         text+="\n2000hz : "+left2000;
+        text += "\nNoise : " + left4000db;
         text+="\n4000hz : "+left4000;
 
         return text;

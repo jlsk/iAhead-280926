@@ -158,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
             loggerContext.reset();
             ContextInitializer ci = new ContextInitializer(loggerContext);
             ci.autoConfig();
+            AppLogger.i("test","test");
         } catch (JoranException ex) {
             Log.d("error","error");
         }
