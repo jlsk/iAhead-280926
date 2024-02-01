@@ -395,7 +395,7 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
                 playTone.play(flag, 1000, 0.02, 2000);
 
                 countSeq++;
-                cTimer = new CountDownTimer(getInternal(), 1000) {
+                cTimer = new CountDownTimer(3000, 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
                         String leftright="";
@@ -451,7 +451,7 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
                 };
                 cTimer.start();
             }
-        }, 3000);
+        }, getInternal());
     }
 
     private void startTimerFirst2000(boolean flag) {
@@ -483,7 +483,7 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
                 playTone.play(flag, 2000, 0.02, 2000);
 
                 countSeq++;
-                cTimer = new CountDownTimer(getInternal(), 1000) {
+                cTimer = new CountDownTimer(3000, 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
                         String leftright="";
@@ -541,7 +541,7 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
                 };
                 cTimer.start();
             }
-        }, 3000);
+        }, getInternal());
     }
 
     private void startTimerFirst4000(boolean flag) {
@@ -573,7 +573,7 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
                 playTone.play(flag, 4000, 0.02, 2000);
 
                 countSeq++;
-                cTimer = new CountDownTimer(getInternal(), 1000) {
+                cTimer = new CountDownTimer(3000, 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
                         String leftright="";
@@ -643,7 +643,7 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
                 };
                 cTimer.start();
             }
-        }, 3000);
+        }, getInternal());
     }
 
     //cancel timer

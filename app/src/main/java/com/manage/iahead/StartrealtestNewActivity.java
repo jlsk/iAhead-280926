@@ -410,7 +410,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
         }else{
             maxmin="56";
         }
-        appendStr+="\n "+TAG +" "+ "Frequency 2000 start,"+screeninglevel+"db,,,Max-"+maxmin;
+        appendStr+="\n "+TAG +" "+ "Frequency 500 start,"+screeninglevel+"db,,,Max-"+maxmin;
 
         handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(new Runnable() {
@@ -428,7 +428,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                     Log.d("test","test-random-"+String.valueOf(randomInt));
 
                 countSeq++;
-                cTimer = new CountDownTimer(getInternal(), 1000) {
+                cTimer = new CountDownTimer(3000, 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
                         String leftright="";
@@ -489,12 +489,12 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                                     }
                                 }
                             }
-                        }, 2000);
+                        }, getInternal());
                     }
                 };
                 cTimer.start();
             }
-        }, 2000);
+        }, getInternal());
     }
 
     private void startTimerFirst1000(boolean flag) {
@@ -527,7 +527,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 Log.d("test","test-random-"+String.valueOf(randomInt));
 
                 countSeq++;
-                cTimer = new CountDownTimer(getInternal(), 1000) {
+                cTimer = new CountDownTimer(3000, 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
                         String leftright="";
@@ -587,12 +587,12 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                                     }
                                 }
                             }
-                        }, 2000);
+                        }, getInternal());
                     }
                 };
                 cTimer.start();
             }
-        }, 3000);
+        }, getInternal());
     }
 
     private void startTimerFirst2000(boolean flag) {
@@ -621,11 +621,11 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 if(playTone==null){
                     playTone = new PlayTone(StartrealtestNewActivity.this, StartrealtestNewActivity.this);
                 }
-                    playTone.play(flag, 2000, 0.02, 2000);
+                    playTone.play(flag, 3000, 0.02, 2000);
                     Log.d("test","test-random-"+String.valueOf(randomInt));
 
                 countSeq++;
-                cTimer = new CountDownTimer(getInternal(), 1000) {
+                cTimer = new CountDownTimer(3000, 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
                         String leftright="";
@@ -686,12 +686,12 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                                     }
                                 }
                             }
-                        }, 2000);
+                        }, getInternal());
                     }
                 };
                 cTimer.start();
             }
-        }, 3000);
+        }, getInternal());
     }
 
     private void startTimerFirst4000(boolean flag) {
@@ -723,7 +723,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                     Log.d("test","test-random-"+String.valueOf(randomInt));
 
                 countSeq++;
-                cTimer = new CountDownTimer(getInternal(), 1000) {
+                cTimer = new CountDownTimer(3000, 1000) {
                     public void onTick(long millisUntilFinished) {
                         tvTime.setText("00:0"+String.valueOf(millisUntilFinished/1000));
                         String leftright="";
@@ -796,12 +796,12 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                                     }
                                 }
                             }
-                        }, 2000);
+                        }, getInternal());
                     }
                 };
                 cTimer.start();
             }
-        }, 3000);
+        }, getInternal());
     }
 
     //cancel timer

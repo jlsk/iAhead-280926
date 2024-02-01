@@ -132,10 +132,10 @@ public class ResultpageNoisyActivity extends AppCompatActivity {
                 sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
                 String gmtDateString = sdf.format(currentDate);
                 String textContent = getResultAsText();
-//                String shareContent = textContent + "\n\nShared on: " + gmtDateString;
+                String shareContent = textContent; //+ "\n\nShared on: " + gmtDateString;
                 Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
-//                shareIntent.putExtra(Intent.EXTRA_TEXT, shareContent);
+                shareIntent.putExtra(Intent.EXTRA_TEXT, shareContent);
                 startActivity(Intent.createChooser(shareIntent, "Share With"));
             }
         });
@@ -204,7 +204,7 @@ public class ResultpageNoisyActivity extends AppCompatActivity {
         text+="\n2000hz : "+right2000;
         text+= "\nNoise : "+right4000db;
         text+="\n4000hz : "+right4000;
-        text+="\nLeft:";
+        text+="\n\nLeft:";
         text+= "\n500hz : N/A";
         text+= "\nNoise : "+left1000db;
         text+="\n1000hz : "+left1000;
