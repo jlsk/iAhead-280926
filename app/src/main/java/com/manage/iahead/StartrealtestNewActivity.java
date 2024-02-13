@@ -117,6 +117,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
 
         tvDb = findViewById(R.id.tvDb);
         tvDisplay = findViewById(R.id.tvDisplay);
+        tvTime = findViewById(R.id.tvTime);
 
         String DEBUGMODESTR = SharedPref.read(SharedPref.DEBUGMODE, "");
         if(DEBUGMODESTR.equalsIgnoreCase("Y")){
@@ -124,6 +125,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
         }else{
             tvDb.setVisibility(View.GONE);
             tvDisplay.setVisibility(View.GONE);
+            tvTime.setVisibility(View.GONE);
         }
 //        Intent serviceIntent = new Intent(this, NoiseLevelService.class);
 //        startService(serviceIntent);
@@ -164,7 +166,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 finish();
             }
         });
-        tvTime = findViewById(R.id.tvTime);
+
         llNext = findViewById(R.id.llNext);
         llNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,6 +191,14 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                     checkPass = true;
                     cancelTimer();
                     ivHit.setBackground(getResources().getDrawable(R.drawable.yay));
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            handler.removeCallbacksAndMessages(null);
+                            ivHit.setBackground(getResources().getDrawable(R.drawable.ongoing));
+                        }
+                    }, 500);
                     if (playTone == null) {
                         return;
                     }

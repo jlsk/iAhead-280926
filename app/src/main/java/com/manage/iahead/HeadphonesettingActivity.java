@@ -73,7 +73,9 @@ public class HeadphonesettingActivity extends AppCompatActivity implements PlayT
                 if(playTone!=null) {
                     playTone.stop();
                 }
-                handler.removeCallbacksAndMessages(null);
+                if(handler!=null) {
+                    handler.removeCallbacksAndMessages(null);
+                }
                 if(handler1!=null){
                     handler1.removeCallbacksAndMessages(null);
                 }
@@ -165,14 +167,18 @@ public class HeadphonesettingActivity extends AppCompatActivity implements PlayT
     @Override
     protected void onPause() {
         super.onPause();
-        handler.removeCallbacksAndMessages(null);
+        if(handler!=null) {
+            handler.removeCallbacksAndMessages(null);
+        }
         if(handler1!=null){
             handler1.removeCallbacksAndMessages(null);
         }
         if(playTone!=null){
             playTone.stop();
         }
-        unregisterReceiver(broadcastReceiver);
+        if(broadcastReceiver!=null) {
+            unregisterReceiver(broadcastReceiver);
+        }
         cancelTimerBack();
     }
 
