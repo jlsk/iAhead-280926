@@ -188,12 +188,12 @@
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="25db (Quiet)"/>
+                android:text="25dB (Quiet)"/>
 
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="40db (Noisy)"/>
+                android:text="40dB (Noisy)"/>
 
         </RadioGroup>
     </LinearLayout>

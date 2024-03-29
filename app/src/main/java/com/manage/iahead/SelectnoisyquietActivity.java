@@ -33,7 +33,7 @@ public class SelectnoisyquietActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SharedPref.write(SharedPref.TESTLOCATION, "Noisy");
-                Intent intent = new Intent(SelectnoisyquietActivity.this, StartrealtestNewNoisyActivity.class);
+                Intent intent = new Intent(SelectnoisyquietActivity.this, ReadytestActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -43,7 +43,7 @@ public class SelectnoisyquietActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SharedPref.write(SharedPref.TESTLOCATION, "Quiet");
-                Intent intent = new Intent(SelectnoisyquietActivity.this, StartrealtestNewActivity.class);
+                Intent intent = new Intent(SelectnoisyquietActivity.this, ReadytestActivity.class);
                 startActivity(intent);
                 finish();
             }

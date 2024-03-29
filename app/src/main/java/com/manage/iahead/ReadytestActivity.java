@@ -21,7 +21,7 @@ public class ReadytestActivity extends AppCompatActivity {
         ll_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ReadytestActivity.this, SelectnoisyquietActivity.class);
+                Intent intent = new Intent(ReadytestActivity.this, StartrealtestNewNoisyActivity.class);
                 startActivity(intent);
                 finish();
             }

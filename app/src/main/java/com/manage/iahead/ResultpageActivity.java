@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,7 +27,7 @@ public class ResultpageActivity extends AppCompatActivity {
     private TextView tv_id, tvLeft, tvRight, tvNoise, tv_date, tv_location, tv_screening,
             tv500left, tv1000left, tv2000left, tv4000left, tv500right, tv1000right, tv2000right, tv4000right,
             tv500leftNoise, tv1000leftNoise, tv2000leftNoise, tv4000leftNoise,
-            tv500rightNoise, tv1000rightNoise, tv2000rightNoise, tv4000rightNoise;
+            tv500rightNoise, tv1000rightNoise, tv2000rightNoise, tv4000rightNoise, tvText, tv_1, tv_2, tv_3, tv_test;
     private String left, right;
     private String Id, leftStr, rightStr, noisy, result, type, name, phone, email, typecat, datetime, testlocation,
     screeninglevel, right500, right1000, right2000, right4000, left500, left1000, left2000, left4000, datetime1,
@@ -79,6 +80,20 @@ public class ResultpageActivity extends AppCompatActivity {
         tv1000rightNoise = findViewById(R.id.tv1000rightNoise);
         tv2000rightNoise = findViewById(R.id.tv2000rightNoise);
         tv4000rightNoise = findViewById(R.id.tv4000rightNoise);
+        tvText = findViewById(R.id.tvText);
+        tv_1 = findViewById(R.id.tv_1);
+        tv_2 = findViewById(R.id.tv_2);
+        tv_3 = findViewById(R.id.tv_3);
+        tv_test = findViewById(R.id.tv_test);
+
+        String sourceString = "<b>" + "PASS " + "</b> " +
+                "- Your hearing is OK!<br>"+
+                "<b>" + "REFER " + "</b> " +
+                "- You need a full hearing assessment. Find the nearest hearing clinic for further assessment.<br>"+
+                "<b>" + "NOISE " + "</b> " +
+                "- Please find a quieter place to test your hearing";
+        tvText.setText(Html.fromHtml(sourceString));
+
         tv500leftNoise.setText("Noise: "+left500db);
         tv1000leftNoise.setText("Noise: "+left1000db);
         tv2000leftNoise.setText("Noise: "+left2000db);
@@ -88,15 +103,15 @@ public class ResultpageActivity extends AppCompatActivity {
         tv2000rightNoise.setText("Noise: "+right2000db);
         tv4000rightNoise.setText("Noise: "+right4000db);
 
-        tv500left.setText("500hz: "+left500);
-        tv1000left.setText("1000hz: "+left1000);
-        tv2000left.setText("2000hz: "+left2000);
-        tv4000left.setText("4000hz: "+left4000);
+        tv500left.setText("500Hz: "+left500);
+        tv1000left.setText("1000Hz: "+left1000);
+        tv2000left.setText("2000Hz: "+left2000);
+        tv4000left.setText("4000Hz: "+left4000);
 
-        tv500right.setText("500hz: "+right500);
-        tv1000right.setText("1000hz: "+right1000);
-        tv2000right.setText("2000hz: "+right2000);
-        tv4000right.setText("4000hz: "+right4000);
+        tv500right.setText("500Hz: "+right500);
+        tv1000right.setText("1000Hz: "+right1000);
+        tv2000right.setText("2000Hz: "+right2000);
+        tv4000right.setText("4000Hz: "+right4000);
 
         SharedPref.init(this);
         Id = SharedPref.read(SharedPref.Id, "");
@@ -130,10 +145,15 @@ public class ResultpageActivity extends AppCompatActivity {
         tv_date.setText(datetime1);
 
         tv_location = findViewById(R.id.tv_location);
-        tv_location.setText("Test Location : "+testlocation);
+        tv_location.setText("Test Place : "+testlocation.toUpperCase());
 
         tv_screening = findViewById(R.id.tv_screening);
-        tv_screening.setText("Screening Level : "+screeninglevel+ "db");
+        tv_screening.setText("Screening Level : "+screeninglevel+ "dB");
+        if(screeninglevel.equalsIgnoreCase("25")){
+            tv_test.setText("Test : Quiet");
+        }else{
+            tv_test.setText("Test : Noisy");
+        }
 
         ll_whatsapp = findViewById(R.id.ll_whatsapp);
         ll_whatsapp.setOnClickListener(new View.OnClickListener() {
@@ -177,9 +197,15 @@ public class ResultpageActivity extends AppCompatActivity {
         });
         tv_id = findViewById(R.id.tv_id);
         if(typecat.equalsIgnoreCase("child")){
-            tv_id.setText(Id + " / "+ name + " / "+ datetime);
+//            tv_id.setText(Id + " / "+ name + " / "+ datetime);
+            tv_1.setText("ID : "+Id);
+            tv_2.setText("Name : "+name);
+            tv_3.setText("Date & Time "+datetime);
         }else{
-            tv_id.setText(Id + " / "+ phone + " / "+ email);
+//            tv_id.setText(Id + " / "+ phone + " / "+ email);
+            tv_1.setText("ID : "+Id);
+            tv_2.setText("Phone : "+phone);
+            tv_3.setText("Email "+email);
         }
 
         ll_home = findViewById(R.id.ll_home);
@@ -206,26 +232,37 @@ public class ResultpageActivity extends AppCompatActivity {
             text+="\nName : "+ name;
         }
         text+="\nDate & Time : "+ datetime1;
-        text+="\nScreening Level: "+screeninglevel+"db";
-        text+="\nTest Location :"+testlocation+"\n";
+        text+="\nScreening Level: "+screeninglevel+"dB";
+        String test="";
+        if(screeninglevel.equalsIgnoreCase("25")){
+            test="Quiet";
+        }else{
+            test="Test : Noisy";
+        }
+        text+="\nTest :"+test+"";
+        text+="\nTest Place :"+testlocation+"\n";
         text+="\nRight:";
-        text += "\nNoise : " + right500db;
-        text += "\n500hz : " + right500;
-        text += "\nNoise : " + right1000db;
-        text+="\n1000hz : "+right1000;
-        text += "\nNoise : " + right2000db;
-        text+="\n2000hz : "+right2000;
-        text += "\nNoise : " + right4000db;
-        text+="\n4000hz : "+right4000;
+//        text += "\nNoise : " + right500db;
+        text += "\n500Hz : " + right500;
+//        text += "\nNoise : " + right1000db;
+        text+="\n1000Hz : "+right1000;
+//        text += "\nNoise : " + right2000db;
+        text+="\n2000Hz : "+right2000;
+//        text += "\nNoise : " + right4000db;
+        text+="\n4000Hz : "+right4000;
         text+="\n\nLeft:";
-        text += "\nNoise : " + left500db;
-        text += "\n500hz : " + left500;
-        text += "\nNoise : " + left1000db;
-        text+="\n1000hz : "+left1000;
-        text += "\nNoise : " + left2000db;
-        text+="\n2000hz : "+left2000;
-        text += "\nNoise : " + left4000db;
-        text+="\n4000hz : "+left4000;
+//        text += "\nNoise : " + left500db;
+        text += "\n500Hz : " + left500;
+//        text += "\nNoise : " + left1000db;
+        text+="\n1000Hz : "+left1000;
+//        text += "\nNoise : " + left2000db;
+        text+="\n2000Hz : "+left2000;
+//        text += "\nNoise : " + left4000db;
+        text+="\n4000Hz : "+left4000;
+        text+="\n\n";
+        text+="PASS - Your hearing is OK!\n";
+        text+="REFER - You need a full hearing assessment. FInd the nearest hearing clinic for further assessement\n";
+        text+="NOISY - PLease find a quieter place to test your hearing.";
 
         return text;
     }

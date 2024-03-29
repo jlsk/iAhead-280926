@@ -44,6 +44,7 @@
                 android:textColor="@color/black"/>
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tv_id"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="10dp"
@@ -65,6 +66,7 @@
                 android:textColor="@color/black"/>
 
             <TextView
+                android:visibility="gone"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
@@ -74,6 +76,7 @@
                 android:textColor="@color/black"/>
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tv_date"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
@@ -82,6 +85,36 @@
                 android:text=""
                 android:textSize="21dp"
                 android:textColor="@color/black"/>
+
+            <TextView
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:id="@+id/tv_1"/>
+
+            <TextView
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:id="@+id/tv_2"/>
+
+            <TextView
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:id="@+id/tv_3"/>
 
             <TextView
                 android:visibility="gone"
@@ -95,12 +128,12 @@
 
             <TextView
                 android:id="@+id/tv_screening"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="3dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="21dp"
+                android:textSize="18dp"
                 android:textColor="@color/black"/>
 
             <TextView
@@ -109,18 +142,28 @@
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TEST LOCATION"
+                android:text="TEST PLACE"
+                android:textSize="18dp"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/tv_test"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
                 android:textSize="18dp"
                 android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/tv_location"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="3dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="21dp"
+                android:textSize="18dp"
                 android:textColor="@color/black"/>
 
             <LinearLayout
@@ -151,6 +194,7 @@
                         android:background="@color/black"/>
 
                     <TextView
+                        android:visibility="gone"
                         android:layout_below="@+id/view50"
                         android:layout_marginLeft="30dp"
                         android:id="@+id/tv500leftNoise"
@@ -161,6 +205,7 @@
                         android:textColor="@color/black"/>
 
                     <View
+                        android:visibility="gone"
                         android:id="@+id/view1"
                         android:layout_below="@+id/tv500leftNoise"
                         android:layout_width="match_parent"
@@ -185,6 +230,7 @@
                         android:background="@color/black"/>
 
                     <TextView
+                        android:visibility="gone"
                         android:layout_marginLeft="30dp"
                         android:layout_below="@+id/view51"
                         android:id="@+id/tv1000leftNoise"
@@ -195,6 +241,7 @@
                         android:textColor="@color/black"/>
 
                     <View
+                        android:visibility="gone"
                         android:id="@+id/view11"
                         android:layout_below="@+id/tv1000leftNoise"
                         android:layout_width="match_parent"
@@ -219,6 +266,7 @@
                         android:background="@color/black"/>
 
                     <TextView
+                        android:visibility="gone"
                         android:layout_marginLeft="30dp"
                         android:layout_below="@+id/view52"
                         android:id="@+id/tv2000leftNoise"
@@ -229,6 +277,7 @@
                         android:textColor="@color/black"/>
 
                     <View
+                        android:visibility="gone"
                         android:id="@+id/view12"
                         android:layout_below="@+id/tv2000leftNoise"
                         android:layout_width="match_parent"
@@ -253,6 +302,7 @@
                         android:background="@color/black"/>
 
                     <TextView
+                        android:visibility="gone"
                         android:layout_marginLeft="30dp"
                         android:layout_below="@+id/view53"
                         android:id="@+id/tv4000leftNoise"
@@ -263,6 +313,7 @@
                         android:textColor="@color/black"/>
 
                     <View
+                        android:visibility="gone"
                         android:id="@+id/view13"
                         android:layout_below="@+id/tv4000leftNoise"
                         android:layout_width="match_parent"
@@ -304,6 +355,7 @@
                         android:background="@color/black"/>
 
                     <TextView
+                        android:visibility="gone"
                         android:layout_alignParentRight="true"
                         android:layout_below="@+id/view54"
                         android:layout_marginRight="30dp"
@@ -315,6 +367,7 @@
                         android:textColor="@color/black"/>
 
                     <View
+                        android:visibility="gone"
                         android:id="@+id/view2"
                         android:layout_below="@+id/tv500rightNoise"
                         android:layout_width="match_parent"
@@ -340,6 +393,7 @@
                         android:background="@color/black"/>
 
                     <TextView
+                        android:visibility="gone"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="30dp"
                         android:layout_below="@+id/view55"
@@ -351,6 +405,7 @@
                         android:textColor="@color/black"/>
 
                     <View
+                        android:visibility="gone"
                         android:id="@+id/view21"
                         android:layout_below="@+id/tv1000rightNoise"
                         android:layout_width="match_parent"
@@ -376,6 +431,7 @@
                         android:background="@color/black"/>
 
                     <TextView
+                        android:visibility="gone"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="30dp"
                         android:layout_below="@+id/view56"
@@ -387,6 +443,7 @@
                         android:textColor="@color/black"/>
 
                     <View
+                        android:visibility="gone"
                         android:id="@+id/view22"
                         android:layout_below="@+id/tv2000rightNoise"
                         android:layout_width="match_parent"
@@ -412,6 +469,7 @@
                         android:background="@color/black"/>
 
                     <TextView
+                        android:visibility="gone"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="30dp"
                         android:layout_below="@+id/view57"
@@ -423,8 +481,9 @@
                         android:textColor="@color/black"/>
 
                     <View
+                        android:visibility="gone"
                         android:id="@+id/view23"
-                        android:layout_below="@+id/tv2000right"
+                        android:layout_below="@+id/tv4000rightNoise"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/black"/>
@@ -444,9 +503,18 @@
 
             </LinearLayout>
 
+            <TextView
+                android:layout_margin="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:id="@+id/tvText"
+                android:textSize="18dp"
+                android:textColor="@color/black"/>
+
+
             <LinearLayout
                 android:weightSum="2"
-                android:layout_marginTop="30dp"
                 android:layout_marginBottom="20dp"
                 android:layout_alignParentBottom="true"
                 android:orientation="horizontal"

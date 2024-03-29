@@ -136,9 +136,11 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
         if(DEBUGMODESTR.equalsIgnoreCase("Y")){
             AppLogger.isDebug=true;
         }else{
-            tvDb.setVisibility(View.GONE);
-            tvDisplay.setVisibility(View.GONE);
-            tvTime.setVisibility(View.GONE);
+            tvDb.setVisibility(View.INVISIBLE);
+            tvDisplay.setVisibility(View.INVISIBLE);
+            tvTime.setVisibility(View.INVISIBLE);
+            tvDisplay.setText("1, 1000Hz, 0secs, 0.02amp, Right");
+            tvDb.setText("MIN-30.9618227089333349,MAX-57.60605584939303033");
         }
 //        serviceIntent = new Intent(this, NoiseLevelService.class);
 //        startService(serviceIntent);
@@ -166,7 +168,7 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
 
         tvFrequency = findViewById(R.id.tvFrequency);
 //        tvFrequency.setText("Frequency-"+String.valueOf(500));
-        tvFrequency.setVisibility(View.INVISIBLE);
+//        tvFrequency.setVisibility(View.GONE);
 //        if(DEBUGMODESTR.equalsIgnoreCase("")){
 //            tvFrequency.setVisibility(View.GONE);
 //        }
@@ -415,7 +417,7 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
                         }else{
                             leftright="Right";
                         }
-                        tvDisplay.setText(String.valueOf(countSeq)+", 1000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
+                        tvDisplay.setText(String.valueOf(countSeq)+", 1000Hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
                         if(String.valueOf(millisUntilFinished/1000).equalsIgnoreCase("0")){
                             ableClick=false;
                         }else{
@@ -423,8 +425,8 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
                         }
                     }
                     public void onFinish() {
-                        AppLogger.i(TAG, String.valueOf(countSeq)+", 1000hz, "+String.valueOf(0)+ "secs, 0.02amp, "+isLeft+", DB-"+tvDb.getText().toString());
-                        appendStr+="\n "+TAG +" "+ String.valueOf(countSeq)+", 1000hz, "+String.valueOf(0)+ "secs, 0.02amp, "+isLeft+", DB-"+tvDb.getText().toString()+", "+checkStatus("Frequency-1000", returnMax(), isLeft);
+                        AppLogger.i(TAG, String.valueOf(countSeq)+", 1000Hz, "+String.valueOf(0)+ "secs, 0.02amp, "+isLeft+", DB-"+tvDb.getText().toString());
+                        appendStr+="\n "+TAG +" "+ String.valueOf(countSeq)+", 1000Hz, "+String.valueOf(0)+ "secs, 0.02amp, "+isLeft+", DB-"+tvDb.getText().toString()+", "+checkStatus("Frequency-1000", returnMax(), isLeft);
 
                         Log.d("test", "testnopress1000-isleft-"+String.valueOf(isLeft));
                         Log.d("test", "testnopress1000-type-"+String.valueOf(type));
@@ -503,7 +505,7 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
                         }else{
                             leftright="Right";
                         }
-                        tvDisplay.setText(String.valueOf(countSeq)+", 2000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
+                        tvDisplay.setText(String.valueOf(countSeq)+", 2000Hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
 
                         if(String.valueOf(millisUntilFinished/1000).equalsIgnoreCase("0")){
                             ableClick=false;
@@ -512,8 +514,8 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
                         }
                     }
                     public void onFinish() {
-                        AppLogger.i(TAG, String.valueOf(countSeq)+", 2000hz, "+String.valueOf(0)+ "secs, 0.02amp, "+isLeft+", DB-"+tvDb.getText().toString());
-                        appendStr+="\n "+TAG +" "+ String.valueOf(countSeq)+", 2000hz, "+String.valueOf(0)+ "secs, 0.02amp, "+isLeft+", DB-"+tvDb.getText().toString()+", "+checkStatus("Frequency-2000", returnMax(), isLeft);
+                        AppLogger.i(TAG, String.valueOf(countSeq)+", 2000Hz, "+String.valueOf(0)+ "secs, 0.02amp, "+isLeft+", DB-"+tvDb.getText().toString());
+                        appendStr+="\n "+TAG +" "+ String.valueOf(countSeq)+", 2000Hz, "+String.valueOf(0)+ "secs, 0.02amp, "+isLeft+", DB-"+tvDb.getText().toString()+", "+checkStatus("Frequency-2000", returnMax(), isLeft);
 
                         Log.d("test", "testnopress2000-isleft-"+String.valueOf(isLeft));
                         Log.d("test", "testnopress2000-type-"+String.valueOf(type));
@@ -593,7 +595,7 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
                         }else{
                             leftright="Right";
                         }
-                        tvDisplay.setText(String.valueOf(countSeq)+", 4000hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
+                        tvDisplay.setText(String.valueOf(countSeq)+", 4000Hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
 
                         if(String.valueOf(millisUntilFinished/1000).equalsIgnoreCase("0")){
                             ableClick=false;
@@ -602,8 +604,8 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
                         }
                     }
                     public void onFinish() {
-                        AppLogger.i(TAG, String.valueOf(countSeq)+", 4000hz, "+String.valueOf(0)+ "secs, 0.02amp, "+isLeft+", DB-"+tvDb.getText().toString());
-                        appendStr+="\n "+TAG +" "+ String.valueOf(countSeq)+", 4000hz, "+String.valueOf(0)+ "secs, 0.02amp, "+isLeft+", DB-"+tvDb.getText().toString()+", "+checkStatus("Frequency-4000", returnMax(), isLeft);
+                        AppLogger.i(TAG, String.valueOf(countSeq)+", 4000Hz, "+String.valueOf(0)+ "secs, 0.02amp, "+isLeft+", DB-"+tvDb.getText().toString());
+                        appendStr+="\n "+TAG +" "+ String.valueOf(countSeq)+", 4000Hz, "+String.valueOf(0)+ "secs, 0.02amp, "+isLeft+", DB-"+tvDb.getText().toString()+", "+checkStatus("Frequency-4000", returnMax(), isLeft);
 
                         Log.d("test", "testnopress4000-isleft-"+String.valueOf(isLeft));
                         Log.d("test", "testnopress4000-type-"+String.valueOf(type));

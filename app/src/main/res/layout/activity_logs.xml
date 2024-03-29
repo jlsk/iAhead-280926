@@ -13,42 +13,42 @@
         android:id="@+id/tvLogs"
         android:text="
  NoisySelection Frequency 1000 start
- NoisySelection 1, 1000hz, 3secs, 0.02amp, Right, DB-MIN-29.11418844378545,MAX-30.961209733365266
+ NoisySelection 1, 1000Hz, 3secs, 0.02amp, Right, DB-MIN-29.11418844378545,MAX-30.961209733365266
  NoisySelection PRESS-Frequency-1000, 0.02amp, false, DB-MIN-29.11418844378545,MAX-30.961209733365266
  NoisySelection Frequency 1000 start
- NoisySelection 2, 1000hz, 4secs, 0.02amp, Right, DB-MIN-29.11418844378545,MAX-31.478710906910052
+ NoisySelection 2, 1000Hz, 4secs, 0.02amp, Right, DB-MIN-29.11418844378545,MAX-31.478710906910052
  NoisySelection PRESS-Frequency-1000, 0.02amp, false, DB-MIN-29.11418844378545,MAX-31.478710906910052
  NoisySelection Frequency 2000 start
- NoisySelection 3, 2000hz, 4secs, 0.02amp, Right, DB-MIN-29.30921227344745,MAX-31.384237174443808
+ NoisySelection 3, 2000Hz, 4secs, 0.02amp, Right, DB-MIN-29.30921227344745,MAX-31.384237174443808
  NoisySelection PRESS-Frequency-2000, 0.02amp, false, DB-MIN-29.30921227344745,MAX-31.384237174443808
  NoisySelection Frequency 2000 start
- NoisySelection 4, 2000hz, 4secs, 0.02amp, Right, DB-MIN-29.163056127771732,MAX-31.384237174443808
+ NoisySelection 4, 2000Hz, 4secs, 0.02amp, Right, DB-MIN-29.163056127771732,MAX-31.384237174443808
  NoisySelection PRESS-Frequency-2000, 0.02amp, false, DB-MIN-29.163056127771732,MAX-31.384237174443808
  NoisySelection Frequency 4000 start
- NoisySelection 5, 4000hz, 3secs, 0.02amp, Right, DB-MIN-30.23968516625348,MAX-33.013859205593995
+ NoisySelection 5, 4000Hz, 3secs, 0.02amp, Right, DB-MIN-30.23968516625348,MAX-33.013859205593995
  NoisySelection PRESS-Frequency-4000, 0.02amp, false, DB-MIN-29.627981753879663,MAX-33.013859205593995
  NoisySelection Frequency 4000 start
- NoisySelection 6, 4000hz, 2secs, 0.02amp, Right, DB-MIN-29.627981753879663,MAX-33.013859205593995
+ NoisySelection 6, 4000Hz, 2secs, 0.02amp, Right, DB-MIN-29.627981753879663,MAX-33.013859205593995
  NoisySelection PRESS-Frequency-4000, 0.02amp, false, DB-MIN-29.539271851879132,MAX-33.013859205593995
  NoisySelection Frequency 1000 start
- NoisySelection 7, 1000hz, 4secs, 0.02amp, Left, DB-MIN-29.722621082280554,MAX-31.32529664362847
- NoisySelection 7, 1000hz, 3secs, 0.02amp, Left, DB-MIN-29.638774481370124,MAX-31.32529664362847
+ NoisySelection 7, 1000Hz, 4secs, 0.02amp, Left, DB-MIN-29.722621082280554,MAX-31.32529664362847
+ NoisySelection 7, 1000Hz, 3secs, 0.02amp, Left, DB-MIN-29.638774481370124,MAX-31.32529664362847
  NoisySelection PRESS-Frequency-1000, 0.02amp, true, DB-MIN-29.638774481370124,MAX-31.32529664362847
  NoisySelection Frequency 1000 start
- NoisySelection 8, 1000hz, 3secs, 0.02amp, Left, DB-MIN-29.399130445561447,MAX-35.95843503037235
+ NoisySelection 8, 1000Hz, 3secs, 0.02amp, Left, DB-MIN-29.399130445561447,MAX-35.95843503037235
  NoisySelection PRESS-Frequency-1000, 0.02amp, true, DB-MIN-29.248997182358053,MAX-35.95843503037235
  NoisySelection Frequency 2000 start
- NoisySelection 9, 2000hz, 4secs, 0.02amp, Left, DB-MIN-29.020301339531798,MAX-31.502512543037568
- NoisySelection 9, 2000hz, 3secs, 0.02amp, Left, DB-MIN-29.020301339531798,MAX-31.502512543037568
+ NoisySelection 9, 2000Hz, 4secs, 0.02amp, Left, DB-MIN-29.020301339531798,MAX-31.502512543037568
+ NoisySelection 9, 2000Hz, 3secs, 0.02amp, Left, DB-MIN-29.020301339531798,MAX-31.502512543037568
  NoisySelection PRESS-Frequency-2000, 0.02amp, true, DB-MIN-29.020301339531798,MAX-31.502512543037568
  NoisySelection Frequency 2000 start
- NoisySelection 10, 2000hz, 5secs, 0.02amp, Left, DB-MIN-29.020301339531798,MAX-33.17216173712302
+ NoisySelection 10, 2000Hz, 5secs, 0.02amp, Left, DB-MIN-29.020301339531798,MAX-33.17216173712302
  NoisySelection PRESS-Frequency-2000, 0.02amp, true, DB-MIN-29.020301339531798,MAX-33.17216173712302
  NoisySelection Frequency 4000 start
- NoisySelection 11, 4000hz, 4secs, 0.02amp, Left, DB-MIN-29.815068856610868,MAX-32.728156546630764
+ NoisySelection 11, 4000Hz, 4secs, 0.02amp, Left, DB-MIN-29.815068856610868,MAX-32.728156546630764
  NoisySelection PRESS-Frequency-4000, 0.02amp, true, DB-MIN-29.09071942124674,MAX-32.728156546630764
  NoisySelection Frequency 4000 start
- NoisySelection 12, 4000hz, 3secs, 0.02amp, Left, DB-MIN-29.09071942124674,MAX-32.728156546630764
+ NoisySelection 12, 4000Hz, 3secs, 0.02amp, Left, DB-MIN-29.09071942124674,MAX-32.728156546630764
  NoisySelection PRESS-Frequency-4000, 0.02amp, true, DB-MIN-29.09071942124674,MAX-32.728156546630764
  NoisySelection ------------------------------------)"/>
 
