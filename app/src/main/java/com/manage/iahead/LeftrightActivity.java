@@ -76,6 +76,10 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
                 finish();
             }
         });
+        String DEBUGMODESTR = SharedPref.read(SharedPref.DEBUGMODE, "");
+        if(DEBUGMODESTR.equalsIgnoreCase("Y")){
+            ll_skip.setVisibility(View.VISIBLE);
+        }
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
         float dpWidth = displayMetrics.widthPixels / displayMetrics.density;

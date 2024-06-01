@@ -60,6 +60,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".LogsActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".CalibrationActivity"
+            android:screenOrientation="portrait"/>
 
         <service android:name=".Service.NoiseLevelService"
             android:exported="false" android:enabled="true"/>

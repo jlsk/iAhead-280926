@@ -248,7 +248,7 @@ public class ResultpageNoisyActivity extends AppCompatActivity {
         text+="\n\n";
         text+="PASS - Your hearing is OK!\n";
         text+="REFER - You need a full hearing assessment. FInd the nearest hearing clinic for further assessement\n";
-        text+="NOISY - PLease find a quieter place to test your hearing.";
+        text+="NOISY - Please find a quieter place to test your hearing.";
 
         return text;
     }

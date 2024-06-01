@@ -39,7 +39,7 @@ import ch.qos.logback.core.joran.spi.JoranException;
 public class MainActivity extends AppCompatActivity {
     private ImageView iv_child, iv_parent, iv_therapist;
     private Intent intent;
-    private LinearLayout view_hidden;
+    private LinearLayout view_hidden, ll_calibration;
     private String DEBUGMODESTR="";
     private int countBack=0;
     private CountDownTimer cTimerBack = null;
@@ -53,6 +53,14 @@ public class MainActivity extends AppCompatActivity {
         loggingCheck();
         SharedPref.init(this);
 
+        ll_calibration = findViewById(R.id.ll_calibration);
+        ll_calibration.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CalibrationActivity.class);
+                startActivity(intent);
+            }
+        });
         view_hidden = findViewById(R.id.view_hidden);
         view_hidden.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -60,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 DEBUGMODESTR = SharedPref.read(SharedPref.DEBUGMODE, "");
                 if(DEBUGMODESTR.equalsIgnoreCase("")){
                     SharedPref.write(SharedPref.DEBUGMODE, "Y");
+                    ll_calibration.setVisibility(View.VISIBLE);
                     Toast.makeText(MainActivity.this, "Debug Mode Activated", Toast.LENGTH_SHORT).show();
                     permissionstorage();
                 }else{
@@ -98,6 +107,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        if(DEBUGMODESTR.equalsIgnoreCase("")){
+            SharedPref.write(SharedPref.DEBUGMODE, "Y");
+            ll_calibration.setVisibility(View.VISIBLE);
+        }
     }
 
     private void permissionstorage(){

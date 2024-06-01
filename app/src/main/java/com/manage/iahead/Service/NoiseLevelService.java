@@ -504,7 +504,9 @@ public class NoiseLevelService extends Service {
                             @Override
                             public void run() {
                                 handler.removeCallbacksAndMessages(null);
-                                sendDataToActivity("Noisy", "MIN-"+String.valueOf(dbFftAGlobalMin)+",MAX-"+String.valueOf(dbFftAGlobalMax));
+                                String minStr = String.format("%.2f", dbFftAGlobalMin);
+                                String maxStr = String.format("%.2f", dbFftAGlobalMax);
+                                sendDataToActivity("Noisy", "MIN-"+minStr+",MAX-"+maxStr);
                             }
                         }, 1000);
 

@@ -21,8 +21,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.google.gson.Gson;
 import com.manage.iahead.Jsyn.PlayTone;
 import com.manage.iahead.Jsyn.PlayToneListener;
+import com.manage.iahead.Obj.calibrationObj;
 import com.manage.iahead.Service.NoiseLevelService;
 import com.manage.iahead.Utility.AppLogger;
 import com.manage.iahead.Utility.SharedPref;
@@ -66,6 +68,8 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
     private String TAG="NoisySelection";
     private String appendStr="", screeninglevel, Left500db, Left1000db="", Left2000db="", Left4000db="",
             Right500db, Right1000db="", Right2000db="", Right4000db="";
+    private calibrationObj leftObj, rightObj;
+    private String allAmplitude="";
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -132,6 +136,13 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
         tvDisplay = findViewById(R.id.tvDisplay);
         tvTime = findViewById(R.id.tvTime);
 
+        SharedPref.init(this);
+        Gson gson = new Gson();
+        String leftstr = SharedPref.read(SharedPref.LEFT, "");
+        String rightstr = SharedPref.read(SharedPref.RIGHT, "");
+        leftObj = gson.fromJson(leftstr, calibrationObj.class);
+        rightObj = gson.fromJson(rightstr, calibrationObj.class);
+
         String DEBUGMODESTR = SharedPref.read(SharedPref.DEBUGMODE, "");
         if(DEBUGMODESTR.equalsIgnoreCase("Y")){
             AppLogger.isDebug=true;
@@ -151,7 +162,6 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
         AudioManager am =
                 (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
-        SharedPref.init(this);
         screeninglevel = SharedPref.read(SharedPref.SCREENINGLEVEL, "");
         if(screeninglevel.equalsIgnoreCase("40")) {
             am.setStreamVolume(
@@ -192,8 +202,8 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
             @Override
             public void onClick(View v) {
                 if (tvFrequency.getText().toString().length() > 0) {
-                    AppLogger.i(TAG, "PRESS-" + tvFrequency.getText().toString() + ", 0.02amp, " + isLeft + ", DB-" + tvDb.getText().toString());
-                    appendStr += "\n " + TAG + " PRESS-" + tvFrequency.getText().toString() + ", 0.02amp, " + isLeft + ", DB-" + tvDb.getText().toString() + ", " + checkStatus(tvFrequency.getText().toString(), returnMax(), isLeft);
+                    AppLogger.i(TAG, "PRESS-" + tvFrequency.getText().toString() + ", "+allAmplitude+"amp, " + isLeft + ", DB-" + tvDb.getText().toString());
+                    appendStr += "\n " + TAG + " PRESS-" + tvFrequency.getText().toString() + ", "+allAmplitude+"amp, " + isLeft + ", DB-" + tvDb.getText().toString() + ", " + checkStatus(tvFrequency.getText().toString(), returnMax(), isLeft);
 
                     Log.d("test", "testpress-isleft-" + String.valueOf(isLeft));
                     Log.d("test", "testpress-type-" + String.valueOf(type));
@@ -405,7 +415,19 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
                 if(playTone==null){
                     playTone = new PlayTone(StartrealtestNewNoisyActivity.this, StartrealtestNewNoisyActivity.this);
                 }
-                playTone.play(flag, 1000, 0.02, 2000);
+                String amplitude="";
+                if(flag){
+                    //left
+                    if(leftObj!=null){
+                        amplitude=leftObj.getAmp1000();
+                    }
+                }else{
+                    if(rightObj!=null){
+                        amplitude=rightObj.getAmp1000();
+                    }
+                }
+                allAmplitude=amplitude;
+                playTone.play(flag, 1000, Double.parseDouble(amplitude), 2000);
 
                 countSeq++;
                 cTimer = new CountDownTimer(3000, 1000) {
@@ -417,7 +439,8 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
                         }else{
                             leftright="Right";
                         }
-                        tvDisplay.setText(String.valueOf(countSeq)+", 1000Hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
+                        tvDisplay.setText(String.valueOf(countSeq)+", 1000Hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, " +
+                                ""+allAmplitude+"amp, "+leftright);
                         if(String.valueOf(millisUntilFinished/1000).equalsIgnoreCase("0")){
                             ableClick=false;
                         }else{
@@ -425,8 +448,8 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
                         }
                     }
                     public void onFinish() {
-                        AppLogger.i(TAG, String.valueOf(countSeq)+", 1000Hz, "+String.valueOf(0)+ "secs, 0.02amp, "+isLeft+", DB-"+tvDb.getText().toString());
-                        appendStr+="\n "+TAG +" "+ String.valueOf(countSeq)+", 1000Hz, "+String.valueOf(0)+ "secs, 0.02amp, "+isLeft+", DB-"+tvDb.getText().toString()+", "+checkStatus("Frequency-1000", returnMax(), isLeft);
+                        AppLogger.i(TAG, String.valueOf(countSeq)+", 1000Hz, "+String.valueOf(0)+ "secs, "+allAmplitude+"amp, "+isLeft+", DB-"+tvDb.getText().toString());
+                        appendStr+="\n "+TAG +" "+ String.valueOf(countSeq)+", 1000Hz, "+String.valueOf(0)+ "secs, "+allAmplitude+"amp, "+isLeft+", DB-"+tvDb.getText().toString()+", "+checkStatus("Frequency-1000", returnMax(), isLeft);
 
                         Log.d("test", "testnopress1000-isleft-"+String.valueOf(isLeft));
                         Log.d("test", "testnopress1000-type-"+String.valueOf(type));
@@ -493,7 +516,19 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
                 if(playTone==null){
                     playTone = new PlayTone(StartrealtestNewNoisyActivity.this, StartrealtestNewNoisyActivity.this);
                 }
-                playTone.play(flag, 2000, 0.02, 2000);
+                String amplitude="";
+                if(flag){
+                    //left
+                    if(leftObj!=null){
+                        amplitude=leftObj.getAmp2000();
+                    }
+                }else{
+                    if(rightObj!=null){
+                        amplitude=rightObj.getAmp2000();
+                    }
+                }
+                allAmplitude=amplitude;
+                playTone.play(flag, 2000, Double.parseDouble(amplitude), 2000);
 
                 countSeq++;
                 cTimer = new CountDownTimer(3000, 1000) {
@@ -505,7 +540,7 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
                         }else{
                             leftright="Right";
                         }
-                        tvDisplay.setText(String.valueOf(countSeq)+", 2000Hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
+                        tvDisplay.setText(String.valueOf(countSeq)+", 2000Hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, "+allAmplitude+"amp, "+leftright);
 
                         if(String.valueOf(millisUntilFinished/1000).equalsIgnoreCase("0")){
                             ableClick=false;
@@ -514,8 +549,8 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
                         }
                     }
                     public void onFinish() {
-                        AppLogger.i(TAG, String.valueOf(countSeq)+", 2000Hz, "+String.valueOf(0)+ "secs, 0.02amp, "+isLeft+", DB-"+tvDb.getText().toString());
-                        appendStr+="\n "+TAG +" "+ String.valueOf(countSeq)+", 2000Hz, "+String.valueOf(0)+ "secs, 0.02amp, "+isLeft+", DB-"+tvDb.getText().toString()+", "+checkStatus("Frequency-2000", returnMax(), isLeft);
+                        AppLogger.i(TAG, String.valueOf(countSeq)+", 2000Hz, "+String.valueOf(0)+ "secs, "+allAmplitude+"amp, "+isLeft+", DB-"+tvDb.getText().toString());
+                        appendStr+="\n "+TAG +" "+ String.valueOf(countSeq)+", 2000Hz, "+String.valueOf(0)+ "secs, "+allAmplitude+"amp, "+isLeft+", DB-"+tvDb.getText().toString()+", "+checkStatus("Frequency-2000", returnMax(), isLeft);
 
                         Log.d("test", "testnopress2000-isleft-"+String.valueOf(isLeft));
                         Log.d("test", "testnopress2000-type-"+String.valueOf(type));
@@ -583,7 +618,19 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
                 if(playTone==null){
                     playTone = new PlayTone(StartrealtestNewNoisyActivity.this, StartrealtestNewNoisyActivity.this);
                 }
-                playTone.play(flag, 4000, 0.02, 2000);
+                String amplitude="";
+                if(flag){
+                    //left
+                    if(leftObj!=null){
+                        amplitude=leftObj.getAmp4000();
+                    }
+                }else{
+                    if(rightObj!=null){
+                        amplitude=rightObj.getAmp4000();
+                    }
+                }
+                allAmplitude=amplitude;
+                playTone.play(flag, 4000, Double.parseDouble(amplitude), 2000);
 
                 countSeq++;
                 cTimer = new CountDownTimer(3000, 1000) {
@@ -595,7 +642,7 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
                         }else{
                             leftright="Right";
                         }
-                        tvDisplay.setText(String.valueOf(countSeq)+", 4000Hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, 0.02amp, "+leftright);
+                        tvDisplay.setText(String.valueOf(countSeq)+", 4000Hz, "+String.valueOf(millisUntilFinished/1000)+ "secs, "+allAmplitude+"amp, "+leftright);
 
                         if(String.valueOf(millisUntilFinished/1000).equalsIgnoreCase("0")){
                             ableClick=false;
@@ -604,8 +651,8 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
                         }
                     }
                     public void onFinish() {
-                        AppLogger.i(TAG, String.valueOf(countSeq)+", 4000Hz, "+String.valueOf(0)+ "secs, 0.02amp, "+isLeft+", DB-"+tvDb.getText().toString());
-                        appendStr+="\n "+TAG +" "+ String.valueOf(countSeq)+", 4000Hz, "+String.valueOf(0)+ "secs, 0.02amp, "+isLeft+", DB-"+tvDb.getText().toString()+", "+checkStatus("Frequency-4000", returnMax(), isLeft);
+                        AppLogger.i(TAG, String.valueOf(countSeq)+", 4000Hz, "+String.valueOf(0)+ "secs, "+allAmplitude+"amp, "+isLeft+", DB-"+tvDb.getText().toString());
+                        appendStr+="\n "+TAG +" "+ String.valueOf(countSeq)+", 4000Hz, "+String.valueOf(0)+ "secs, "+allAmplitude+"amp, "+isLeft+", DB-"+tvDb.getText().toString()+", "+checkStatus("Frequency-4000", returnMax(), isLeft);
 
                         Log.d("test", "testnopress4000-isleft-"+String.valueOf(isLeft));
                         Log.d("test", "testnopress4000-type-"+String.valueOf(type));
