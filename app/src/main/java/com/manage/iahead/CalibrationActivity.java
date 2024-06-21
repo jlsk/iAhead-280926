@@ -35,7 +35,7 @@ import org.jtransforms.fft.DoubleFFT_1D;
 
 import java.lang.reflect.Type;
 
-public class CalibrationActivity extends AppCompatActivity {
+public class CalibrationActivity extends AppCompatActivity implements PlayToneListener{
     private final static String TAG = CalibrationActivity.class.getSimpleName();
     private TextView tv_min, tv_max, tv_db;
     private LinearLayout ll_Save, ll_play, ll_stop, ll_back;
@@ -94,6 +94,20 @@ public class CalibrationActivity extends AppCompatActivity {
     private EditText et_gain;
     private EditText et_500, et_1000, et_2000, et_4000;
     private RadioGroup radioGroup;
+    private LinearLayout ll_play1, ll_play2, ll_play3, ll_play4;
+    private String leftRight="Left";
+    private PlayTone playTone;
+
+    @Override
+    public void onPlay() {
+
+    }
+
+    @Override
+    public void onSleep() {
+
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,12 +121,77 @@ public class CalibrationActivity extends AppCompatActivity {
         tv_min = findViewById(R.id.tv_min);
         et_gain = findViewById(R.id.et_gain);
         String gainStr = SharedPref.read(SharedPref.GAIN, "");
+        if(gainStr.equalsIgnoreCase("")) {
+            gainStr="0";
+        }
         et_gain.setText(gainStr);
 
         et_500 = findViewById(R.id.et_500);
         et_1000 = findViewById(R.id.et_1000);
         et_2000 = findViewById(R.id.et_2000);
         et_4000 = findViewById(R.id.et_4000);
+
+        playTone = new PlayTone(this, CalibrationActivity.this);
+        ll_play1 = findViewById(R.id.ll_play1);
+        ll_play1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(et_500.getText().toString().length()==0){
+                    Toast.makeText(CalibrationActivity.this, "Please input frequency 500", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                boolean booleftright=false;
+                if(leftRight.equalsIgnoreCase("left")){
+                    booleftright=true;
+                }
+                playTone.play(booleftright, 500, Double.parseDouble(et_500.getText().toString()), 2000);
+            }
+        });
+        ll_play2 = findViewById(R.id.ll_play2);
+        ll_play2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(et_1000.getText().toString().length()==0){
+                    Toast.makeText(CalibrationActivity.this, "Please input frequency 1000", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                boolean booleftright=false;
+                if(leftRight.equalsIgnoreCase("left")){
+                    booleftright=true;
+                }
+                playTone.play(booleftright, 1000, Double.parseDouble(et_1000.getText().toString()), 2000);
+            }
+        });
+        ll_play3 = findViewById(R.id.ll_play3);
+        ll_play3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(et_2000.getText().toString().length()==0){
+                    Toast.makeText(CalibrationActivity.this, "Please input frequency 2000", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                boolean booleftright=false;
+                if(leftRight.equalsIgnoreCase("left")){
+                    booleftright=true;
+                }
+                playTone.play(booleftright, 2000, Double.parseDouble(et_2000.getText().toString()), 2000);
+            }
+        });
+        ll_play4 = findViewById(R.id.ll_play4);
+        ll_play4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(et_4000.getText().toString().length()==0){
+                    Toast.makeText(CalibrationActivity.this, "Please input frequency 4000", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                boolean booleftright=false;
+                if(leftRight.equalsIgnoreCase("left")){
+                    booleftright=true;
+                }
+                playTone.play(booleftright, 4000, Double.parseDouble(et_4000.getText().toString()), 2000);
+            }
+        });
 
         radioGroup = findViewById(R.id.radioGroup);
         Gson gson = new Gson();
@@ -155,6 +234,7 @@ public class CalibrationActivity extends AppCompatActivity {
                 RadioButton selectedRadioButton = findViewById(checkedId);
                 String selectedOption = selectedRadioButton.getText().toString();
                 if(selectedOption.equalsIgnoreCase("Left")){
+                    leftRight="Left";
                     String leftstr = SharedPref.read(SharedPref.LEFT, "");
                     calibrationObj leftObj = gson.fromJson(leftstr, calibrationObj.class);
                     if(leftObj!=null) {
@@ -169,6 +249,7 @@ public class CalibrationActivity extends AppCompatActivity {
                         et_4000.setText("");
                     }
                 }else{
+                    leftRight="Right";
                     String rightstr = SharedPref.read(SharedPref.RIGHT, "");
                     calibrationObj rightObj = gson.fromJson(rightstr, calibrationObj.class);
                     if(rightObj!=null) {
