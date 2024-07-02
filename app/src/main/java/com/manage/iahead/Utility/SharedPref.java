@@ -17,6 +17,7 @@ public class SharedPref {
     public static final String GAIN = "GAIN";
     public static final String LEFT = "LEFT";
     public static final String RIGHT = "RIGHT";
+    public static final String VOLUME = "VOLUME";
     public static final String DEBUGMODE = "DEBUGMODE";
     public static final String FREQUENCY = "FREQUENCY";
     public static final String MY_PREFS_NAME = "MyPrefsFile";

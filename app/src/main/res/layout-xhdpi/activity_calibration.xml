@@ -15,6 +15,15 @@
         android:textSize="25dp"
         android:textColor="@color/black"/>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
     <TextView
         android:layout_marginTop="5dp"
         android:layout_marginLeft="10dp"
@@ -554,6 +563,36 @@
         </LinearLayout>
     </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Volume Control : "
+                android:textSize="18dp"
+                android:textColor="@color/black"/>
+
+            <Switch
+                android:id="@+id/switch1"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="18dp"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
     <LinearLayout
         android:layout_marginTop="10dp"
         android:id="@+id/ll_back"
@@ -572,5 +611,7 @@
             android:layout_marginRight="10dp"
             android:textColor="@color/black"/>
     </LinearLayout>
+    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

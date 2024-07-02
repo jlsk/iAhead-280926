@@ -70,6 +70,7 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
             Right500db="", Right1000db="", Right2000db="", Right4000db="";
     private calibrationObj leftObj, rightObj;
     private String allAmplitude="";
+    private String volume="";
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -150,16 +151,19 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                 (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
         screeninglevel = SharedPref.read(SharedPref.SCREENINGLEVEL, "");
-        if(screeninglevel.equalsIgnoreCase("40")) {
-            am.setStreamVolume(
-                    AudioManager.STREAM_MUSIC,
-                    2,
-                    0);
-        }else{
-            am.setStreamVolume(
-                    AudioManager.STREAM_MUSIC,
-                    1,
-                    0);
+        volume = SharedPref.read(SharedPref.VOLUME, "");
+        if(volume.equalsIgnoreCase("Y")) {
+            if (screeninglevel.equalsIgnoreCase("40")) {
+                am.setStreamVolume(
+                        AudioManager.STREAM_MUSIC,
+                        2,
+                        0);
+            } else {
+                am.setStreamVolume(
+                        AudioManager.STREAM_MUSIC,
+                        1,
+                        0);
+            }
         }
 
         playTone = new PlayTone(this, StartrealtestNewActivity.this);
@@ -461,6 +465,9 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                     }
                 }
                 allAmplitude=amplitude;
+                if(amplitude.equalsIgnoreCase("")){
+                    amplitude="0.02";
+                }
                     playTone.play(flag, 500, Double.parseDouble(amplitude), 2000);
                     Log.d("test","test-random-"+String.valueOf(randomInt));
 
@@ -572,6 +579,9 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                     }
                 }
                 allAmplitude=amplitude;
+                if(amplitude.equalsIgnoreCase("")){
+                    amplitude="0.02";
+                }
                 playTone.play(flag, 1000, Double.parseDouble(amplitude), 2000);
                 Log.d("test","test-random-"+String.valueOf(randomInt));
 
@@ -682,6 +692,9 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                     }
                 }
                 allAmplitude=amplitude;
+                if(amplitude.equalsIgnoreCase("")){
+                    amplitude="0.02";
+                }
                     playTone.play(flag, 3000, Double.parseDouble(amplitude), 2000);
                     Log.d("test","test-random-"+String.valueOf(randomInt));
 
@@ -792,6 +805,9 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
                     }
                 }
                 allAmplitude=amplitude;
+                if(amplitude.equalsIgnoreCase("")){
+                    amplitude="0.02";
+                }
                     playTone.play(flag, 4000, Double.parseDouble(amplitude), 2000);
                     Log.d("test","test-random-"+String.valueOf(randomInt));
 
@@ -1020,18 +1036,21 @@ public class StartrealtestNewActivity extends AppCompatActivity implements PlayT
     public boolean dispatchKeyEvent(KeyEvent event) {
         int action = event.getAction();
         int keyCode = event.getKeyCode();
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_VOLUME_UP:
-                if (action == KeyEvent.ACTION_DOWN) {
-                }
-                return true;
-            case KeyEvent.KEYCODE_VOLUME_DOWN:
-                if (action == KeyEvent.ACTION_DOWN) {
-                }
-                return true;
-            default:
-                return super.dispatchKeyEvent(event);
+        if(volume.equalsIgnoreCase("Y")) {
+            switch (keyCode) {
+                case KeyEvent.KEYCODE_VOLUME_UP:
+                    if (action == KeyEvent.ACTION_DOWN) {
+                    }
+                    return true;
+                case KeyEvent.KEYCODE_VOLUME_DOWN:
+                    if (action == KeyEvent.ACTION_DOWN) {
+                    }
+                    return true;
+                default:
+                    return super.dispatchKeyEvent(event);
+            }
         }
+        return false;
     }
 
     private void restartNoiseService(){

@@ -42,6 +42,7 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
     private int countBack=0;
     private CountDownTimer cTimerBack = null;
     private int random, randomInt;
+    private String volume="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,16 +55,19 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
 
         SharedPref.init(this);
         String screeninglevel = SharedPref.read(SharedPref.SCREENINGLEVEL, "");
-        if(screeninglevel.equalsIgnoreCase("40")) {
-            am.setStreamVolume(
-                    AudioManager.STREAM_MUSIC,
-                    2,
-                    0);
-        }else{
-            am.setStreamVolume(
-                    AudioManager.STREAM_MUSIC,
-                    1,
-                    0);
+        volume = SharedPref.read(SharedPref.VOLUME, "");
+        if(volume.equalsIgnoreCase("Y")) {
+            if (screeninglevel.equalsIgnoreCase("40")) {
+                am.setStreamVolume(
+                        AudioManager.STREAM_MUSIC,
+                        2,
+                        0);
+            } else {
+                am.setStreamVolume(
+                        AudioManager.STREAM_MUSIC,
+                        1,
+                        0);
+            }
         }
 
         ll_skip = findViewById(R.id.ll_skip);
@@ -404,17 +408,20 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
     public boolean dispatchKeyEvent(KeyEvent event) {
         int action = event.getAction();
         int keyCode = event.getKeyCode();
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_VOLUME_UP:
-                if (action == KeyEvent.ACTION_DOWN) {
-                }
-                return true;
-            case KeyEvent.KEYCODE_VOLUME_DOWN:
-                if (action == KeyEvent.ACTION_DOWN) {
-                }
-                return true;
-            default:
-                return super.dispatchKeyEvent(event);
+        if(volume.equalsIgnoreCase("Y")) {
+            switch (keyCode) {
+                case KeyEvent.KEYCODE_VOLUME_UP:
+                    if (action == KeyEvent.ACTION_DOWN) {
+                    }
+                    return true;
+                case KeyEvent.KEYCODE_VOLUME_DOWN:
+                    if (action == KeyEvent.ACTION_DOWN) {
+                    }
+                    return true;
+                default:
+                    return super.dispatchKeyEvent(event);
+            }
         }
+        return false;
     }
 }

@@ -13,10 +13,12 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -97,6 +99,7 @@ public class CalibrationActivity extends AppCompatActivity implements PlayToneLi
     private LinearLayout ll_play1, ll_play2, ll_play3, ll_play4;
     private String leftRight="Left";
     private PlayTone playTone;
+    private Switch switch1;
 
     @Override
     public void onPlay() {
@@ -120,6 +123,21 @@ public class CalibrationActivity extends AppCompatActivity implements PlayToneLi
         tv_max = findViewById(R.id.tv_max);
         tv_min = findViewById(R.id.tv_min);
         et_gain = findViewById(R.id.et_gain);
+        switch1 = findViewById(R.id.switch1);
+        String volume = SharedPref.read(SharedPref.VOLUME, "");
+        if(volume.equalsIgnoreCase("Y")){
+            switch1.setChecked(true);
+        }
+        switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    SharedPref.write(SharedPref.VOLUME, "Y");
+                } else {
+                    SharedPref.write(SharedPref.VOLUME, "");
+                }
+            }
+        });
         String gainStr = SharedPref.read(SharedPref.GAIN, "");
         if(gainStr.equalsIgnoreCase("")) {
             gainStr="0";
