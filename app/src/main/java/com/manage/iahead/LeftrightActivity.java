@@ -20,8 +20,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import com.google.gson.Gson;
 import com.manage.iahead.Jsyn.PlayTone;
 import com.manage.iahead.Jsyn.PlayToneListener;
+import com.manage.iahead.Obj.calibrationObj;
 import com.manage.iahead.Utility.SharedPref;
 
 import java.util.Random;
@@ -42,7 +44,8 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
     private int countBack=0;
     private CountDownTimer cTimerBack = null;
     private int random, randomInt;
-    private String volume="";
+    private String volume="", screeninglevel="";
+    private calibrationObj leftObj, rightObj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +57,13 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
                 (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
         SharedPref.init(this);
-        String screeninglevel = SharedPref.read(SharedPref.SCREENINGLEVEL, "");
+        Gson gson = new Gson();
+        String leftstr = SharedPref.read(SharedPref.LEFT, "");
+        String rightstr = SharedPref.read(SharedPref.RIGHT, "");
+        leftObj = gson.fromJson(leftstr, calibrationObj.class);
+        rightObj = gson.fromJson(rightstr, calibrationObj.class);
+
+        screeninglevel = SharedPref.read(SharedPref.SCREENINGLEVEL, "");
         volume = SharedPref.read(SharedPref.VOLUME, "");
         if(volume.equalsIgnoreCase("Y")) {
             if (screeninglevel.equalsIgnoreCase("40")) {
@@ -172,7 +181,29 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
                 if(playTone==null){
                     playTone = new PlayTone(LeftrightActivity.this, LeftrightActivity.this);
                 }
-                playTone.play(isLeft, 1000, 0.02, 2000);
+                String amplitude="";
+                if(isLeft){
+                    if(leftObj!=null){
+                        if(screeninglevel.equalsIgnoreCase("25")){
+                            amplitude = leftObj.getConditioning();
+                        }else {
+                            amplitude = leftObj.getConditioning_40();
+                        }
+                    }
+                }else{
+                    if(rightObj!=null){
+                        if(screeninglevel.equalsIgnoreCase("25")){
+                            amplitude = rightObj.getConditioning();
+                        }else {
+                            amplitude = rightObj.getConditioning_40();
+                        }
+                    }
+                }
+                if(amplitude.equalsIgnoreCase("")){
+                    amplitude="0.02";
+                }
+                Log.d("testplay", "testplay-"+String.valueOf(isLeft)+"-"+amplitude);
+                playTone.play(isLeft, 1000, Double.parseDouble(amplitude), 2000);
 
                 startTimer(0);
             }
@@ -258,8 +289,21 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
                                     countTone++;
                                     Log.d("test", "test-"+String.valueOf(countTone));
                                     if(countTone>2) {
-                                        playTone.play(true, 1000, 0.02, randomInt);
+                                        String amplitude="";
 
+                                        if(leftObj!=null){
+                                            if(screeninglevel.equalsIgnoreCase("25")){
+                                                amplitude = leftObj.getConditioning();
+                                            }else {
+                                                amplitude = leftObj.getConditioning_40();
+                                            }
+                                        }
+
+                                        if(amplitude.equalsIgnoreCase("")){
+                                            amplitude="0.02";
+                                        }
+                                        playTone.play(true, 1000, Double.parseDouble(amplitude), randomInt);
+                                        Log.d("testplay", "testplay-true-"+amplitude);
                                         RelativeLayout.LayoutParams params;
                                         if(dpInt<350){
                                             params = new RelativeLayout.LayoutParams(
@@ -281,8 +325,20 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
                                         startTimer(1);
                                     }else{
                                         //right
-                                        playTone.play(false, 1000, 0.02, randomInt);
+                                        String amplitude="";
+                                        if(rightObj!=null){
+                                            if(screeninglevel.equalsIgnoreCase("25")){
+                                                amplitude = rightObj.getConditioning();
+                                            }else {
+                                                amplitude = rightObj.getConditioning_40();
+                                            }
+                                        }
 
+                                        if(amplitude.equalsIgnoreCase("")){
+                                            amplitude="0.02";
+                                        }
+                                        playTone.play(false, 1000, Double.parseDouble(amplitude), randomInt);
+                                        Log.d("testplay", "testplay-false-"+amplitude);
                                         RelativeLayout.LayoutParams paramsRight;
                                         if(dpInt<350){
                                             paramsRight = new RelativeLayout.LayoutParams(
@@ -314,8 +370,21 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
                                             if(playTone==null){
                                                 playTone = new PlayTone(LeftrightActivity.this, LeftrightActivity.this);
                                             }
-                                            playTone.play(true, 1000, 0.02, randomInt);
+                                            String amplitude="";
 
+                                            if(leftObj!=null){
+                                                if(screeninglevel.equalsIgnoreCase("25")){
+                                                    amplitude = leftObj.getConditioning();
+                                                }else {
+                                                    amplitude = leftObj.getConditioning_40();
+                                                }
+                                            }
+
+                                            if(amplitude.equalsIgnoreCase("")){
+                                                amplitude="0.02";
+                                            }
+                                            playTone.play(true, 1000, Double.parseDouble(amplitude), randomInt);
+                                            Log.d("testplay", "testplay-true-"+amplitude);
                                             RelativeLayout.LayoutParams params;
                                             if(dpInt<350){
                                                 params = new RelativeLayout.LayoutParams(

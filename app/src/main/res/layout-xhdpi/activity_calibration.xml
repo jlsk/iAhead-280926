@@ -71,7 +71,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Amplitude"
+                android:text="Amplitude (25 dBHL)"
                 android:textSize="18dp"
                 android:textColor="@color/black"/>
         </LinearLayout>
@@ -333,6 +333,433 @@
                 android:textColor="@color/black"/>
         </LinearLayout>
     </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Conditioning"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"/>
+
+                <LinearLayout
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/ll_play5"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/et_grey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Play"
+                        android:textSize="18dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:inputType="numberDecimal"
+                    android:id="@+id/et_conditioning"
+                    android:paddingRight="5dp"
+                    android:paddingLeft="5dp"
+                    android:background="@drawable/et_grey"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="18dp"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Frequency"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Amplitude (40 dBHL)"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="500"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"/>
+
+                <LinearLayout
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/ll_play140"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/et_grey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Play"
+                        android:textSize="18dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:inputType="numberDecimal"
+                    android:id="@+id/et_500_40"
+                    android:paddingRight="5dp"
+                    android:paddingLeft="5dp"
+                    android:background="@drawable/et_grey"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="18dp"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1000"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"/>
+
+                <LinearLayout
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/ll_play240"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/et_grey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Play"
+                        android:textSize="18dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:inputType="numberDecimal"
+                    android:id="@+id/et_1000_40"
+                    android:paddingRight="5dp"
+                    android:paddingLeft="5dp"
+                    android:background="@drawable/et_grey"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="18dp"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2000"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"/>
+
+                <LinearLayout
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/ll_play340"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/et_grey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Play"
+                        android:textSize="18dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:inputType="numberDecimal"
+                    android:id="@+id/et_2000_40"
+                    android:paddingRight="5dp"
+                    android:paddingLeft="5dp"
+                    android:background="@drawable/et_grey"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="18dp"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4000"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"/>
+
+                <LinearLayout
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/ll_play440"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/et_grey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Play"
+                        android:textSize="18dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:inputType="numberDecimal"
+                    android:id="@+id/et_4000_40"
+                    android:paddingRight="5dp"
+                    android:paddingLeft="5dp"
+                    android:background="@drawable/et_grey"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="18dp"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Conditioning"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"/>
+
+                <LinearLayout
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/ll_play540"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/et_grey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Play"
+                        android:textSize="18dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:inputType="numberDecimal"
+                    android:id="@+id/et_conditioning_40"
+                    android:paddingRight="5dp"
+                    android:paddingLeft="5dp"
+                    android:background="@drawable/et_grey"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="18dp"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+        </LinearLayout>
 
     <RadioGroup
         android:layout_gravity="center_horizontal"

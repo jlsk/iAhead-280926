@@ -94,9 +94,10 @@ public class CalibrationActivity extends AppCompatActivity implements PlayToneLi
     private double dbFftAGlobalMax;
     private double dbFftAGlobalMin;
     private EditText et_gain;
-    private EditText et_500, et_1000, et_2000, et_4000;
+    private EditText et_500, et_1000, et_2000, et_4000, et_conditioning, et_500_40, et_1000_40,
+            et_2000_40, et_4000_40, et_conditioning_40;
     private RadioGroup radioGroup;
-    private LinearLayout ll_play1, ll_play2, ll_play3, ll_play4;
+    private LinearLayout ll_play1, ll_play2, ll_play3, ll_play4, ll_play5, ll_play140, ll_play240, ll_play340, ll_play440, ll_play540;
     private String leftRight="Left";
     private PlayTone playTone;
     private Switch switch1;
@@ -148,6 +149,12 @@ public class CalibrationActivity extends AppCompatActivity implements PlayToneLi
         et_1000 = findViewById(R.id.et_1000);
         et_2000 = findViewById(R.id.et_2000);
         et_4000 = findViewById(R.id.et_4000);
+        et_conditioning = findViewById(R.id.et_conditioning);
+        et_500_40 = findViewById(R.id.et_500_40);
+        et_1000_40 = findViewById(R.id.et_1000_40);
+        et_2000_40 = findViewById(R.id.et_2000_40);
+        et_4000_40 = findViewById(R.id.et_4000_40);
+        et_conditioning_40 = findViewById(R.id.et_conditioning_40);
 
         playTone = new PlayTone(this, CalibrationActivity.this);
         ll_play1 = findViewById(R.id.ll_play1);
@@ -162,6 +169,11 @@ public class CalibrationActivity extends AppCompatActivity implements PlayToneLi
                 if(leftRight.equalsIgnoreCase("left")){
                     booleftright=true;
                 }
+                if(playTone!=null){
+                    playTone.stop();
+                }
+                playTone=null;
+                playTone = new PlayTone(CalibrationActivity.this, CalibrationActivity.this);
                 playTone.play(booleftright, 500, Double.parseDouble(et_500.getText().toString()), 2000);
             }
         });
@@ -177,6 +189,11 @@ public class CalibrationActivity extends AppCompatActivity implements PlayToneLi
                 if(leftRight.equalsIgnoreCase("left")){
                     booleftright=true;
                 }
+                if(playTone!=null){
+                    playTone.stop();
+                }
+                playTone=null;
+                playTone = new PlayTone(CalibrationActivity.this, CalibrationActivity.this);
                 playTone.play(booleftright, 1000, Double.parseDouble(et_1000.getText().toString()), 2000);
             }
         });
@@ -192,6 +209,11 @@ public class CalibrationActivity extends AppCompatActivity implements PlayToneLi
                 if(leftRight.equalsIgnoreCase("left")){
                     booleftright=true;
                 }
+                if(playTone!=null){
+                    playTone.stop();
+                }
+                playTone=null;
+                playTone = new PlayTone(CalibrationActivity.this, CalibrationActivity.this);
                 playTone.play(booleftright, 2000, Double.parseDouble(et_2000.getText().toString()), 2000);
             }
         });
@@ -207,9 +229,35 @@ public class CalibrationActivity extends AppCompatActivity implements PlayToneLi
                 if(leftRight.equalsIgnoreCase("left")){
                     booleftright=true;
                 }
+                if(playTone!=null){
+                    playTone.stop();
+                }
+                playTone=null;
+                playTone = new PlayTone(CalibrationActivity.this, CalibrationActivity.this);
                 playTone.play(booleftright, 4000, Double.parseDouble(et_4000.getText().toString()), 2000);
             }
         });
+        ll_play5 = findViewById(R.id.ll_play5);
+        ll_play5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(et_conditioning.getText().toString().length()==0){
+                    Toast.makeText(CalibrationActivity.this, "Please input frequency conditioning", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                boolean booleftright=false;
+                if(leftRight.equalsIgnoreCase("left")){
+                    booleftright=true;
+                }
+                if(playTone!=null){
+                    playTone.stop();
+                }
+                playTone=null;
+                playTone = new PlayTone(CalibrationActivity.this, CalibrationActivity.this);
+                playTone.play(booleftright, 1000, Double.parseDouble(et_conditioning.getText().toString()), 2000);
+            }
+        });
+        db40play();
 
         radioGroup = findViewById(R.id.radioGroup);
         Gson gson = new Gson();
@@ -227,6 +275,13 @@ public class CalibrationActivity extends AppCompatActivity implements PlayToneLi
                     et_1000.setText(leftObj.getAmp1000());
                     et_2000.setText(leftObj.getAmp2000());
                     et_4000.setText(leftObj.getAmp4000());
+                    et_conditioning.setText(leftObj.getConditioning());
+
+                    et_500_40.setText(leftObj.getAmp500_40());
+                    et_1000_40.setText(leftObj.getAmp1000_40());
+                    et_2000_40.setText(leftObj.getAmp2000_40());
+                    et_4000_40.setText(leftObj.getAmp4000_40());
+                    et_conditioning_40.setText(leftObj.getConditioning_40());
                 }
             }
         }
@@ -238,10 +293,17 @@ public class CalibrationActivity extends AppCompatActivity implements PlayToneLi
                 RadioButton selectedRadioButton = findViewById(selectedId);
                 String selectedOption = selectedRadioButton.getText().toString();
                 if(selectedOption.equalsIgnoreCase("Right")){
-                    et_500.setText(leftObj.getAmp500());
-                    et_1000.setText(leftObj.getAmp1000());
-                    et_2000.setText(leftObj.getAmp2000());
-                    et_4000.setText(leftObj.getAmp4000());
+                    et_500.setText(rightObj.getAmp500());
+                    et_1000.setText(rightObj.getAmp1000());
+                    et_2000.setText(rightObj.getAmp2000());
+                    et_4000.setText(rightObj.getAmp4000());
+                    et_conditioning.setText(rightObj.getConditioning());
+
+                    et_500_40.setText(rightObj.getAmp500_40());
+                    et_1000_40.setText(rightObj.getAmp1000_40());
+                    et_2000_40.setText(rightObj.getAmp2000_40());
+                    et_4000_40.setText(rightObj.getAmp4000_40());
+                    et_conditioning_40.setText(rightObj.getConditioning_40());
                 }
             }
         }
@@ -260,11 +322,25 @@ public class CalibrationActivity extends AppCompatActivity implements PlayToneLi
                         et_1000.setText(leftObj.getAmp1000());
                         et_2000.setText(leftObj.getAmp2000());
                         et_4000.setText(leftObj.getAmp4000());
+                        et_conditioning.setText(leftObj.getConditioning());
+
+                        et_500_40.setText(leftObj.getAmp500_40());
+                        et_1000_40.setText(leftObj.getAmp1000_40());
+                        et_2000_40.setText(leftObj.getAmp2000_40());
+                        et_4000_40.setText(leftObj.getAmp4000_40());
+                        et_conditioning_40.setText(leftObj.getConditioning_40());
                     }else{
                         et_500.setText("");
                         et_1000.setText("");
                         et_2000.setText("");
                         et_4000.setText("");
+                        et_conditioning.setText("");
+
+                        et_500_40.setText("");
+                        et_1000_40.setText("");
+                        et_2000_40.setText("");
+                        et_4000_40.setText("");
+                        et_conditioning_40.setText("");
                     }
                 }else{
                     leftRight="Right";
@@ -275,11 +351,25 @@ public class CalibrationActivity extends AppCompatActivity implements PlayToneLi
                         et_1000.setText(rightObj.getAmp1000());
                         et_2000.setText(rightObj.getAmp2000());
                         et_4000.setText(rightObj.getAmp4000());
+                        et_conditioning.setText(rightObj.getConditioning());
+
+                        et_500_40.setText(rightObj.getAmp500_40());
+                        et_1000_40.setText(rightObj.getAmp1000_40());
+                        et_2000_40.setText(rightObj.getAmp2000_40());
+                        et_4000_40.setText(rightObj.getAmp4000_40());
+                        et_conditioning_40.setText(rightObj.getConditioning_40());
                     }else{
                         et_500.setText("");
                         et_1000.setText("");
                         et_2000.setText("");
                         et_4000.setText("");
+                        et_conditioning.setText("");
+
+                        et_500_40.setText("");
+                        et_1000_40.setText("");
+                        et_2000_40.setText("");
+                        et_4000_40.setText("");
+                        et_conditioning_40.setText("");
                     }
                 }
             }
@@ -290,19 +380,43 @@ public class CalibrationActivity extends AppCompatActivity implements PlayToneLi
             @Override
             public void onClick(View v) {
                 if(et_500.getText().toString().length()==0){
-                    Toast.makeText(CalibrationActivity.this, "Please insert amplitude 500", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CalibrationActivity.this, "Please insert amplitude 500 for 25dBHL", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(et_1000.getText().toString().length()==0){
-                    Toast.makeText(CalibrationActivity.this, "Please insert amplitude 1000", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CalibrationActivity.this, "Please insert amplitude 1000 for 25dBHL", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(et_2000.getText().toString().length()==0){
-                    Toast.makeText(CalibrationActivity.this, "Please insert amplitude 2000", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CalibrationActivity.this, "Please insert amplitude 2000 for 25dBHL", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(et_4000.getText().toString().length()==0){
-                    Toast.makeText(CalibrationActivity.this, "Please insert amplitude 4000", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CalibrationActivity.this, "Please insert amplitude 4000 for 25dBHL", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(et_conditioning.getText().toString().length()==0){
+                    Toast.makeText(CalibrationActivity.this, "Please insert amplitude conditioning", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(et_500_40.getText().toString().length()==0){
+                    Toast.makeText(CalibrationActivity.this, "Please insert amplitude 500 for 40dBHL", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(et_1000_40.getText().toString().length()==0){
+                    Toast.makeText(CalibrationActivity.this, "Please insert amplitude 1000 for 40dBHL", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(et_2000_40.getText().toString().length()==0){
+                    Toast.makeText(CalibrationActivity.this, "Please insert amplitude 2000 for 40dBHL", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(et_4000_40.getText().toString().length()==0){
+                    Toast.makeText(CalibrationActivity.this, "Please insert amplitude 4000 for 40dBHL", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(et_conditioning_40.getText().toString().length()==0){
+                    Toast.makeText(CalibrationActivity.this, "Please insert amplitude conditioning for 40dBHL", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 int selectedId = radioGroup.getCheckedRadioButtonId();
@@ -316,6 +430,12 @@ public class CalibrationActivity extends AppCompatActivity implements PlayToneLi
                     obj.setAmp1000(et_1000.getText().toString());
                     obj.setAmp2000(et_2000.getText().toString());
                     obj.setAmp4000(et_4000.getText().toString());
+                    obj.setConditioning(et_conditioning.getText().toString());
+                    obj.setAmp500_40(et_500_40.getText().toString());
+                    obj.setAmp1000_40(et_1000_40.getText().toString());
+                    obj.setAmp2000_40(et_2000_40.getText().toString());
+                    obj.setAmp4000_40(et_4000_40.getText().toString());
+                    obj.setConditioning_40(et_conditioning_40.getText().toString());
                     String json = gson.toJson(obj);
                     if(selectedOption.equalsIgnoreCase("Left")){
                         SharedPref.write(SharedPref.LEFT, json);
@@ -813,5 +933,108 @@ public class CalibrationActivity extends AppCompatActivity implements PlayToneLi
             mRecorder = null;
             recordingThread = null;
         }
+    }
+
+    private void db40play(){
+        ll_play140 = findViewById(R.id.ll_play140);
+        ll_play140.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(et_500_40.getText().toString().length()==0){
+                    Toast.makeText(CalibrationActivity.this, "Please input frequency 500", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                boolean booleftright=false;
+                if(leftRight.equalsIgnoreCase("left")){
+                    booleftright=true;
+                }
+                if(playTone!=null){
+                    playTone.stop();
+                }
+                playTone=null;
+                playTone = new PlayTone(CalibrationActivity.this, CalibrationActivity.this);
+                playTone.play(booleftright, 500, Double.parseDouble(et_500_40.getText().toString()), 2000);
+            }
+        });
+        ll_play240 = findViewById(R.id.ll_play240);
+        ll_play240.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(et_1000_40.getText().toString().length()==0){
+                    Toast.makeText(CalibrationActivity.this, "Please input frequency 1000", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                boolean booleftright=false;
+                if(leftRight.equalsIgnoreCase("left")){
+                    booleftright=true;
+                }
+                if(playTone!=null){
+                    playTone.stop();
+                }
+                playTone=null;
+                playTone = new PlayTone(CalibrationActivity.this, CalibrationActivity.this);
+                playTone.play(booleftright, 1000, Double.parseDouble(et_1000_40.getText().toString()), 2000);
+            }
+        });
+        ll_play340 = findViewById(R.id.ll_play340);
+        ll_play340.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(et_2000_40.getText().toString().length()==0){
+                    Toast.makeText(CalibrationActivity.this, "Please input frequency 2000", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                boolean booleftright=false;
+                if(leftRight.equalsIgnoreCase("left")){
+                    booleftright=true;
+                }
+                if(playTone!=null){
+                    playTone.stop();
+                }
+                playTone=null;
+                playTone = new PlayTone(CalibrationActivity.this, CalibrationActivity.this);
+                playTone.play(booleftright, 2000, Double.parseDouble(et_2000_40.getText().toString()), 2000);
+            }
+        });
+        ll_play440 = findViewById(R.id.ll_play440);
+        ll_play440.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(et_4000_40.getText().toString().length()==0){
+                    Toast.makeText(CalibrationActivity.this, "Please input frequency 4000", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                boolean booleftright=false;
+                if(leftRight.equalsIgnoreCase("left")){
+                    booleftright=true;
+                }
+                if(playTone!=null){
+                    playTone.stop();
+                }
+                playTone=null;
+                playTone = new PlayTone(CalibrationActivity.this, CalibrationActivity.this);
+                playTone.play(booleftright, 4000, Double.parseDouble(et_4000_40.getText().toString()), 2000);
+            }
+        });
+        ll_play540 = findViewById(R.id.ll_play540);
+        ll_play540.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(et_conditioning_40.getText().toString().length()==0){
+                    Toast.makeText(CalibrationActivity.this, "Please input frequency conditioning", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                boolean booleftright=false;
+                if(leftRight.equalsIgnoreCase("left")){
+                    booleftright=true;
+                }
+                if(playTone!=null){
+                    playTone.stop();
+                }
+                playTone=null;
+                playTone = new PlayTone(CalibrationActivity.this, CalibrationActivity.this);
+                playTone.play(booleftright, 1000, Double.parseDouble(et_conditioning_40.getText().toString()), 2000);
+            }
+        });
     }
 }
