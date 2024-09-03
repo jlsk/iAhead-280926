@@ -62,9 +62,21 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".CalibrationActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".HearingScreeningActivity"
+            android:screenOrientation="portrait"/>
 
         <service android:name=".Service.NoiseLevelService"
             android:exported="false" android:enabled="true"/>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.manage.iahead.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

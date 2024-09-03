@@ -12,6 +12,7 @@ public class SharedPref {
     public static final String PHONE = "PHONE";
     public static final String NAME = "NAME";
     public static final String Id = "Id";
+    public static final String FOLLOWUPLINK = "FOLLOWUPLINK";
     public static final String TYPE = "TYPE";
     public static final String EMAIL = "EMAIL";
     public static final String GAIN = "GAIN";

@@ -22,16 +22,16 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class ResultpageNoisyActivity extends AppCompatActivity {
-    private LinearLayout ll_home, ll_whatsapp, ll_email;
+    private LinearLayout ll_home, ll_whatsapp, ll_email, ll_followup;
     private TextView tv_id, tvLeft, tvRight, tvNoise, tv_date, tv_location, tv_screening,
              tv1000left, tv2000left, tv4000left,  tv1000right, tv2000right, tv4000right,
             tv1000leftNoise, tv2000leftNoise, tv4000leftNoise,
-            tv1000rightNoise, tv2000rightNoise, tv4000rightNoise, tvText, tv_1, tv_2, tv_3, tv_test;
+            tv1000rightNoise, tv2000rightNoise, tv4000rightNoise, tvText, tv_1, tv_2, tv_3, tv_test, tv_time;
     private String left, right;
     private String Id, leftStr, rightStr, noisy, result, type, name, phone, email, typecat, datetime, testlocation,
     screeninglevel, right1000, right2000, right4000,  left1000, left2000, left4000, datetime1,
             left500db, left1000db, left2000db, left4000db,
-            right500db, right1000db, right2000db, right4000db;
+            right500db, right1000db, right2000db, right4000db, startendtime, followuplink;
     private int countBack=0;
     private CountDownTimer cTimerBack = null;
     private Button btnLogs;
@@ -59,6 +59,7 @@ public class ResultpageNoisyActivity extends AppCompatActivity {
         left2000db = intent.getStringExtra("left2000db");
         left4000db = intent.getStringExtra("left4000db");
         String logs = intent.getStringExtra("logs");
+        startendtime = intent.getStringExtra("startendtime");
 
         tv1000left = findViewById(R.id.tv1000left);
         tv2000left = findViewById(R.id.tv2000left);
@@ -80,6 +81,8 @@ public class ResultpageNoisyActivity extends AppCompatActivity {
         tv2000rightNoise.setText("Noise: "+right2000db);
         tv4000rightNoise.setText("Noise: "+right4000db);
 
+        tv_time = findViewById(R.id.tv_time);
+
         tv1000left.setText("1000Hz: "+left1000);
         tv2000left.setText("2000Hz: "+left2000);
         tv4000left.setText("4000Hz: "+left4000);
@@ -93,14 +96,7 @@ public class ResultpageNoisyActivity extends AppCompatActivity {
         tv_2 = findViewById(R.id.tv_2);
         tv_3 = findViewById(R.id.tv_3);
         tv_test = findViewById(R.id.tv_test);
-
-        String sourceString = "<b>" + "PASS " + "</b> " +
-                "- Your hearing is OK!<br>"+
-                "<b>" + "REFER " + "</b> " +
-                "- You need a full hearing assessment. Find the nearest hearing clinic for further assessment.<br>"+
-                "<b>" + "NOISE " + "</b> " +
-                "- Please find a quieter place to test your hearing";
-        tvText.setText(Html.fromHtml(sourceString));
+        ll_followup = findViewById(R.id.ll_followup);
 
         SharedPref.init(this);
         Id = SharedPref.read(SharedPref.Id, "");
@@ -112,6 +108,16 @@ public class ResultpageNoisyActivity extends AppCompatActivity {
         testlocation = SharedPref.read(SharedPref.TESTLOCATION, "");
         screeninglevel = SharedPref.read(SharedPref.SCREENINGLEVEL, "");
         String DEBUGMODESTR = SharedPref.read(SharedPref.DEBUGMODE, "");
+        followuplink = SharedPref.read(SharedPref.FOLLOWUPLINK, "https://go.cheesze.com/iaheaddefaultform");
+        tv_time.setText("Start & End Date Time : "+startendtime);
+
+        ll_followup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(followuplink));
+                startActivity(browserIntent);
+            }
+        });
 
         btnLogs = findViewById(R.id.btnLogs);
         btnLogs.setOnClickListener(new View.OnClickListener() {
@@ -137,11 +143,29 @@ public class ResultpageNoisyActivity extends AppCompatActivity {
 
         tv_screening = findViewById(R.id.tv_screening);
         tv_screening.setText("Screening Level : "+screeninglevel+ "dB");
+        String sourceString="";
+
         if(screeninglevel.equalsIgnoreCase("25")){
             tv_test.setText("Test : Quiet");
+            sourceString = "<b>" + "PASS " + "</b> " +
+                    " - pass at all test frequencies<br>"+
+                    " • Your hearing should be OK<br>"+
+                    "<b>" + "REFER " + "</b> " +
+                    " - • Find an audiologist for further hearing assessment.<br>"+
+                    "<b>" + "NOISE " + "</b> " +
+                    " - • Find a quieter place and re-test.";
         }else{
             tv_test.setText("Test : Noisy");
+            sourceString = "<b>" + "PASS " + "</b> " +
+                    " - pass at all test frequencies<br>"+
+                    " - • You do not have a signficant hearing loss<br>"+
+                    "<b>" + "REFER " + "</b> " +
+                    " - • Find an audiologist for further hearing assessment<br>"+
+                    "<b>" + "NOISE " + "</b> " +
+                    " - • Find a quieter place and re-test.";
         }
+
+        tvText.setText(Html.fromHtml(sourceString));
 
         ll_whatsapp = findViewById(R.id.ll_whatsapp);
         ll_whatsapp.setOnClickListener(new View.OnClickListener() {
@@ -188,7 +212,7 @@ public class ResultpageNoisyActivity extends AppCompatActivity {
 //            tv_id.setText(Id + " / "+ name + " / "+ datetime);
             tv_1.setText("ID : "+Id);
             tv_2.setText("Name : "+name);
-            tv_3.setText("Date & Time "+datetime);
+            tv_3.setText("DOB "+datetime);
         }else{
 //            tv_id.setText(Id + " / "+ phone + " / "+ email);
             tv_1.setText("ID : "+Id);
@@ -219,7 +243,7 @@ public class ResultpageNoisyActivity extends AppCompatActivity {
         if(type.equalsIgnoreCase("child")){
             text+="\nName : "+ name;
         }
-        text+="\nDate & Time : "+ datetime1;
+        text+="\nDOB : "+ datetime1;
         text+="\nScreening Level: "+screeninglevel+"dB";
         String test="";
         if(screeninglevel.equalsIgnoreCase("25")){
@@ -246,9 +270,17 @@ public class ResultpageNoisyActivity extends AppCompatActivity {
 //        text+= "\nNoise : "+left4000db;
         text+="\n4000Hz : "+left4000;
         text+="\n\n";
-        text+="PASS - Your hearing is OK!\n";
-        text+="REFER - You need a full hearing assessment. FInd the nearest hearing clinic for further assessement\n";
-        text+="NOISY - Please find a quieter place to test your hearing.";
+        if(screeninglevel.equalsIgnoreCase("25")) {
+            text += "PASS - pass at all test frequencies\n" +
+                    "Your hearing should be OK \n";
+            text += "REFER - • Find an audiologist for further hearing assessment.\n";
+            text += "NOISY - • Find a quieter place and re-test.";
+        }else{
+            text += "PASS - pass at all test frequencies\n" +
+                    "You do not have a significant hearing loss \n";
+            text += "REFER - • Find an audiologist for further hearing assessment.\n";
+            text += "NOISY - • Find a quieter place and re-test.";
+        }
 
         return text;
     }

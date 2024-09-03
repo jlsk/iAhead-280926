@@ -84,7 +84,7 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
             @Override
             public void onClick(View v) {
                 cancelTimer();
-                Intent intent = new Intent(LeftrightActivity.this, SelectnoisyquietActivity.class);
+                Intent intent = new Intent(LeftrightActivity.this, HearingScreeningActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -212,7 +212,7 @@ public class LeftrightActivity extends AppCompatActivity implements PlayToneList
             @Override
             public void onClick(View v) {
                 cancelTimer();
-                Intent intent = new Intent(LeftrightActivity.this, SelectnoisyquietActivity.class);
+                Intent intent = new Intent(LeftrightActivity.this, HearingScreeningActivity.class);
                 startActivity(intent);
                 finish();
             }

@@ -16,9 +16,18 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <ImageView
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/logo_new"
+                android:layout_width="200dp"
+                android:layout_height="80dp"/>
+
     <ImageView
         android:id="@+id/iv_child"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:background="@drawable/child"
@@ -30,7 +39,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
-        android:background="@drawable/parent"
+        android:background="@drawable/adult"
         android:layout_width="match_parent"
         android:layout_height="180dp"/>
 
@@ -39,7 +48,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
-        android:background="@drawable/professional"
+        android:background="@drawable/administrator"
         android:layout_width="match_parent"
         android:layout_height="180dp"/>
 

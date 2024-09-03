@@ -4,14 +4,14 @@ plugins {
 
 android {
     namespace 'com.manage.iahead'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.manage.iahead"
         minSdk 23
-        targetSdk 33
+        targetSdk 34
         versionCode 1
-        versionName "1.0.28"
+        versionName "1.0.29"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

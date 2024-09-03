@@ -40,7 +40,7 @@ import java.lang.reflect.Type;
 public class CalibrationActivity extends AppCompatActivity implements PlayToneListener{
     private final static String TAG = CalibrationActivity.class.getSimpleName();
     private TextView tv_min, tv_max, tv_db;
-    private LinearLayout ll_Save, ll_play, ll_stop, ll_back;
+    private LinearLayout ll_Save, ll_play, ll_stop, ll_back, ll_Reset;
 
     private AudioRecord mRecorder;
     private boolean isRecording;
@@ -95,12 +95,12 @@ public class CalibrationActivity extends AppCompatActivity implements PlayToneLi
     private double dbFftAGlobalMin;
     private EditText et_gain;
     private EditText et_500, et_1000, et_2000, et_4000, et_conditioning, et_500_40, et_1000_40,
-            et_2000_40, et_4000_40, et_conditioning_40;
+            et_2000_40, et_4000_40, et_conditioning_40, et_followuplink;
     private RadioGroup radioGroup;
     private LinearLayout ll_play1, ll_play2, ll_play3, ll_play4, ll_play5, ll_play140, ll_play240, ll_play340, ll_play440, ll_play540;
     private String leftRight="Left";
     private PlayTone playTone;
-    private Switch switch1;
+    private Switch switch1, switch_debug;
 
     @Override
     public void onPlay() {
@@ -125,6 +125,11 @@ public class CalibrationActivity extends AppCompatActivity implements PlayToneLi
         tv_min = findViewById(R.id.tv_min);
         et_gain = findViewById(R.id.et_gain);
         switch1 = findViewById(R.id.switch1);
+        switch_debug = findViewById(R.id.switch_debug);
+        et_followuplink = findViewById(R.id.et_followuplink);
+        String followuplink = SharedPref.read(SharedPref.FOLLOWUPLINK, "https://go.cheesze.com/iaheaddefaultform");
+        et_followuplink.setText(followuplink);
+
         String volume = SharedPref.read(SharedPref.VOLUME, "");
         if(volume.equalsIgnoreCase("Y")){
             switch1.setChecked(true);
@@ -136,6 +141,20 @@ public class CalibrationActivity extends AppCompatActivity implements PlayToneLi
                     SharedPref.write(SharedPref.VOLUME, "Y");
                 } else {
                     SharedPref.write(SharedPref.VOLUME, "");
+                }
+            }
+        });
+        String DEBUGMODESTR = SharedPref.read(SharedPref.DEBUGMODE, "");
+        if(DEBUGMODESTR.equalsIgnoreCase("Y")){
+            switch_debug.setChecked(true);
+        }
+        switch_debug.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    SharedPref.write(SharedPref.DEBUGMODE, "Y");
+                } else {
+                    SharedPref.write(SharedPref.DEBUGMODE, "");
                 }
             }
         });
@@ -155,6 +174,23 @@ public class CalibrationActivity extends AppCompatActivity implements PlayToneLi
         et_2000_40 = findViewById(R.id.et_2000_40);
         et_4000_40 = findViewById(R.id.et_4000_40);
         et_conditioning_40 = findViewById(R.id.et_conditioning_40);
+        ll_Reset = findViewById(R.id.ll_Reset);
+        ll_Reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                et_500.setText("0.0016797");
+                et_1000.setText("0.00078147");
+                et_2000.setText("0.0010775");
+                et_4000.setText("0.001262");
+                et_conditioning.setText("0.025");
+                et_500_40.setText("0.01697");
+                et_1000_40.setText("0.011");
+                et_2000_40.setText("0.013");
+                et_4000_40.setText("0.015");
+                et_conditioning_40.setText("0.025");
+                et_gain.setText("50");
+            }
+        });
 
         playTone = new PlayTone(this, CalibrationActivity.this);
         ll_play1 = findViewById(R.id.ll_play1);

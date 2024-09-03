@@ -29,7 +29,11 @@ import com.manage.iahead.Service.NoiseLevelService;
 import com.manage.iahead.Utility.AppLogger;
 import com.manage.iahead.Utility.SharedPref;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
 
 public class StartrealtestNewNoisyActivity extends AppCompatActivity implements PlayToneListener {
@@ -70,7 +74,7 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
             Right500db, Right1000db="", Right2000db="", Right4000db="";
     private calibrationObj leftObj, rightObj;
     private String allAmplitude="";
-    private String volume="";
+    private String volume="", startTime="", endTime="";
     private boolean checkTone=false;
 
     private BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -133,6 +137,12 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starttest);
+
+        Calendar calendar = Calendar.getInstance();
+        Date currentDate = calendar.getTime();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        startTime = dateFormat.format(currentDate);
 
         tvDb = findViewById(R.id.tvDb);
         tvDisplay = findViewById(R.id.tvDisplay);
@@ -866,8 +876,16 @@ public class StartrealtestNewNoisyActivity extends AppCompatActivity implements 
         }else{
             Left4000dbnew="Pass";
         }
+
+        Calendar calendar = Calendar.getInstance();
+        Date currentDate = calendar.getTime();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        endTime = dateFormat.format(currentDate);
+
         intent.putExtra("left4000db", Left4000dbnew);
         intent.putExtra("logs", appendStr);
+        intent.putExtra("startendtime", startTime + " - "+endTime);
         startActivity(intent);
         finish();
     }

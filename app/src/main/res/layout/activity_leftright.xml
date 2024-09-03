@@ -51,8 +51,8 @@
         android:layout_marginRight="30dp"
         android:layout_marginLeft="30dp"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:background="@drawable/soundcheck"/>
+        android:layout_height="450dp"
+        android:background="@drawable/soundcheck_new"/>
 
     <LinearLayout
         android:visibility="gone"

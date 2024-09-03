@@ -27,6 +27,7 @@ import com.manage.iahead.Utility.SharedPref;
 
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
@@ -53,6 +54,13 @@ public class MainActivity extends AppCompatActivity {
         loggingCheck();
         SharedPref.init(this);
 
+//        File dir = getExternalFilesDir(null);
+//        if (dir != null) {
+//            Log.d("FileOperation", "External Files Directory: " + dir.getAbsolutePath());
+//        } else {
+//            Log.e("FileOperation", "External Files Directory is null");
+//        }
+
         ll_calibration = findViewById(R.id.ll_calibration);
         ll_calibration.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,22 +70,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         view_hidden = findViewById(R.id.view_hidden);
-        view_hidden.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                DEBUGMODESTR = SharedPref.read(SharedPref.DEBUGMODE, "");
-                if(DEBUGMODESTR.equalsIgnoreCase("")){
-                    SharedPref.write(SharedPref.DEBUGMODE, "Y");
-                    ll_calibration.setVisibility(View.VISIBLE);
-                    Toast.makeText(MainActivity.this, "Debug Mode Activated", Toast.LENGTH_SHORT).show();
-                    permissionstorage();
-                }else{
-                    SharedPref.write(SharedPref.DEBUGMODE, "");
-                    Toast.makeText(MainActivity.this, "Debug Mode Deactivated", Toast.LENGTH_SHORT).show();
-                }
-                return false;
-            }
-        });
+//        view_hidden.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                DEBUGMODESTR = SharedPref.read(SharedPref.DEBUGMODE, "");
+//                if(DEBUGMODESTR.equalsIgnoreCase("")){
+//                    SharedPref.write(SharedPref.DEBUGMODE, "Y");
+//                    ll_calibration.setVisibility(View.VISIBLE);
+//                    Toast.makeText(MainActivity.this, "Debug Mode Activated", Toast.LENGTH_SHORT).show();
+//                    permissionstorage();
+//                }else{
+//                    SharedPref.write(SharedPref.DEBUGMODE, "");
+//                    Toast.makeText(MainActivity.this, "Debug Mode Deactivated", Toast.LENGTH_SHORT).show();
+//                }
+//                return false;
+//            }
+//        });
 
         intent=new Intent(this, EnteridActivity.class);
         iv_child = findViewById(R.id.iv_child);
@@ -102,16 +110,18 @@ public class MainActivity extends AppCompatActivity {
         iv_therapist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intent.putExtra("type", "therapist");
-                SharedPref.write(SharedPref.TYPE, "therapist");
+//                intent.putExtra("type", "therapist");
+//                SharedPref.write(SharedPref.TYPE, "therapist");
+//                startActivity(intent);
+                Intent intent = new Intent(MainActivity.this, CalibrationActivity.class);
                 startActivity(intent);
             }
         });
 
-        if(DEBUGMODESTR.equalsIgnoreCase("")){
-            SharedPref.write(SharedPref.DEBUGMODE, "Y");
-            ll_calibration.setVisibility(View.VISIBLE);
-        }
+//        if(DEBUGMODESTR.equalsIgnoreCase("")){
+//            SharedPref.write(SharedPref.DEBUGMODE, "Y");
+//            ll_calibration.setVisibility(View.VISIBLE);
+//        }
     }
 
     private void permissionstorage(){
