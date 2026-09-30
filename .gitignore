@@ -1,3 +1,14 @@
+# Gradle and Android Studio generated files
+.gradle/
+.idea/
+**/build/
 
-/.gradle
-/.gradle
+# Local Android SDK configuration
+local.properties
+
+# Signing credentials
+*.keystore
+*.jks
+
+# macOS metadata
+.DS_Store
